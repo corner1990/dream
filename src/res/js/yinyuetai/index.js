@@ -26,7 +26,104 @@
 	banner();
 	function banner(){
 		var wrap = s('.banner');
-		var list = s('.banner .list')
+		var list = s('.banner .list');
+		var oNav = s('.banner .nav');
+		var iNow = 0;//计数器
+		var num = 0;
+		var w = wrap[0].offsetWidth;
+		var html = list[0].innerHTML;
+		var listSX = 0;//list初始坐标
+		var touchSX = 0;//鼠标开始坐标
+		var disX = 0
+		var timer =null;
+		
+		var stepX =0;
+		cssTransform(list[0],'translateX',0);
+
+		html+=html;
+		list[0].innerHTML = html;
+		var length = list[0].children.length;
+		num = Math.floor(length/2)-1;
+		cssTransform(list[0],'translateX',-num*w);
+		list[0].style.width =100 * length+'%';
+
+		on(list,'touchstart',function(e){
+			timer = null;
+			this.style.transition = 'transform 0 linear';
+			this.classList.remove('transition');
+			var touch = e.changedTouches[0];
+			touchSX = touch.pageX;
+			disX = touchSX;
+			listSX = cssTransform(list[0],'translateX');
+
+			on(list,'touchmove',function(e){
+				var touch = e.changedTouches[0];
+				stepX = (touch.pageX - touchSX);
+				listSX += stepX;
+				touchSX = touch.pageX;
+				cssTransform(list[0],'translateX',listSX);
+			})
+		})
+		on(list,'touchend',function(e){
+			var touch = e.changedTouches[0];
+			if(Math.abs(touch.pageX - disX) >=80){
+				if(touch.pageX - disX > 0){
+					iNow--;
+					num --;
+					if(iNow < 0){
+						iNow = length/2-1;
+					}
+					if(num <= 0){
+						num = Math.floor(length/2);
+						cssTransform(list[0],'translateX',-num*w);
+					}
+				}else{
+					iNow++;
+					num++;
+					if(iNow >= length/2){
+						iNow = 0
+					}
+					if(num >= length-1){
+						num = length/2-1;
+						cssTransform(list[0],'translateX',-num*w);
+					}
+				}
+
+				setTimeout(function(){
+					auto();
+				},5000);
+			}
+			
+			setNav(iNow);
+			this.classList.add('transition');
+			cssTransform(list[0],'translateX',-num*w);
+			clearTimeout(timer);
+	
+		})
+
+		function setNav(num){
+			for(var i=0;i<oNav[0].children.length;i++){
+				oNav[0].children[i].classList.remove('active');
+			}
+			oNav[0].children[num].classList.add('active');
+		}
+		auto();
+		function auto(){
+			timer = setInterval(function(){
+				iNow++;
+				num++;
+				if(iNow >= length/2){
+					iNow = 0
+				}
+				if(num >= length-1){
+					num = length/2-1;
+					cssTransform(list[0],'translateX',-num*w);
+				}
+				setNav(iNow);
+				cssTransform(list[0],'translateX',-num*w);
+			},4000);
+		}
+
 	}
 
 	// 导航拖拽
@@ -71,6 +168,7 @@
 			})
 		})
 	}
+
 })()
 
 // 选择器
@@ -124,6 +222,26 @@ function on(obj,type,fn){
 	}
 }
 
+function off(obj,type,fn){
+	if(arguments.length < 3){
+		if(obj.length <2){
+			obj[0].removeEventListener(type);
+		}else{
+			for(var i =0;i<obj.length;i++){
+				obj[i].addEventListener(type);
+			}
+		}
+	}else{
+		if(obj.length <2){
+			obj[0].removeEventListener(type,fn,false);
+		}else{
+			for(var i =0;i<obj.length;i++){
+				obj[i].addEventListener(type,fn,false);
+			}
+		}
+	}
+	
+}
 function stopPropagation(e){
 	var e = e || window.event;
 	if(e.stopPropagation){//w3c阻止冒泡方法
@@ -245,4 +363,5 @@ function navSwipe() {
 			cssTransform(navs,"translateX",target);
 		}
 	);
+	
 }

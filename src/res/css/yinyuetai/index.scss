@@ -32,6 +32,7 @@ input::-webkit-input-placeholder, textarea::-webkit-input-placeholder { color: #
 .fl{float: left;}
 .fr{float: right;}
 .btn{display: inline-block;}
+.transition{transition: transform 0.5s linear};
 /* End hide from IE-mac */
 /*Reset End*/
 $rem : 20;
@@ -60,13 +61,16 @@ $rem : 20;
 .main-nav .active{background: #690;color: #fff;}
 .main-nav .list{width: 37rem;transform: transform 0.5s linear;}
 
-.banner{position: relative;overflow: hidden;width: 16rem;}
-.banner .list{width: 500%;}
-.banner img{width: 320rem /$rem;height: 182rem/$rem;}
-.banner li{float: left;}
-.banner ol{overflow: hidden;position: absolute;top: 160rem / $rem;right: 30rem /$rem;}
-.banner ol li{width: 12rem / $rem; height: 12rem / $rem; @include bg(#efefef); @include BR();margin: 0 10rem/$rem 0 0;}
-.banner ol .active{@include bg(#690);}
+.banner{position: relative;overflow: hidden;width: 16rem;
+	.list{width: 500%;}
+	li{float: left;}
+	img{width: 320rem /$rem;height: 182rem/$rem;}
+	.nav{overflow: hidden;position: absolute;top: 160rem / $rem;right: 30rem /$rem;
+		li{width: 12rem / $rem; height: 12rem / $rem; @include bg(#efefef); @include BR();margin: 0 10rem/$rem 0 0;}
+		.active{@include bg(#690);}
+	}
+}
+
 
 .g-wrap{width: 310rem/$rem;@include bg(#fff);margin:0 auto;}
 
