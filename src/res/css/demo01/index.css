@@ -1,0 +1,42 @@
+@utf-8;
+/*样式重置*/
+
+body,h1,h2,h3,h4,h5,h6,dl,dt,dd,ul,ol,li,th,td,p,blockquote,pre,form,fieldset,legend,input,button,textarea,hr{margin:0;padding:0}
+body,button,input,select,textarea{ font:12px/1.5 "宋体",arial, verdana, sans-serif}
+h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal}
+li{list-style:none}
+fieldset,img{border:0}
+table{border-collapse:collapse;border-spacing:0}
+q:before,q:after{content:”}
+button,input,select,textarea{font-size:100%}
+legend{color:#000}
+small{font-size:12px}
+hr{border:none;height:1px}
+a{text-decoration:none}
+a:hover{color: #a40000;}
+.cle:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+.cle{ display:inline-block}
+.cle{ display:block}
+.clear {clear: both;}
+
+/*body样式*/
+.selectAWeek{background: #fff;font-family: "微软雅黑";}
+/*头部样式*/
+.selectAWeek .header{width: 100%;height: 440px;background: #f3f3f3 url(/res/img/demo01/header_bg.jpg) no-repeat center top;position: relative;}
+.selectAWeek .header a{position: absolute;top: 0;left: 50%;margin-left: -595px;}
+/*内容部分*/
+.selectAWeek .container{width: 1190px;margin: 0 auto;padding-bottom: 108px;}
+.selectAWeek .qj,.yc{margin-top: 24px;}
+.selectAWeek h2{border-bottom: 1px solid #e8e8e8;height: 22px;padding: 14px 0;}
+.selectAWeek h2 a{font-size: 22px;color: #323232;line-height: 22px;padding-left: 30px;background: url(http://www.hqbuy.com//res/img/activity/selectweek/select_week_ico.png) no-repeat 0px 5px;}
+.selectAWeek .lists{margin-top: 20px;width: 100%;padding: 4px 5px;overflow: hidden;}
+.selectAWeek .list{float: left;width: 218px;height: 276px;margin-right:20px;border: 1px solid #fff;}
+.selectAWeek .list:hover{border: 1px solid #ddd;-webkit-box-shadow:0 0 5px 3px #eee;-moz-box-shadow:0 0 5px 3px #eee;box-shadow:0 0 5px 3px #eee;background: url(http://www.hqbuy.com//res/img/activity/selectweek/jingxuan.png) no-repeat 144px -1px;border-radius: 2px;}
+.selectAWeek li.right{margin: 0;}
+.selectAWeek .list img{width: 110px;height: 110px;margin: 33px 0 33px 45px;}
+.selectAWeek .list a{display: block;color: #323232;font-size: 16px;line-height: 26px;margin-left: 10px;}
+.selectAWeek .list a:hover{color: #a40000;}
+.selectAWeek .list .price{color: #969696;font-size: 14px;line-height: 26px;margin-left: 10px;}
+.selectAWeek .list .price i{color: #a40000;font-style: normal;}
+.selectAWeek .list span{color: #969696;font-size: 14px;line-height: 26px;margin-left: 10px;}
+.selectAWeek .yc h2 a{background: url(http://www.hqbuy.com//res/img/activity/selectweek/select_week_ico.png) no-repeat 0px -22px;}

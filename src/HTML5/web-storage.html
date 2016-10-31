@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Web Storage and Session Storage</title>
+</head>
+<body>
+	<textarea name="" id="textarea" cols="30" rows="10" onresize="true"></textarea>
+	<div class="btn-group">
+		<a href="javascript:;" id="btn_set">btn_set</a>
+		<a href="javascript:;" id="btn_get">btn_get</a>
+	</div>
+	<script>
+		(function(){
+			var btnSet = document.getElementById('btn_set');
+			var btnGet = document.getElementById('btn_get');
+			var str = document.getElementById('textarea');
+			console.log(btnGet)
+			btnGet.addEventListener('click',function(){
+				// 存储数据
+				if(window.localStorage){
+					//str.value = localStorage.getItem['hello'] 专用方法
+					str.value = localStorage['hello'];
+				}
+			},false);
+
+			btnSet.addEventListener('click',function(){
+				// 存储数据
+				if(window.localStorage){
+					//localStorage.getItem['hello', str.value] 专用方法
+					localStorage['hello'] = str.value ;
+				}
+			},false);
+
+			// 通过localStorage.getItem获取一个没有的键，会返回空字符串
+			// 通过 localStorage['hello'] 方式访问一个没有的键，会返回undefined
+		})()
+	</script>
+</body>
+</html>

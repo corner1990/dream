@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>SVG</title>
+</head>
+<body>
+	<!-- SVG页面载入方式 -->
+	<!-- 直接写行内代码，不推荐 -->
+	<!-- 2.通过iframe标签 推荐 -->
+	<iframe src="../res/img/HTML5/demo.svg" frameborder="0"></iframe>
+	<!-- 3.embed标签引用 -->
+	<embed src="../res/img/HTML5/demo.svg" type="">
+	<!-- 4.svg 标签 svg标签不支持src属性，我们可以使用自定义属性 -->
+	<svg data-src="../res/img/HTML5/demo.svg"></svg>
+	<script>
+		window.addEventListener('load',function(){
+			var svgs= document.getElementsByTagName('svg');
+			for(var i=0;i<svgs.length;i++){
+				//想服务器发送请求 得到svg
+			}
+		});
+	</script>
+</body>
+</html>

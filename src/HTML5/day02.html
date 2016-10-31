@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,user-scalable=no" />
+	<title>基础事件</title>
+<style id="css">
+body {margin: 0;}
+.wrap {.overflow: hidden;position: relative;}
+.list {position: absolute;left: 0;top: 0;margin: 0;padding: 0;list-style: none;}
+.list li {float: left;}
+.list img {width: 100%;display: block;}
+.nav {position: absolute;left: 0;bottom: 3px;width: 100%;line-height: 10px;text-align: center;}
+.nav span {display: inline-block;width: 10px;height: 10px;background: #C00;border-radius: 5px;}
+.nav .active {background: #0F0;}
+</style>
+
+</head>
+<body>
+<!-- 划屏的幻灯片 -->
+	<div class="wrap">
+		<ul class="list">
+			<li><a href="javascript:;"><img src="/res/img/HTML5/1.jpg" alt=""></a></li>
+			<li><a href="javascript:;"><img src="/res/img/HTML5/2.jpg" alt=""></a></li>
+			<li><a href="javascript:;"><img src="/res/img/HTML5/3.jpg" alt=""></a></li>
+			<li><a href="javascript:;"><img src="/res/img/HTML5/4.jpg" alt=""></a></li>
+			<li><a href="javascript:;"><img src="/res/img/HTML5/5.jpg" alt=""></a></li>
+		</ul>
+		<nav class="nav">
+			<span class="nav-item"></span>
+			<span class="nav-item"></span>
+			<span class="nav-item"></span>
+			<span class="nav-item"></span>
+			<span class="nav-item"></span>
+		</nav>
+	</div>
+	<script>
+		(function(window){
+			var wrap = document.querySelector('.wrap');
+			box.addEventListener('touchstart',function(e){
+				console.log(e.targetTouches[0].pageX +'|' + e.targetTouches[0].pageY)
+			})
+		})(window)
+	</script>
+</body>
+</html>

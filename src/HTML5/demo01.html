@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>划屏事件</title>
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1,user-scalable=no">
+	<style>
+		/*兼容HTML5*/
+		article,aside,dialog,foot,header,section,foot,nav,figure,menu{display:block}
+		/**
+		 * 常用 reset 
+		 */
+
+		body,h1,h2,h3,h4,h5,h6,p,figure,form,blockquote {margin:0;}
+		ul,ol,li,dl,dd{margin: 0;padding:0;list-style: none;}
+		ul,ol{list-style: none outside none;}
+		input,button,textarea{outline:0px;}
+		html{height:100%;}
+		body{height:100%;font:12px "Microsoft YaHei","\5b8b\4f53","Helvetica Neue","Helvetica","STHeiti","tahoma","arial";line-height:150%;color:#333;background:#FFF;text-align:left;min-width: 1190px;}
+		a{color:#333; text-decoration:none;}
+		a:hover{color:#c00;text-decoration:none;}
+		table {border-collapse: collapse;border-spacing: 0;}
+		input[type=search] {-webkit-appearance: textfield;box-sizing: content-box;}
+		/* 辅助 */
+		.hide{display:none;}
+		em,i{font-style:normal;font-weight:normal;}
+		.highlight{color:#a40000}
+		.fl{float:left;}
+		.fr{float:right;}
+		.g-mr-10{margin-right:10px;}
+		.container{width: 1120px;margin: 0 auto;}
+		.clearfix:after,.container:after{content:" ";display:table;clear:both;}.clearfix,.container{zoom:1;}
+
+		.list .item{float: left;}
+	</style>
+</head>
+<body>
+	<article class="wrap">
+		<ul class="list">
+			<li class="item"><img src="/res/img/HTML5/1.jpg" alt=""></li>
+			<li class="item"><img src="/res/img/HTML5/2.jpg" alt=""></li>
+			<li class="item"><img src="/res/img/HTML5/3.jpg" alt=""></li>
+			<li class="item"><img src="/res/img/HTML5/4.jpg" alt=""></li>
+			<li class="item"><img src="/res/img/HTML5/5.jpg" alt=""></li>
+		</ul>
+	</article>
+	<article id="hello">
+	</article>
+</body>
+<script src="http://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+<script src="/res/js/HTML5/qrcode.js"></script>
+<script>
+	$(function(){
+		$('#hello').qrcode({render:'table',width: 64,height: 64,correctLevel:0,text: "http://localhost:3000/HTML5/demo01.html"})
+	})
+</script>
+<script>
+	//(function(window){
+		// var wrap = document.querySelector('.wrap');
+		// var scrollElm = document.querySelector('.scroll');
+		// var startPoint = 0;
+		// wrap.addEventListener('touchstart',function(e){
+		// 	var touch = e.changedTouches[0];
+		// 	startPoint = touch.pageY;
+		// },false)
+		// wrap.addEventListener('touchmove',function(e){
+		// 	var touch = e.changedTouches[0];
+		// 	var nowPoint = touch.pageY;
+		// 	console.log(nowPoint-startPoint)
+		// },false)
+
+	// 	function cssTransform(elm,attr,val){
+	// 		if(!elm.transform){
+	// 			elm.transform = {};
+	// 		}
+	// 		var sVal = '';
+	// 		if(arguments.length > 2){
+	// 			elm.transform[attr]=val;
+	// 			for(var key in elm.transform){
+	// 				switch(key){
+	// 					case 'rotate':
+	// 					case 'rotateX':
+	// 					case 'rotateY':
+	// 						sVal +=key+'('+elm.transform[key]+'deg)';
+	// 					break;
+	// 					case 'translateX':
+	// 					case 'translateY':
+	// 						sVal +=key+'('+elm.transform[key]+'px)';
+	// 						break;
+	// 					case 'scaleX':
+	// 					case 'scaleY':
+	// 					case 'scale':
+	// 						sVal +=key+'('+elm.transform[key]+')';
+	// 						break;
+	// 				}
+	// 				elm.style.WebkitTransform = elm.style.transform = sVal;
+	// 			}
+	// 		}else{
+	// 			sVal = elm.transform[attr];
+	// 			if(typeof sVal == 'undefined'){
+	// 				 sVal = -1;
+	// 			}
+	// 			console.log(sVal)
+	// 		}
+
+	// 	}
+
+	// 	var p = document.getElementsByTagName('p')[0];
+	// 	//cssTransform(p,'rotate',45);
+	// 	//cssTransform(p,'scale',1.4);
+	// 	cssTransform(p,'scale');
+	// })(window)
+</script>
+</html>

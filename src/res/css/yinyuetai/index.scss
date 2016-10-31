@@ -1,0 +1,87 @@
+/* CSS Reset*/
+html { font-family:"微软雅黑", "Helvetica Neue", Helvetica, STHeiTi, Arial, sans-serif; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; font-size: 62.5%; }
+body { margin: 0; font-size:1.4rem; line-height: 20px; color: #000; background-color: #fff; height: 100%; overflow-x: hidden; -webkit-overflow-scrolling: touch; }
+
+article, aside, details, figcaption, figure, footer, header, hgroup, main, nav, section, summary { display: block; }
+a { background: transparent; text-decoration: none; color: #000; }
+a:active { outline: 0; }
+b, strong { font-weight: bold; }
+dfn { font-style:normal;}
+img { border: 0; vertical-align: middle; }
+* {
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+	-webkit-tap-highlight-color: transparent; /* For some Androids */
+	outline: none;
+}
+input,textarea,button { border: 0; margin: 0; padding: 0; font-family:"微软雅黑", "Helvetica Neue", Helvetica, STHeiTi, Arial, sans-serif;}
+textarea { resize: none;}
+table { border-collapse: collapse; border-spacing: 0; }
+td, th { padding: 0; }
+h1, h2, h3, h4, h5, h6, p, figure, form, blockquote { margin: 0; }
+ul, ol, li, dl, dd { margin: 0; padding: 0; }
+ul, ol { list-style: none; }
+input::-moz-placeholder, textarea::-moz-placeholder { color: #ccc; }
+input:-ms-input-placeholder, textarea:-ms-input-placeholder { color: #ccc; }
+input::-webkit-input-placeholder, textarea::-webkit-input-placeholder { color: #ccc; }
+
+.clearfix:after { content:"."; display:block; height:0; clear:both; visibility:hidden;}
+.clearfix { display:inline-block;}
+/* Hides from IE-mac \*/
+* html .clearfix { height:1%;}
+.clearfix { display:block;}
+.fl{float: left;}
+.fr{float: right;}
+.btn{display: inline-block;}
+/* End hide from IE-mac */
+/*Reset End*/
+$rem : 20;
+@mixin BR($index:5rem){border-radius: $index/$rem;}
+@mixin bg($cl: transparent){background: $cl};
+@mixin box($y:center,$x:row,$just:space-between){display: flex; display: box; flex-direction: $x;justify-content: $just;align-items: $y;}
+.header{background: #171717;overflow: hidden;width: 100%;}
+.header img{ width: 4.2rem;height: 1.5rem;margin:0.35rem 0.2rem;}
+.header .btn-more{height: 34rem/$rem;width: 24rem/$rem;background: url(/res/img/yinyuetai/channel_ice.png) no-repeat 0 0;margin: 0.2rem 0 0.25rem 0.4rem;}
+.header .bg-b{background-position:0 -32.6rem/$rem;}
+.header .btn-wrap{font-size: 0.6rem;color: #fff;line-height: 1.5rem;}
+.header .btn-wrap{font-size: 0.6rem;color: #fff;line-height: 1.5rem;}
+.header .btn-wrap .btn{margin: 0.4rem 0.4rem 0 0;color:#fff;height: 1.4rem;padding: 0 0.5rem;background: #690;line-height: 1.4rem;border-radius: 0.12rem;}
+.header-bari{position: fixed;top: 0;left: 0;}
+
+.header-more .menu-more{display: block;}
+.menu-more{z-index:99;border-top: 1px solid #fefefe;background: rgba(23,23,23,0.8);color: #fff;font-size: 16rem/$rem;display: none;position:absolute;top: 44rem/$rem;}
+.menu-more li{float: left;line-height: 30rem/$rem;padding:0 6rem/$rem;margin:2rem/$rem  10rem/$rem 2rem/$rem 0;}
+
+.search{height: 2rem;background: #171717;}
+.search input{height: 1.4rem;line-height: 1.4rem;width: 12rem;margin: 0 0 0 0.4rem;border-radius: 0.12rem 0 0 0.12rem;background: #999;color: #626274;text-indent: 0.2rem;}
+.search button{width: 3rem;height: 1.4rem;margin: 0 0 0 0.2rem;background: #414040;color: #fff;border-radius: 0 0.12rem 0.12rem 0;}
+
+.main-nav{height: 2rem;width:320rem/$rem;overflow:hidden;background: #eee;line-height: 2rem;font-size: 0.75rem;color: #323232;border-bottom: 2px solid #ccc;}
+.main-nav a{display: inline-block;height:1.25rem;line-height: 1.25rem;padding:0 0.35rem;}
+.main-nav .active{background: #690;color: #fff;}
+.main-nav .list{width: 37rem;transform: transform 0.5s linear;}
+
+.banner{position: relative;overflow: hidden;width: 16rem;}
+.banner .list{width: 500%;}
+.banner img{width: 320rem /$rem;height: 182rem/$rem;}
+.banner li{float: left;}
+.banner ol{overflow: hidden;position: absolute;top: 160rem / $rem;right: 30rem /$rem;}
+.banner ol li{width: 12rem / $rem; height: 12rem / $rem; @include bg(#efefef); @include BR();margin: 0 10rem/$rem 0 0;}
+.banner ol .active{@include bg(#690);}
+
+.g-wrap{width: 310rem/$rem;@include bg(#fff);margin:0 auto;}
+
+.title{@include box();height: 32rem/$rem;font-size: 12rem/$rem;
+	h2{font-size: 14rem/$rem;font-weight: 400;}
+}
+.move-list-wrap{
+	overflow: hidden;
+	.move-nav{overflow: hidden;}
+	.link{width: 36rem/$rem;margin: 0 5rem/$rem;text-align:center;float: left;font-size: 14rem/$rem;line-height: 18rem/$rem;border-bottom: 2px solid #fff;}
+	.link.active{border-color: #690;}
+}
+.move-list{
+	li{margin-top: 8rem/$rem;padding:2px; @include bg(#eee);float: left;font-size: 12rem/$rem;margin: 3rem/$rem;}
+	img{width: 144rem/$rem;height: 84rem/$rem;}
+	p{color: #000;line-height: 20rem/$rem;}
+	span{margin-right: 10rem/$rem;}
+}
