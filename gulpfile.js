@@ -181,7 +181,9 @@ gulp.task('html-es6', function () {
 
 gulp.task('js-es6',function(){
     return gulp.src(['src/res/js/es6/index.js'])
-    .pipe(babel())
+    .pipe(babel({
+         presets: ['es2015']
+    }))
     .pipe(jshint())
     .pipe(jshint.reporter('default'))
     .pipe(concat('index.js'))
