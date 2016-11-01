@@ -11,6 +11,7 @@ var gulp = require('gulp'),
     notify = require('gulp-notify'),
     cache = require('gulp-cache'),
     browserSync = require('browser-sync'),
+    babel = require("gulp-babel"),
 	minifyHTML = require("gulp-minify-html");
     var browserSync = require('browser-sync').create();
     var reload = browserSync.reload;
@@ -170,6 +171,46 @@ gulp.task("css-yinyuetai", function () {
       .pipe(gulp.dest('dist/res/css/yinyuetai'))
 })
 
+// ES6
+gulp.task('html-es6', function () {
+    gulp.src('src/es6/*.html')
+    .pipe(gulp.dest("dist/es6"))
+    .pipe(browserSync.stream());
+
+});
+
+gulp.task('js-es6',function(){
+    return gulp.src(['src/res/js/es6/index.js'])
+    .pipe(babel())
+    .pipe(jshint())
+    .pipe(jshint.reporter('default'))
+    .pipe(concat('index.js'))
+    .pipe(gulp.dest('dist/res/js/es6'))
+    .pipe(rename({suffix:'.min'}))
+    .pipe(uglify({
+        output:{
+            ascii_only:true
+        }
+
+    }))
+    .pipe(gulp.dest('dist/res/js/es6'))
+    .pipe(browserSync.stream());
+});
+
+gulp.task("css-es6", function () {
+    return gulp.src('src/res/css/es6/*.scss')
+    .pipe(sass({ style: 'expanded' }))
+      .pipe(autoprefixer({
+          browsers: ['> 1%'],
+          cascade: false
+      }))
+      .pipe(gulp.dest('dist/res/css/es6'))
+      .pipe(rename({ suffix: '.min' }))
+      .pipe(minifycss({ compatibility: 'ie8' }))
+      .pipe(gulp.dest('dist/res/css/es6'))
+})
+
+
 //ANGULAR 静态服务器
 gulp.task('angular',function() {
     browserSync.init({
@@ -207,4 +248,18 @@ gulp.task('yinyuetai',function() {
     gulp.watch("src/yinyuetai/*.html", ['html-yinyuetai']).on('change', browserSync.reload);
     gulp.watch('src/res/css/yinyuetai/*.scss', ['css-yinyuetai']).on('change', browserSync.reload);
     gulp.watch('src/res/js/yinyuetai/*.js', ['js-yinyuetai']).on('change', browserSync.reload);
+});
+
+//ECMA6 学习
+gulp.task('es6',function(){
+   browserSync.init({
+        server: {
+            baseDir: "dist",
+             directory: true
+        }
+    });
+    gulp.watch("src/es6/*.html", ['html-es6']).on('change', browserSync.reload);
+    gulp.watch('src/res/css/es6/*.scss', ['css-es6']).on('change', browserSync.reload);
+    gulp.watch('src/res/js/es6/*.js', ['js-es6']).on('change', browserSync.reload);
+
 });
