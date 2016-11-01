@@ -48,7 +48,7 @@
 		list[0].style.width =100 * length+'%';
 
 		on(list,'touchstart',function(e){
-			timer = null;
+			clearInterval(timer);
 			this.style.transition = 'transform 0 linear';
 			this.classList.remove('transition');
 			var touch = e.changedTouches[0];
@@ -75,6 +75,7 @@
 					}
 					if(num <= 0){
 						num = Math.floor(length/2);
+						this.classList.remove('transition');console.log('减小');
 						cssTransform(list[0],'translateX',-num*w);
 					}
 				}else{
@@ -85,19 +86,19 @@
 					}
 					if(num >= length-1){
 						num = length/2-1;
+						this.classList.remove('transition');console.log('++');
 						cssTransform(list[0],'translateX',-num*w);
 					}
 				}
 
 				setTimeout(function(){
-					auto();
+					// auto();
 				},5000);
 			}
 			
 			setNav(iNow);
-			this.classList.add('transition');
+			//this.classList.add('transition');
 			cssTransform(list[0],'translateX',-num*w);
-			clearTimeout(timer);
 	
 		})
 
@@ -107,22 +108,23 @@
 			}
 			oNav[0].children[num].classList.add('active');
 		}
-		auto();
-		function auto(){
-			timer = setInterval(function(){
-				iNow++;
-				num++;
-				if(iNow >= length/2){
-					iNow = 0
-				}
-				if(num >= length-1){
-					num = length/2-1;
-					cssTransform(list[0],'translateX',-num*w);
-				}
-				setNav(iNow);
-				cssTransform(list[0],'translateX',-num*w);
-			},4000);
-		}
+		// auto();
+		// function auto(){
+		// 	timer = setInterval(function(){
+		// 		clearInterval(timer);
+		// 		iNow++;
+		// 		num++;
+		// 		if(iNow >= length/2){
+		// 			iNow = 0
+		// 		}
+		// 		if(num >= length-1){
+		// 			num = length/2-1;
+		// 			cssTransform(list[0],'translateX',-num*w);
+		// 		}
+		// 		setNav(iNow);
+		// 		cssTransform(list[0],'translateX',-num*w);
+		// 	},4000);
+		// }
 
 	}
 
