@@ -50,65 +50,63 @@
 <script src="http://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
 <script src="/res/js/HTML5/qrcode.js"></script>
 <script>
-	$(function(){
-		$('#hello').qrcode({render:'table',width: 64,height: 64,correctLevel:0,text: "http://localhost:3000/HTML5/demo01.html"})
-	})
+	
 </script>
 <script>
-	//(function(window){
-		// var wrap = document.querySelector('.wrap');
-		// var scrollElm = document.querySelector('.scroll');
-		// var startPoint = 0;
-		// wrap.addEventListener('touchstart',function(e){
-		// 	var touch = e.changedTouches[0];
-		// 	startPoint = touch.pageY;
-		// },false)
-		// wrap.addEventListener('touchmove',function(e){
-		// 	var touch = e.changedTouches[0];
-		// 	var nowPoint = touch.pageY;
-		// 	console.log(nowPoint-startPoint)
-		// },false)
+	(function(window){
+		var wrap = document.querySelector('.wrap');
+		var scrollElm = document.querySelector('.scroll');
+		var startPoint = 0;
+		wrap.addEventListener('touchstart',function(e){
+			var touch = e.changedTouches[0];
+			startPoint = touch.pageY;
+		},false)
+		wrap.addEventListener('touchmove',function(e){
+			var touch = e.changedTouches[0];
+			var nowPoint = touch.pageY;
+			console.log(nowPoint-startPoint)
+		},false)
 
-	// 	function cssTransform(elm,attr,val){
-	// 		if(!elm.transform){
-	// 			elm.transform = {};
-	// 		}
-	// 		var sVal = '';
-	// 		if(arguments.length > 2){
-	// 			elm.transform[attr]=val;
-	// 			for(var key in elm.transform){
-	// 				switch(key){
-	// 					case 'rotate':
-	// 					case 'rotateX':
-	// 					case 'rotateY':
-	// 						sVal +=key+'('+elm.transform[key]+'deg)';
-	// 					break;
-	// 					case 'translateX':
-	// 					case 'translateY':
-	// 						sVal +=key+'('+elm.transform[key]+'px)';
-	// 						break;
-	// 					case 'scaleX':
-	// 					case 'scaleY':
-	// 					case 'scale':
-	// 						sVal +=key+'('+elm.transform[key]+')';
-	// 						break;
-	// 				}
-	// 				elm.style.WebkitTransform = elm.style.transform = sVal;
-	// 			}
-	// 		}else{
-	// 			sVal = elm.transform[attr];
-	// 			if(typeof sVal == 'undefined'){
-	// 				 sVal = -1;
-	// 			}
-	// 			console.log(sVal)
-	// 		}
+		function cssTransform(elm,attr,val){
+			if(!elm.transform){
+				elm.transform = {};
+			}
+			var sVal = '';
+			if(arguments.length > 2){
+				elm.transform[attr]=val;
+				for(var key in elm.transform){
+					switch(key){
+						case 'rotate':
+						case 'rotateX':
+						case 'rotateY':
+							sVal +=key+'('+elm.transform[key]+'deg)';
+						break;
+						case 'translateX':
+						case 'translateY':
+							sVal +=key+'('+elm.transform[key]+'px)';
+							break;
+						case 'scaleX':
+						case 'scaleY':
+						case 'scale':
+							sVal +=key+'('+elm.transform[key]+')';
+							break;
+					}
+					elm.style.WebkitTransform = elm.style.transform = sVal;
+				}
+			}else{
+				sVal = elm.transform[attr];
+				if(typeof sVal == 'undefined'){
+					 sVal = -1;
+				}
+				console.log(sVal)
+			}
 
-	// 	}
+		}
 
-	// 	var p = document.getElementsByTagName('p')[0];
-	// 	//cssTransform(p,'rotate',45);
-	// 	//cssTransform(p,'scale',1.4);
-	// 	cssTransform(p,'scale');
-	// })(window)
+		var p = document.getElementsByTagName('p')[0];
+		//cssTransform(p,'rotate',45);
+		//cssTransform(p,'scale',1.4);
+		cssTransform(p,'scale');
+	})(window)
 </script>
 </html>
