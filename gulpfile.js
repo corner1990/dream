@@ -239,7 +239,7 @@ gulp.task('HTML5',function() {
     gulp.watch('src/res/js/HTML5/*.js', ['js-HTML5']).on('change', browserSync.reload);
 });
 
-//HTML5 静态服务器
+//音悦台 静态服务器
 gulp.task('yinyuetai',function() {
     browserSync.init({
         server: {
