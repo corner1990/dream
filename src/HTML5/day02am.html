@@ -16,6 +16,7 @@
 		.wrap{position:relative;width: 100%;overflow: hidden;}
 		.list{position: absolute;left: 0;top:0;}
 		li{list-style: none;}
+		img{display: block;width: 100%;}
 		.list .item{float: left;}
 		.list-nav{position:absolute;height:0.6px;width: 6.2rem;bottom: 1rem;right: 0;}
 		.list-nav .nav-item{float: left;width: 0.6rem;height:0.6rem;border-radius: 50%;background:#06c;margin: 0 0.3rem;}
@@ -35,10 +36,48 @@
 			var wrap = q('.wrap');
 			var list = q('.list');
 			var item = qAll('.list li');
+			var navList = qAll('.list-nav .nav-item');
 			var style = '.wrap{height:'+img.offsetHeight+'px} .list{width: '+item.length+'00%} .list .item{width:'+1/item.length*100+'% ;height:'+img.offsetHeight+'px}';
 
 			css.innerHTML += style;
-			console.log(img.offsetHeight)
+
+			//幻灯片初始化变量
+			var startX = 0;//list的坐标值
+			var touchX = 0;//手指按下的坐标
+			// 手指按下事件函数
+			on(list,'touchstart',function(e){
+				var touch = e.changedTouches[0];
+				touchX = touch.pageX;
+				startX = this.offsetLeft;
+				console.log(touchX,startX)
+			})
+
+			// 手指移动事件函数
+			on(list,'touchmove',function(e){
+				var touch = e.changedTouches[0];
+				var nowX = touch.pageX;
+				var dis = touch.pageX - touchX;
+				var left = startX + dis;
+				this.style.left = left+'px';
+				
+			})
+
+			// 手指抬起事件函数
+			on(list,'touchend',function(e){
+				var left = this.offsetLeft;
+				var now = Math.round(-left / wrap.offsetWidth);
+				this.style.left = -now*wrap.offsetWidth+'px';
+				for(var i=0;i<navList.length;i++){
+					navList[i].classList.remove('active');
+				}
+				navList[now].classList.add('active');
+			})
+
+		}
+
+		function on(obj,type,fn,b){
+			var B = b || false;
+			return obj.addEventListener(type,fn,B);
 		}
 
 		function q(str){
