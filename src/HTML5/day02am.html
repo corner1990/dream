@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1,user-scalable=no">
+	<title>简易幻灯片</title>
+	<script type="text/javascript">
+		(function(window){
+			var html = document.querySelector('html');
+			var width = html.getBoundingClientRect().width;
+			html.style.fontSize = width / 16 + 'px';
+		})(window)
+	</script>
+	<style id="css">
+		*{padding:0;margin: 0;}
+		.wrap{position:relative;width: 100%;overflow: hidden;}
+		.list{position: absolute;left: 0;top:0;}
+		li{list-style: none;}
+		.list .item{float: left;}
+		.list-nav{position:absolute;height:0.6px;width: 6.2rem;bottom: 1rem;right: 0;}
+		.list-nav .nav-item{float: left;width: 0.6rem;height:0.6rem;border-radius: 50%;background:#06c;margin: 0 0.3rem;}
+		.list-nav .active{background: #a40000;}
+	</style>
+	<script>
+		window.addEventListener(
+			'touchstart', 
+			function(e){
+				e.preventDefault();
+			},
+			false
+		)
+		window.onload = function(){
+			var css = q('#css');
+			var img = q('.wrap img');
+			var wrap = q('.wrap');
+			var list = q('.list');
+			var item = qAll('.list li');
+			var style = '.wrap{height:'+img.offsetHeight+'px} .list{width: '+item.length+'00%} .list .item{width:'+1/item.length*100+'% ;height:'+img.offsetHeight+'px}';
+
+			css.innerHTML += style;
+			console.log(img.offsetHeight)
+		}
+
+		function q(str){
+			return document.querySelector(str);
+		}
+		function qAll(str){
+			return document.querySelectorAll(str);
+		}
+	</script>
+</head>
+<body>
+	<div class="wrap">
+		<ul class="list">
+			<li class="item"><a href="#"><img src="/res/img/html5/1.jpg" alt=""></a></li>
+			<li class="item"><a href="#"><img src="/res/img/html5/2.jpg" alt=""></a></li>
+			<li class="item"><a href="#"><img src="/res/img/html5/3.jpg" alt=""></a></li>
+			<li class="item"><a href="#"><img src="/res/img/html5/4.jpg" alt=""></a></li>
+			<li class="item"><a href="#"><img src="/res/img/html5/5.jpg" alt=""></a></li>
+		</ul>
+		<nav class="list-nav">
+			<li class="nav-item active"></li>
+			<li class="nav-item"></li>
+			<li class="nav-item"></li>
+			<li class="nav-item"></li>
+			<li class="nav-item"></li>
+		</nav>
+	</div>
+</body>
+</html>
