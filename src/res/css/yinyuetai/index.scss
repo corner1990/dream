@@ -31,6 +31,7 @@ input::-webkit-input-placeholder, textarea::-webkit-input-placeholder { color: #
 .clearfix { display:block;}
 .fl{float: left;}
 .fr{float: right;}
+.hide{display: none;}
 .btn{display: inline-block;}
 .transition{transition: transform 0.5s linear};
 /* End hide from IE-mac */
@@ -80,8 +81,9 @@ $rem : 20;
 .move-list-wrap{
 	overflow: hidden;
 	.move-nav{overflow: hidden;}
+	label{float: left;}
 	.link{width: 36rem/$rem;margin: 0 5rem/$rem;text-align:center;float: left;font-size: 14rem/$rem;line-height: 18rem/$rem;border-bottom: 2px solid #fff;}
-	.link.active{border-color: #690;}
+	input[checked] + a{border-color: #690;}
 }
 .move-list{
 	li{margin-top: 8rem/$rem;padding:2px; @include bg(#eee);float: left;font-size: 12rem/$rem;margin: 3rem/$rem;}

@@ -1,0 +1,72 @@
+[33mcommit d267b75926342c89594c047d17abab1060cc7217[m
+Author: lixinglong <804160646@qq.com>
+Date:   Thu Nov 10 11:24:55 2016 +0800
+
+    '修改left为transform:translateX()'
+
+[33mcommit 5c5a701e14b5d23b87d6597caa9898e9de6f6b2f[m
+Author: lixinglong <804160646@qq.com>
+Date:   Wed Nov 9 10:30:44 2016 +0800
+
+    '修改幻灯片'
+
+[33mcommit 94f2827c0623332c799ae259d8d1765f1b82084a[m
+Author: corner1990 <804160646@qq.com>
+Date:   Wed Nov 9 08:20:54 2016 +0800
+
+    ‘简易幻灯片’
+
+[33mcommit 47438de6f01fff1b5b2bccfece197b76bb4883eb[m
+Author: lixinglong <804160646@qq.com>
+Date:   Tue Nov 8 09:40:55 2016 +0800
+
+    '自定义滚动'
+
+[33mcommit 6abd12df2dd726583d0388699e3db36bcfbdebf8[m
+Merge: 51d8b62 48b5c9f
+Author: lixinglong <804160646@qq.com>
+Date:   Tue Nov 8 08:42:11 2016 +0800
+
+    Merge branch 'master' of https://github.com/corner1990/dream
+
+[33mcommit 48b5c9fcff0ff59ff83c4b7700b922fd050465b1[m
+Author: corner1990 <804160646@qq.com>
+Date:   Tue Nov 8 07:47:58 2016 +0800
+
+    移动端第一天课程
+
+[33mcommit 51d8b62cbdc75fa85b2d7cf4007e4d9547fbb137[m
+Author: lixinglong <804160646@qq.com>
+Date:   Wed Nov 2 15:48:54 2016 +0800
+
+    '更新笔记'
+
+[33mcommit 005b7cdb6c4f27a0dae3f09da2b6c724e1162ea9[m
+Author: unknown <lixinglong@hqdc.com>
+Date:   Tue Nov 1 17:36:02 2016 +0800
+
+    es6 学习笔记
+
+[33mcommit 1d2c95280c7f471725a86aa5812215d3d1d172a9[m
+Author: unknown <lixinglong@hqdc.com>
+Date:   Tue Nov 1 15:27:13 2016 +0800
+
+    '修改设置babel'
+
+[33mcommit 0af4a3dd77ca231c5c9b9b06457dd680989abca2[m
+Author: unknown <lixinglong@hqdc.com>
+Date:   Tue Nov 1 14:45:27 2016 +0800
+
+    新增es6目录
+
+[33mcommit 6061084c126b8d57e60fe73ca97315eea8be3a57[m
+Author: unknown <lixinglong@hqdc.com>
+Date:   Mon Oct 31 17:11:47 2016 +0800
+
+    新增轮播图
+
+[33mcommit 8750b484a6626341756427849a5c564b9bc0ebe2[m
+Author: unknown <lixinglong@hqdc.com>
+Date:   Mon Oct 31 10:19:08 2016 +0800
+
+    '第一次提交'
