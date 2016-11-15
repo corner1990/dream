@@ -14,7 +14,7 @@
 	<style id="css">
 		*{padding:0;margin: 0;}
 		.wrap{position:relative;width: 100%;overflow: hidden;}
-		.list{position: absolute;left: 0;top:0;}
+		.list{position: absolute;left: 0;top:0;transition: transform 0.4s linear;}
 		li{list-style: none;}
 		img{display: block;width: 100%;}
 		.list .item{float: left;}
@@ -38,18 +38,16 @@
 			var item = qAll('.list li');
 			var navList = qAll('.list-nav .nav-item');
 			var style = '.wrap{height:'+img.offsetHeight+'px} .list{width: '+item.length+'00%} .list .item{width:'+1/item.length*100+'% ;height:'+img.offsetHeight+'px}';
-
 			css.innerHTML += style;
 
 			//幻灯片初始化变量
+			var listX = 0;
 			var startX = 0;//list的坐标值
 			var touchX = 0;//手指按下的坐标
 			// 手指按下事件函数
 			on(list,'touchstart',function(e){
 				var touch = e.changedTouches[0];
 				touchX = touch.pageX;
-				startX = this.offsetLeft;
-				console.log(touchX,startX)
 			})
 
 			// 手指移动事件函数
@@ -57,16 +55,24 @@
 				var touch = e.changedTouches[0];
 				var nowX = touch.pageX;
 				var dis = touch.pageX - touchX;
-				var left = startX + dis;
-				this.style.left = left+'px';
-				
+				listX = startX + dis;
+				this.style.transitionProperty = 'none';
+				this.style.transform = 'translate('+listX+'px)';
+				this.style.WebkitTransform = 'translate('+listX+'px)';
 			})
 
 			// 手指抬起事件函数
 			on(list,'touchend',function(e){
-				var left = this.offsetLeft;
-				var now = Math.round(-left / wrap.offsetWidth);
-				this.style.left = -now*wrap.offsetWidth+'px';
+				this.style.transitionProperty = 'transform';
+				var now = Math.round(-listX / wrap.offsetWidth);
+				if(now <= 0){
+					now = 0;
+				}else if(now >= navList.length -1){
+					now = navList.length-1;
+				}
+				listX = startX = -now*wrap.offsetWidth;console.log(startX)
+				this.style.transform = 'translate('+listX+'px)';
+				this.style.WebkitTransform = 'translate('+listX+'px)';
 				for(var i=0;i<navList.length;i++){
 					navList[i].classList.remove('active');
 				}

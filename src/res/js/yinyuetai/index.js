@@ -1,5 +1,6 @@
 (function(){
 	navShow();
+	//头部导航
 	function navShow(){
 		
 		var btn = s('.header .btn-more');
@@ -28,103 +29,67 @@
 		var wrap = s('.banner');
 		var list = s('.banner .list');
 		var oNav = s('.banner .nav');
-		var iNow = 0;//计数器
-		var num = 0;
-		var w = wrap[0].offsetWidth;
+		var iNow = 0;
 		var html = list[0].innerHTML;
 		var listSX = 0;//list初始坐标
 		var touchSX = 0;//鼠标开始坐标
-		var disX = 0
-		var timer =null;
-		
-		var stepX =0;
 		cssTransform(list[0],'translateX',0);
 
+		// 复制元素内容，实现无缝
 		html+=html;
 		list[0].innerHTML = html;
 		var length = list[0].children.length;
-		num = Math.floor(length/2)-1;
-		cssTransform(list[0],'translateX',-num*w);
+		cssTransform(list[0],'translateX',0);
 		list[0].style.width =100 * length+'%';
 
+		// 触摸触发事件
 		on(list,'touchstart',function(e){
-			clearInterval(timer);
-			this.style.transition = 'transform 0 linear';
-			this.classList.remove('transition');
+			// 取消transition
+			this.style.transitionProperty='none';
+			// 获取手指
+			// var translateX = cssTransform(list[0],'translateX');
+			// var now = Math.round(-translateX / wrap.offsetWidth);
+			// iNow = Math.round(/wrap[0].offsetWidth);
+			// if(-iNow == 0){
+			// 	iNow = -Math.floor(length/2);
+			// }
+			// if(-iNow == length-1){
+			// 	iNow = -Math.floor(length/2)-1;
+			// }
+			// cssTransform(list[0],'translateX',iNow*wrap[0].offsetWidth);
 			var touch = e.changedTouches[0];
 			touchSX = touch.pageX;
-			disX = touchSX;
 			listSX = cssTransform(list[0],'translateX');
-
-			on(list,'touchmove',function(e){
-				var touch = e.changedTouches[0];
-				stepX = (touch.pageX - touchSX);
-				listSX += stepX;
-				touchSX = touch.pageX;
-				cssTransform(list[0],'translateX',listSX);
-			})
 		})
+
+		// 滑动事件
+		on(list,'touchmove',function(e){
+				var touch = e.changedTouches[0];
+				// 获取手指滑动的距离
+				var stepX = (touch.pageX - touchSX);
+				var tragetX = listSX+stepX;
+				cssTransform(list[0],'translateX',tragetX);
+			})
+
+		// 手指抬起事件
 		on(list,'touchend',function(e){
 			var touch = e.changedTouches[0];
-			if(Math.abs(touch.pageX - disX) >=80){
-				if(touch.pageX - disX > 0){
-					iNow--;
-					num --;
-					if(iNow < 0){
-						iNow = length/2-1;
-					}
-					if(num <= 0){
-						num = Math.floor(length/2);
-						this.classList.remove('transition');console.log('减小');
-						cssTransform(list[0],'translateX',-num*w);
-					}
-				}else{
-					iNow++;
-					num++;
-					if(iNow >= length/2){
-						iNow = 0
-					}
-					if(num >= length-1){
-						num = length/2-1;
-						this.classList.remove('transition');console.log('++');
-						cssTransform(list[0],'translateX',-num*w);
-					}
-				}
-
-				setTimeout(function(){
-					// auto();
-				},5000);
-			}
-			
-			setNav(iNow);
-			//this.classList.add('transition');
-			cssTransform(list[0],'translateX',-num*w);
+			// 设置transition
+			this.style.transitionProperty='transform';
+			iNow = Math.round(cssTransform(list[0],'translateX')/wrap[0].offsetWidth);
+			setNav(-iNow%5);
+			cssTransform(list[0],'translateX',iNow*wrap[0].offsetWidth);
 	
 		})
 
+		// 设置导航按钮
 		function setNav(num){
 			for(var i=0;i<oNav[0].children.length;i++){
 				oNav[0].children[i].classList.remove('active');
 			}
 			oNav[0].children[num].classList.add('active');
 		}
-		// auto();
-		// function auto(){
-		// 	timer = setInterval(function(){
-		// 		clearInterval(timer);
-		// 		iNow++;
-		// 		num++;
-		// 		if(iNow >= length/2){
-		// 			iNow = 0
-		// 		}
-		// 		if(num >= length-1){
-		// 			num = length/2-1;
-		// 			cssTransform(list[0],'translateX',-num*w);
-		// 		}
-		// 		setNav(iNow);
-		// 		cssTransform(list[0],'translateX',-num*w);
-		// 	},4000);
-		// }
+		
 
 	}
 
@@ -135,42 +100,69 @@
 		var list = s('.main-nav .list');//图片列表
 		var listSX = 0;//list初始坐标
 		var touchSX = 0;//鼠标开始坐标
+		var iNow = 1;//判断系数，用来实现橡皮筋效果
 		cssTransform(list[0],'translateX',0);
 
 		// 绑定事件
-		on(wrap,'touchstart',function(e){
+		on(list,'touchstart',function(e){
+			this.style.transitionProperty="none";
 			var touch =e.changedTouches[0];//得到触摸
-			var str = window.getComputedStyle(list[0]).transform;
-			var patt = /(\d)+/g;
-			var step = 0.8;
-			listSX= -(parseInt(str.match(patt)[4]));
+			listSX= cssTransform(list[0],'translateX');
 			touchSX = touch.pageX;
+		})
 
-			on(wrap,'touchmove',function(e){
-				var touch = e.changedTouches[0];
-				listSX -= (touchSX - touch.pageX );
-				touchSX = touch.pageX;
-				if(listSX >=0){
-					step -=0.01;
-					listSX = (touchSX - touch.pageX ) * step;
-				}else if(listSX <= wrap[0].offsetWidth - list[0].offsetWidth){
-					step -=0.01
-					listSX = (touchSX - touch.pageX ) * step;
-				}
-				cssTransform(list[0],'translateX',listSX);
-			})
-			on(wrap,'touchend',function(){
-				step=0.8;
-				if(listSX >=0){
-					listSX = 0;
-				}else if(listSX <= wrap[0].offsetWidth - list[0].offsetWidth){
-					listSX = wrap[0].offsetWidth - list[0].offsetWidth;
-				}
-				cssTransform(list[0],'translateX',listSX);
-			})
+		on(list,'touchmove',function(e){
+			var touch = e.changedTouches[0];
+			var disX = touch.pageX - touchSX ;
+			var tragetX = listSX + disX ;
+	
+			if(tragetX > 0 || tragetX < wrap[0].offsetWidth - list[0].offsetWidth){//判断list的x是否到了最左边||最右边
+				iNow -= 0.02;
+				tragetX = listSX + disX*iNow;
+			}
+			cssTransform(list[0],'translateX',tragetX);
+		})
+		on(list,'touchend',function(e){
+			this.style.transitionProperty="transform";
+			iNow = 1;//还原系数
+			// 设置x值
+			if(cssTransform(list[0],'translateX') > 0){
+				cssTransform(list[0],'translateX',0);
+			}
+			if(cssTransform(list[0],'translateX') < wrap[0].offsetWidth - list[0].offsetWidth){
+				cssTransform(list[0],'translateX',wrap[0].offsetWidth - list[0].offsetWidth);
+			}
 		})
 	}
 
+	// tab切换
+	function tab(el){
+		// 获取包裹元素
+		var wrap = s(el);
+		//所有的选项卡
+		var list = wrap[0].children;
+		for(var i = 0;i < list.length; i++){
+			// 通过自定义属性，给每个元素设置index
+			list[i].setAttribute('index',i);
+			// 绑定touchstart 事件
+			on(list[i],'touchstart',function(e){
+				stopPropagation(e);
+				e.preventDefault();
+				var index = this.getAttribute('index');
+				// 所有元素切换class
+				for(var i = 0;i < list.length; i++){
+					list[i].classList.remove('active');
+				}
+				this.classList.add('active');
+			})
+		}
+		
+		
+	}
+	// mv首播tab
+	tab('.tab-nav');
+	// 正在流行tab
+	tab('.move-nav');
 })()
 
 // 选择器
@@ -215,11 +207,16 @@ function s(str){
 
 //绑定事件函数
 function on(obj,type,fn){
-	if(obj.length <2){
-		obj[0].addEventListener(type,fn,false);
+	if(!obj[0]){//如果说是一个元素
+		obj.addEventListener(type,fn,false);
 	}else{
-		for(var i =0;i<obj.length;i++){
-			obj[i].addEventListener(type,fn,false);
+		//如果类数组
+		if(obj.length <2){
+			obj[0].addEventListener(type,fn,false);
+		}else{
+			for(var i =0;i<obj.length;i++){
+				obj[i].addEventListener(type,fn,false);
+			}
 		}
 	}
 }
