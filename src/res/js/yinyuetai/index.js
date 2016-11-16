@@ -45,21 +45,20 @@
 		// 触摸触发事件
 		on(list,'touchstart',function(e){
 			// 取消transition
-			this.style.transitionProperty='none';
+			this.style.transition='none';
+			var translateX = cssTransform(list[0],'translateX');
+			var iNow = Math.round(-translateX / wrap[0].offsetWidth);
+			if(iNow == 0){
+				iNow = Math.floor(length/2);
+			}
+			if(iNow == length-1){
+				iNow = Math.floor(length/2)-1;
+			}
+			cssTransform(list[0],'translateX',-iNow*wrap[0].offsetWidth);
 			// 获取手指
-			// var translateX = cssTransform(list[0],'translateX');
-			// var now = Math.round(-translateX / wrap.offsetWidth);
-			// iNow = Math.round(/wrap[0].offsetWidth);
-			// if(-iNow == 0){
-			// 	iNow = -Math.floor(length/2);
-			// }
-			// if(-iNow == length-1){
-			// 	iNow = -Math.floor(length/2)-1;
-			// }
-			// cssTransform(list[0],'translateX',iNow*wrap[0].offsetWidth);
 			var touch = e.changedTouches[0];
 			touchSX = touch.pageX;
-			listSX = cssTransform(list[0],'translateX');
+			listSX = cssTransform(list[0],'translateX');console.log(listSX);
 		})
 
 		// 滑动事件
@@ -75,7 +74,7 @@
 		on(list,'touchend',function(e){
 			var touch = e.changedTouches[0];
 			// 设置transition
-			this.style.transitionProperty='transform';
+			this.style.transition='transform 0.3s linear';
 			iNow = Math.round(cssTransform(list[0],'translateX')/wrap[0].offsetWidth);
 			setNav(-iNow%5);
 			cssTransform(list[0],'translateX',iNow*wrap[0].offsetWidth);
