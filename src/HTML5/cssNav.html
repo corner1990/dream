@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>css实现导航目录</title>
+	<style>
+		/*基本样式*/
+		*{margin:0;padding:0;list-style: none;text-decoration: none;color:#646464;font-size: 14px;}
+		.wrap{width: 200px;background: #f8f8f8;border:1px solid #e4e4e4;margin: 50px;}
+		.main-nav{}
+		li{border-top: 1px solid #e4e4e4;margin-top:-1px;}
+		li span{display: block;}
+		li span:hover{background: #eee;}
+		.nav-item{line-height: 36px;}
+
+		.li{display: none;padding: 0 20px;}
+		input{display: none;}
+		/*通过兄弟选择器选择到子元素*/
+		li input:checked ~ul{
+			display: block;
+			-webkit-animation-name: opacityChange;
+			-webkit-animation-duration: 1s;
+		}
+
+		@-webkit-keyframes opacityChange{
+			0%{
+				opacity: 0.3
+			}
+			10%{
+				opacity: :0.8;
+			}
+			100%{opacity: 1;}
+		}
+	}
+	</style>
+</head>
+<body>
+	<div class="wrap">
+		<ul class="main-nav">
+			<li class="nav-item">
+				<label for="one"><span>我是大师兄</span></label>
+				<input type="checkbox" name="nav" checked="checked" id="one">
+				<ul class="li"><li><a href="javascript:;">我是大师兄的徒弟</a></li></ul>
+				<ul class="li"><li><a href="javascript:;">我是也是大师兄的徒弟</a></li></ul>
+			</li>
+			<li class="nav-item">
+				<label for="two"><span>我是二师兄</span></label>
+				<input type="checkbox" name="nav"  id="two">
+				<ul class="li"><a href="javascript:;"><li>我是er师兄的徒弟</a></li></ul>
+				<ul class="li"><li><a href="javascript:;">我是er是大师兄的徒弟</a></a></ul>
+			</li>
+		</ul>
+	</div>
+</body>
+</html>
