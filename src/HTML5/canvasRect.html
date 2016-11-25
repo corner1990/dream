@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>canvas 绘制矩形</title>
+	<style>
+		section{width: 1200px;}
+	</style>
+</head>
+<body>
+	<section>
+		<!-- 设置canvas标签的宽高是通过canvas标签的属性进行设置。不要用css去设置 -->
+		<canvas id="canvas" >
+			<!-- ie9以上才支持 -->
+			<span>你的浏览器不支持canvas 请升级</span>
+		</canvas>
+		<script>
+			// 第一步：拿到canvas的标签
+			var canvas = document.querySelector('#canvas');
+			canvas.width=600;
+			canvas.height=600;
+			// 第二步：拿到canvas的上下文
+			var ctx = canvas.getContext('2d');
+
+			// 第三部：绘制图形
+			// ctx.rect(x,y,w,h);
+			ctx.rect(100, 100, 200, 200);
+			ctx.strokeStyle="#c00";
+			ctx.stroke();
+
+			// 清除矩形
+			// clearRect(x, y, w, h)
+			
+
+		</script>
+	</section>
+</body>
+</html>
