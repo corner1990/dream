@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>canvas 绘制帧动画</title>
+	<style>
+		section{width: 1200px;}
+	</style>
+</head>
+<body>
+	<section>
+		<!-- 设置canvas标签的宽高是通过canvas标签的属性进行设置。不要用css去设置 -->
+		<canvas id="canvas" >
+			<!-- ie9以上才支持 -->
+			<span>你的浏览器不支持canvas 请升级</span>
+		</canvas>
+
+		<script>
+			// 第一步：拿到canvas的标签
+			var canvas = document.querySelector('#canvas');
+			canvas.width=600;
+			canvas.height=600;
+			canvas.style.border="1px solid #0c6";
+			// 第二步：拿到canvas的上下文
+			var ctx = canvas.getContext('2d');
+
+			// 第三部：创建对象
+			var img = new Image();
+			img.src='/res/img/HTML5/gameImgs/DMMban.png';
+			var oH = img.height/4;
+			var oW = img.width/4;
+			var sX = 0, sY = 0;//原始的图片裁切
+			var x = 280, y = 260;//初始化图片坐标
+			var index = 0;
+
+			// 图片裁剪，并在画布上定位被剪切的部分
+		 //    context.drawImage(img,sx,sy,swidth,sheight,x,y,width,height);
+		 //    参数说明：
+		 //        sx,sy 裁剪的左上角坐标，
+		 //        swidth：裁剪图片的高度。 sheight:裁剪的高度 
+		 //        其他同上
+			var timer=null;
+			img.onload = function(){
+				timer = setInterval(drawImg,300);
+			}
+
+			function drawImg(){
+				// 清除画布
+					clearInterval(timer)
+					ctx.clearRect(x,y,oW*2,oH*2)
+					sX = index * oW;
+					ctx.drawImage(img, sX,sY,oW,oH,x,y,oW*2,oH*2);
+					index++;
+					index %= 4;
+					timer = setInterval(drawImg,200);
+			}
+			console.log(img,oH)
+		</script>
+	</section>
+</body>
+</html>
