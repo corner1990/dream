@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>封装一个canvas库</title>
+	<style>
+		section{width: 1200px;}
+	</style>
+</head>
+<body>
+	<section>
+		<!-- 设置canvas标签的宽高是通过canvas标签的属性进行设置。不要用css去设置 -->
+		<canvas id="canvas" >
+			<!-- ie9以上才支持 -->
+			<span>你的浏览器不支持canvas 请升级</span>
+		</canvas>
+		<script>
+			/*
+			*创建一个库
+			*options对象参数：
+				*x:num,y:num x,y坐标
+				*obj canvas对象
+				*type 需要绘制的样式
+				*w:num,h:num 宽 高
+				*W:num,H:num canvas宽 高
+				*TX:num,TY:num 目标x,y
+				*fc fillStle
+				*sc strockStylle
+				*text 文本
+				*textTYpe 文本填充方式
+				*textFZ 文字大小
+				*textAlign 文字对其方式
+			 */
+			function LCanvas(options){
+				this._init(options);
+			}
+
+			// 给原型对象添加方法
+			LCanvas.prototype={
+				// 初始化参数
+				_init : function(options){
+					this.obj = options.obj,
+					this.ctx = this.obj.getContext('2d'),
+					this.x = options.x || 0,
+					this.y = options.y || 0,
+					this.TY = options.TY || 0,
+					this.TX = options.TX || 0,
+					this.w = options.w || 1,
+					this.h = options.h || 0,
+					this.fc = options.fc || '#000',
+					this.sc = options.sc || '#000',
+					this.obj.width = options.W || 500,
+					this.obj.height = options.H || 500,
+					this.txt = options.txt || '',
+					this.txtType = options.txtType || 'fill',
+					this.txtfz = options.fz || 14,
+					this.txtAlign = options.alin || 'left',
+					this.type = options.type;
+					this.render();
+				},
+				// 渲染
+				render:function(){
+					switch(this.type){
+						case 'arc':
+						this.arc();
+						break;
+						case 'text':
+						this.text();
+						break;
+						case 'rect':
+						this.rect();
+						break;
+						case 'line':
+						this.line();
+						break;
+					};
+				},
+				/*
+				图片绘制函数
+				 */
+				// 圆型绘制函数
+				arc : function(){
+					console.log(this.type)
+				},
+				// 圆型绘制函数
+				rect : function(){
+					console.log(this.type)
+				},
+				// 文本绘制函数
+				text : function(){
+					this.renderStart();
+					console.log('绘制文字',this.txt);
+					
+					this.ctx.moveTo(this.x, this.y);
+					this.ctx.font = this.txtfz + 'px "微软雅黑"';
+					this.ctx.txtBaseLine = 'bottom';
+					this.ctx.txtAlign = this.textAlign;
+					if(this.txtType == 'fill'){
+						this.ctx.fillStyle = this.fc;
+						this.ctx.fillText(this.txt, this.TX, this.TY);
+					}else{
+						this.ctx.strokeStyle=this.sc;
+						this.ctx.strokeText(this.txt, this.TX, this.TY);
+					}
+				},
+				// 绘制线条
+				line : function(){
+					this.renderStart();
+					console.log('绘制线条');
+
+					this.ctx.strokeStyle = this.sc;
+					this.ctx.width = this.w;
+					this.ctx.moveTo(this.x, this.y);
+					this.ctx.lineTo(this.TX,this.TY);
+					this.ctx.closePath();
+					this.ctx.stroke();
+				},
+				// 保存原始状态太
+				renderStart:function(){
+					this.ctx.beginPath();
+					this.ctx.save();
+					console.log('start render');
+				},
+				// 绘制完毕 fps动画时需要
+				renderEnd : function(){
+					console.log('start render');
+				},
+				clearCanvas : function(){
+					// this.ctx.clearRect(0, 0, w, h)
+				}
+
+			}
+		</script>
+		<script>
+			var canvas = document.querySelector('#canvas');
+			canvas.style.border="1px solid #f00";
+			var o = new LCanvas({obj:canvas,type:'text',x:200,y:200,TX:200,TY:200,sc:'#06C',fc:'#f00',txt:'hello world',fz:30,txtType:'stroke'});
+		</script>
+	</section>
+</body>
+</html>
