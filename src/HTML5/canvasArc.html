@@ -16,7 +16,7 @@
 		</canvas>
 		<script>
 
-			// 概述：arc() 方法创建弧/曲线（用于创建圆或部分圆）。
+			//  概述：arc() 方法创建弧/曲线（用于创建圆或部分圆）。
 			// 	语法：ctx.arc(x,y,r,sAngle,eAngle,counterclockwise);
 			// 	arc: 弧（度）弧形物；天穹 英 [ɑːk] 美 [ɑrk]
 			// 	counter 反击，还击；反向移动，对着干；反驳，回答 ['kaʊntə] 美 ['kaʊntɚ]
@@ -86,7 +86,7 @@
 				startAngle = tem*Math.PI/180;
 				// 绘制到自己所需要的区域
 				endAngle = (value+tem) * Math.PI / 180;
-
+				// ctx.arc(x,y,r,startAngle,endAngle);
 				ctx.arc(x,y,r,startAngle,endAngle);
 				ctx.fill();
 				tem += value;
