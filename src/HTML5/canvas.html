@@ -14,6 +14,10 @@
 			<!-- ie9以上才支持 -->
 			<span>你的浏览器不支持canvas 请升级</span>
 		</canvas>
+		<canvas id="canvasOne" >
+			<!-- ie9以上才支持 -->
+			<span>你的浏览器不支持canvas 请升级</span>
+		</canvas>
 		<script>
 			/*
 			*创建一个库
@@ -84,7 +88,13 @@
 				},
 				// 圆型绘制函数
 				rect : function(){
-					console.log(this.type)
+					this.renderStart();
+					console.log('绘制矩形',this.type);
+
+					this.ctx.fillStyle = this.fc;
+					this.ctx.moveTo(this.x, this.y);
+					this.ctx.rect(this.x, this.y,this.w,this.h);
+					this.ctx.fill();
 				},
 				// 文本绘制函数
 				text : function(){
@@ -133,8 +143,10 @@
 		</script>
 		<script>
 			var canvas = document.querySelector('#canvas');
+			var canvasOne = document.querySelector('#canvasOne');
 			canvas.style.border="1px solid #f00";
-			var o = new LCanvas({obj:canvas,type:'text',x:200,y:200,TX:200,TY:200,sc:'#06C',fc:'#f00',txt:'hello world',fz:30,txtType:'stroke'});
+			var o = new LCanvas({obj:canvas,type:'rect',x:200,y:200,w:200,h:200,fc:'#c60'});
+			var one = new LCanvas({obj:canvasOne,type:'rect',x:200,y:200,w:200,h:200,fc:'#060'});
 		</script>
 	</section>
 </body>
