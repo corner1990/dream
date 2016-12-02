@@ -34,6 +34,7 @@
 				*textTYpe 文本填充方式
 				*textFZ 文字大小
 				*textAlign 文字对其方式
+				*r. 圆的半径
 			 */
 			function LCanvas(options){
 				this._init(options);
@@ -59,6 +60,9 @@
 					this.txtType = options.txtType || 'fill',
 					this.txtfz = options.fz || 14,
 					this.txtAlign = options.alin || 'left',
+					this.r = options.r || 100,
+					this.startAngle = options.startAngle || -90,
+					this.endAngle = options.endAngle || 270,
 					this.type = options.type;
 					this.render();
 				},
@@ -84,32 +88,30 @@
 				 */
 				// 圆型绘制函数
 				arc : function(){
-					console.log(this.type)
+					this.renderStart();
+					console.log(this.type);
+				
+					this.ctx.arc(this.x,this.y,100,this.startAngle*Math.PI/180,this.endAngle*Math.PI/180);
+					this.renderEnd();
 				},
 				// 圆型绘制函数
 				rect : function(){
 					this.renderStart();
 					console.log('绘制矩形',this.type);
 
-					this.ctx.fillStyle = this.fc;
-					this.ctx.moveTo(this.x, this.y);
 					this.ctx.rect(this.x, this.y,this.w,this.h);
-					this.ctx.fill();
 				},
 				// 文本绘制函数
 				text : function(){
 					this.renderStart();
 					console.log('绘制文字',this.txt);
 					
-					this.ctx.moveTo(this.x, this.y);
 					this.ctx.font = this.txtfz + 'px "微软雅黑"';
 					this.ctx.txtBaseLine = 'bottom';
 					this.ctx.txtAlign = this.textAlign;
 					if(this.txtType == 'fill'){
-						this.ctx.fillStyle = this.fc;
 						this.ctx.fillText(this.txt, this.TX, this.TY);
 					}else{
-						this.ctx.strokeStyle=this.sc;
 						this.ctx.strokeText(this.txt, this.TX, this.TY);
 					}
 				},
@@ -118,22 +120,24 @@
 					this.renderStart();
 					console.log('绘制线条');
 
-					this.ctx.strokeStyle = this.sc;
 					this.ctx.width = this.w;
-					this.ctx.moveTo(this.x, this.y);
 					this.ctx.lineTo(this.TX,this.TY);
-					this.ctx.closePath();
-					this.ctx.stroke();
+					
 				},
 				// 保存原始状态太
 				renderStart:function(){
 					this.ctx.beginPath();
 					this.ctx.save();
+					this.ctx.fillStyle = this.fc;
+					this.ctx.strokeStyle = this.sc;
+					this.ctx.moveTo(this.x, this.y);
 					console.log('start render');
 				},
 				// 绘制完毕 fps动画时需要
 				renderEnd : function(){
-					console.log('start render');
+					this.ctx.closePath();
+					this.ctx.fill();
+					console.log('end render');
 				},
 				clearCanvas : function(){
 					// this.ctx.clearRect(0, 0, w, h)
@@ -145,8 +149,7 @@
 			var canvas = document.querySelector('#canvas');
 			var canvasOne = document.querySelector('#canvasOne');
 			canvas.style.border="1px solid #f00";
-			var o = new LCanvas({obj:canvas,type:'rect',x:200,y:200,w:200,h:200,fc:'#c60'});
-			var one = new LCanvas({obj:canvasOne,type:'rect',x:200,y:200,w:200,h:200,fc:'#060'});
+			var o = new LCanvas({obj:canvas,type:'arc',x:300,y:300,r:100,fc:'#c60'});
 		</script>
 	</section>
 </body>

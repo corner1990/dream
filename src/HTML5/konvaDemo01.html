@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>canvas-demo01</title>
+	<style>
+		html, body, div, span, applet, object, iframe, 
+		h1, h2, h3, h4, h5, h6, p, blockquote, pre, 
+		a, abbr, acronym, address, big, cite, code, 
+		del, dfn, em, img, ins, kbd, q, s, samp, 
+		small, strike, strong, sub, sup, tt, var, 
+		b, u, i, center, 
+		dl, dt, dd, ol, ul, li, 
+		fieldset, form, label, legend, 
+		table, caption, tbody, tfoot, thead, tr, th, td, 
+		article, aside, canvas, details, embed, 
+		figure, figcaption, footer, header, hgroup, 
+		menu, nav, output, ruby, section, summary, 
+		time, mark, audio, video { 
+		margin: 0; 
+		padding: 0; 
+		border: 0; 
+		font-size: 100%; 
+		font: inherit; 
+		vertical-align: baseline; 
+		} 
+		/* HTML5 display-role reset for older browsers */ 
+		article, aside, details, figcaption, figure, 
+		footer, header, hgroup, menu, nav, section { 
+		display: block; 
+		} 
+		body { 
+		line-height: 1; 
+		} 
+		ol, ul { 
+		list-style: none; 
+		} 
+		blockquote, q { 
+		quotes: none; 
+		} 
+		blockquote:before, blockquote:after, 
+		q:before, q:after { 
+		content: ''; 
+		content: none; 
+		} 
+		table { 
+		border-collapse: collapse; 
+		border-spacing: 0; 
+		} 
+	</style>
+</head>
+<body>
+	<section>
+		<div id="container"></div>
+		<script src="/res/js/global/konva.js"></script>
+		<script>
+
+			function CircleText(option){
+				this._init(option);
+			}
+
+			CircleText.prototype = {
+				_init : function(option){
+					this.x = option.x || 0;
+					this.y = option.y || 0;
+					this.innerRadius = option.innerRadius || 0;
+					this.outerRadius = option.outerRadius || 360;
+					this.opactity = option.opactity || 1;
+					this.text = option.text || 'hello world';
+					this.fillStyle = option.fillStyle || 'red';
+					this.strokeStyle = option.strokeStyle || 0;
+					this.circle = option.circle || 0;
+					this.fontSize = option.fontSize || 14;
+					this.color = option.color || '#000';
+					this.width = option.width || 100;
+					this.outerfillStyle = option.outerfillStyle || '#ccc';
+					this.group = new Konva.Group({x : this.x,y : this.y});
+					this.applyArc();
+				},
+				applyArc : function(){
+					var Arc = new Konva.Arc({
+						x : 0,
+						y : 0,
+						angle: 360,
+						innerRadius : 0,
+						outerRadius : this.innerRadius,
+						fill : this.fillStyle
+					});
+					this.group.add(Arc);
+					this.outerRing();
+					this.applyText();
+				},
+				applyText : function(){
+					var txt = new Konva.Text({
+						x : -this.width/2,
+						y : -Math.round(this.fontSize/2),
+						text : this.text,
+						align : 'center',
+						fontSize : this.fontSize,
+						width : this.width,
+						fill : this.color,
+						fontStyle : 'bold'
+					});
+					this.group.add(txt);
+				},
+				outerRing :function(){
+					var ring = new Konva.Ring({
+						x : 0,
+						y : 0,
+						innerRadius : this.innerRadius,
+						outerRadius : this.outerRadius,
+						fill : this.outerfillStyle,
+						opactity : 0.3
+					});
+					this.group.add(ring);
+				},
+				addArgOrGroup : function(arg){
+					arg.add(this.group);
+				}
+			}
+			window.onload = function(){
+				// 创建一个舞台
+				var  stage = new Konva.Stage({
+					container : 'container',
+					x : 0,
+					y : 0,
+					width : window.innerWidth,
+					height : window.innerHeight
+				});
+
+				// 创建一个层
+				var bgLayer = new Konva.Layer();
+				stage.add(bgLayer);
+
+				// 设置中心点
+				var cenx = stage.width() / 2;
+				var ceny = stage.height() / 2;
+
+				// 设置背景圆的半径
+				var innerRadius = 130;
+				var outerRadius = 222;
+
+				// 开始绘制背景
+				var innerCircle = new Konva.Circle({
+					x : cenx,
+					y : ceny,
+					radius : innerRadius,
+					stroke : '#eee',
+					strokeWidth : 2,
+					dash : [8,4],/*设置虚线 10为实现，4为虚线*/
+				});
+				bgLayer.add(innerCircle);
+
+				var outerCircle = new Konva.Circle({
+					x : cenx,
+					y : ceny,
+					radius : outerRadius,
+					stroke : '#eee',
+					strokeWidth : 2,
+					dash : [8,4],/*设置虚线 10为实现，4为虚线*/
+				});
+				bgLayer.add(outerCircle);
+
+				// 创建内部的圆
+				var cenArc = new CircleText({
+					  x : cenx,
+					  y : ceny,
+					  innerRadius:  innerRadius /2,
+					  outerRadius : outerRadius /3,
+					  fillStyle: '#727898',
+					  text : 'Canvas',
+					  color : '#fff',
+					  fontSize : 18,
+					  width : 260,
+					  outerfillStyle : '#eee'
+					});
+				cenArc.addArgOrGroup(bgLayer);
+
+
+				//创建L2Group
+				var L2Group = new Konva.Group();
+				bgLayer.add(L2Group);
+
+				var cssArc = new CircleText({
+					  x : cenx + innerRadius * Math.cos(60 * Math.PI / 180),
+					  y : ceny + innerRadius * Math.sin(60 * Math.PI / 180),
+					  innerRadius:  30,
+					  outerRadius : 40,
+					  fillStyle: '#f8d5db',
+					  fontSize : 14,
+					  text : 'CSS3',
+					  color : '#fff',
+					  width : 260,
+					  outerfillStyle : '#eee'
+					});
+				cssArc.addArgOrGroup(L2Group);
+
+				var H5Arc = new CircleText({
+					  x : cenx + innerRadius * Math.cos(-120 * Math.PI / 180),
+					  y : ceny + innerRadius * Math.sin(-120 * Math.PI / 180),
+					  innerRadius:  30,
+					  outerRadius : 40,
+					  fillStyle: '#fcb430',
+					  fontSize : 14,
+					  text : 'HTML5',
+					  color : '#fff',
+					  width : 260,
+					  outerfillStyle : '#eee'
+					});
+				H5Arc.addArgOrGroup(L2Group);
+				bgLayer.add(L2Group);
+
+				// 创建L3Group组
+				var L3Group = new Konva.Group();
+				var JSArc = new CircleText({
+					  x : cenx + outerRadius * Math.cos(180 * Math.PI / 180),
+					  y : ceny + outerRadius * Math.sin(180 * Math.PI / 180),
+					  innerRadius:  30,
+					  outerRadius : 40,
+					  fillStyle: '#a4c9f6',
+					  fontSize : 14,
+					  text : 'JavaScript',
+					  color : '#fff',
+					  width : 260,
+					  outerfillStyle : '#eee'
+					});
+				JSArc.addArgOrGroup(L2Group);
+				bgLayer.add(L3Group);
+				bgLayer.draw();
+
+				// 动画
+				var step = 80;
+				var rotateAnim = new Konva.Animation(function(frame){
+					var time = frame.time;//动画执行的总时间
+					var timeDiff = frame.timeDiff;/*距离上一帧的时间*/
+
+					var rotateAngle = step * timeDiff /1000;
+					L2Group.rotate(rotateAngle)
+
+				},bgLayer);
+				rotateAnim.start();
+			};
+		</script>
+	</section>
+</body>
+</html>

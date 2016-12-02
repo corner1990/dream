@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>canvas-day01</title>
+	<style>
+		html, body, div, span, applet, object, iframe, 
+		h1, h2, h3, h4, h5, h6, p, blockquote, pre, 
+		a, abbr, acronym, address, big, cite, code, 
+		del, dfn, em, img, ins, kbd, q, s, samp, 
+		small, strike, strong, sub, sup, tt, var, 
+		b, u, i, center, 
+		dl, dt, dd, ol, ul, li, 
+		fieldset, form, label, legend, 
+		table, caption, tbody, tfoot, thead, tr, th, td, 
+		article, aside, canvas, details, embed, 
+		figure, figcaption, footer, header, hgroup, 
+		menu, nav, output, ruby, section, summary, 
+		time, mark, audio, video { 
+		margin: 0; 
+		padding: 0; 
+		border: 0; 
+		font-size: 100%; 
+		font: inherit; 
+		vertical-align: baseline; 
+		} 
+		/* HTML5 display-role reset for older browsers */ 
+		article, aside, details, figcaption, figure, 
+		footer, header, hgroup, menu, nav, section { 
+		display: block; 
+		} 
+		body { 
+		line-height: 1; 
+		} 
+		ol, ul { 
+		list-style: none; 
+		} 
+		blockquote, q { 
+		quotes: none; 
+		} 
+		blockquote:before, blockquote:after, 
+		q:before, q:after { 
+		content: ''; 
+		content: none; 
+		} 
+		table { 
+		border-collapse: collapse; 
+		border-spacing: 0; 
+		} 
+	</style>
+</head>
+<body>
+	<section>
+		<div id="container"></div>
+		<script src="/res/js/global/konva.js"></script>
+		<script>
+			window.onload = function(){
+				// first we need to create a stage
+				var stage = new Konva.Stage({
+				  container: 'container',   // id of container <div>
+				  width: 500,
+				  height: 500
+				});
+
+				// then create layer
+				var layer = new Konva.Layer();
+
+				// create our shape
+				var circle = new Konva.Circle({
+				  x: stage.getWidth() / 2,
+				  y: stage.getHeight() / 2,
+				  radius: 70,
+				  fill: '#06c',
+				  stroke: '#a40',
+				  strokeWidth: 4
+				});
+
+				// add the shape to the layer
+				layer.add(circle);
+
+				// add the layer to the stage
+				stage.add(layer);
+			};
+		</script>
+	</section>
+</body>
+</html>
