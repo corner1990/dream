@@ -129,7 +129,8 @@
 				});
 
 				// 创建一个层
-				var bgLayer = new Konva.Layer();
+				var bgLayer = new Konva.Layer({
+				});
 				stage.add(bgLayer);
 
 				// 设置中心点
@@ -176,14 +177,20 @@
 					});
 				cenArc.addArgOrGroup(bgLayer);
 
-
+				// 创建动画层
+				var animateLayer = new Konva.Group({
+					x : cenx,
+					y : ceny,
+				});
+				bgLayer.add(animateLayer);
 				//创建L2Group
-				var L2Group = new Konva.Group();
-				bgLayer.add(L2Group);
+				var L2Group = new Konva.Group({
+				});
+				animateLayer.add(L2Group);
 
 				var cssArc = new CircleText({
-					  x : cenx + innerRadius * Math.cos(60 * Math.PI / 180),
-					  y : ceny + innerRadius * Math.sin(60 * Math.PI / 180),
+					  x : innerRadius * Math.cos(60 * Math.PI / 180),
+					  y : innerRadius * Math.sin(60 * Math.PI / 180),
 					  innerRadius:  30,
 					  outerRadius : 40,
 					  fillStyle: '#f8d5db',
@@ -195,9 +202,13 @@
 					});
 				cssArc.addArgOrGroup(L2Group);
 
+				//创建第三层
+				var L3Group =  new Konva.Group({
+				});
+				animateLayer.add(L3Group);
 				var H5Arc = new CircleText({
-					  x : cenx + innerRadius * Math.cos(-120 * Math.PI / 180),
-					  y : ceny + innerRadius * Math.sin(-120 * Math.PI / 180),
+					  x :  innerRadius * Math.cos(-120 * Math.PI / 180),
+					  y :  innerRadius * Math.sin(-120 * Math.PI / 180),
 					  innerRadius:  30,
 					  outerRadius : 40,
 					  fillStyle: '#fcb430',
@@ -207,14 +218,15 @@
 					  width : 260,
 					  outerfillStyle : '#eee'
 					});
-				H5Arc.addArgOrGroup(L2Group);
-				bgLayer.add(L2Group);
+				H5Arc.addArgOrGroup(L3Group);
 
-				// 创建L3Group组
-				var L3Group = new Konva.Group();
+				//创建L2Group
+				var L4Group = new Konva.Group({
+				});
+				animateLayer.add(L4Group);
 				var JSArc = new CircleText({
-					  x : cenx + outerRadius * Math.cos(180 * Math.PI / 180),
-					  y : ceny + outerRadius * Math.sin(180 * Math.PI / 180),
+					  x :  outerRadius * Math.cos(180 * Math.PI / 180),
+					  y :  outerRadius * Math.sin(180 * Math.PI / 180),
 					  innerRadius:  30,
 					  outerRadius : 40,
 					  fillStyle: '#a4c9f6',
@@ -224,8 +236,7 @@
 					  width : 260,
 					  outerfillStyle : '#eee'
 					});
-				JSArc.addArgOrGroup(L2Group);
-				bgLayer.add(L3Group);
+				JSArc.addArgOrGroup(L4Group);
 				bgLayer.draw();
 
 				// 动画
@@ -235,10 +246,21 @@
 					var timeDiff = frame.timeDiff;/*距离上一帧的时间*/
 
 					var rotateAngle = step * timeDiff /1000;
-					L2Group.rotate(rotateAngle)
-
+					animateLayer.rotate(rotateAngle);
+					animateLayer.getChildren().each(function(item,index){
+						item.getChildren().each(function(item,inex){
+							item.rotate(-rotateAngle)
+						})
+					});
 				},bgLayer);
 				rotateAnim.start();
+				//设置事件
+				bgLayer.on('mouseover',function(){
+					 step = 10;
+				});
+				bgLayer.on('mouseout',function(){
+					 step = 80;
+				})
 			};
 		</script>
 	</section>
