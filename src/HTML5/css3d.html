@@ -5,65 +5,116 @@
 	<title>CSS transForm</title>
 	<style>
 		*{margin:0;padding:0;border:0;text-decoration:none;}
-		.wrap{width: 400px;height: 400px;border: 1px solid #ccc;margin: 200px auto 0;}
-		.box{width: 200px;height: 200px;background: #f00;margin: 100px auto;}
 		/*设置input与文字对其*/
 		/*input{vertical-align:text-bottom; margin-bottom:2px; margin-bottom:-2px\9;}*/
 		/*input{height: 13px;vertical-align: text-top;}*/
 		/*input{vertical-align:middle; margin: -2px 0 1px 0;}*/
-		.wrap :target{background: #06c;color: #400000;}
-
+		/*.wrap :target{background: #06c;color: #400000;}*/
+		.wrap{
+			width: 200px;
+			height: 200px;
+			padding: 100px;
+			margin: 200px auto 0;
+			border: 1px solid #ccc;
+			background: url(/res/img/HTML5/hello.png) no-repeat 50%;
+			perspective: 400px;
+			perspective-origin: center center;
+		}
+		.box-wrap{
+			position: relative;
+			width: 200px;
+			height: 200px;
+			transform-style: preserve-3d;
+			transform-origin: center center -100px;
+			transition: transform 3s;
+		}
+		.wrap:hover .box-wrap{transform:  rotateY(-360deg);}
+		.box{
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			font: 80px/200px '微软雅黑';
+			text-align: center;
+			color: #fff;
+			background: #f00;
+			transform-origin: center center -100px;
+			backface-visibility: hidden;
+			opacity: .5;
+		}
+		.box:nth-of-type(1){
+			background: #000;
+			transform: rotateY(0deg);
+		}
+		.box:nth-of-type(2){
+			background: #f60;
+			transform: rotateY(90deg);
+		}
+		.box:nth-of-type(3){
+			background: #6f0;
+			transform: rotateY(180deg);
+		}
+		.box:nth-of-type(4){
+			background: #06f;
+			transform: rotateY(270deg);
+		}
 	</style>
 </head>
 <body>
 	<div class="wrap">
-		<div class="box"></div>
+		<div class="box-wrap">
+			<div class="box box1">1</div>
+			<div class="box box2">2</div>
+			<div class="box box3">3</div>
+			<div class="box box4">4</div>
+		</div>
 	</div>
 	<script>
-		window.onload = function(){
-			var box = document.querySelector('.box');
-			// cssTransform兼容写法
-			function cssTF(el,attr,val) {
-				if(!el.transform){
-					el.transform = {};
-				}
-				if(arguments.length>2) {
-					el.transform[attr] = val;
-					var sVal = "";
-					for(var s in el.transform){
-						switch(s) {
-							case "rotate":
-							case "skewX":
-							case "skewY":
-								sVal +=s+"("+el.transform[s]+"deg) ";
-								break;
-							case "translateX":
-							case "translate":
-							case "translateY":
-								sVal +=s+"("+el.transform[s]+"px) ";
-								break;
-							case "scaleX":
-							case "scaleY":
-							case "scale":
-								sVal +=s+"("+el.transform[s]+") ";
-								break;	
-						}
-						el.style.WebkitTransform = el.style.transform = sVal;
-					}
-				} else {
-					val  = el.transform[attr];
-					if(typeof val == "undefined" ) {
-						if(attr == "scale" || attr == "scaleX" || attr == "scaleY"  ) {
-							val = 1;
-						} else {
-							val = 0;
-						}
-					}
-					return val;
-				}
-			}
-			cssTF(box,'translate')
-		}
+		// window.onload = function(){
+		// 	var box = document.querySelector('.box');
+		// 	// cssTransform兼容写法
+		// 	function cssTF(el,attr,val) {
+		// 		if(!el.transform){
+		// 			el.transform = {};
+		// 		}
+		// 		if(arguments.length>2) {
+		// 			el.transform[attr] = val;
+		// 			var sVal = "";
+		// 			for(var s in el.transform){
+		// 				switch(s) {
+		// 					case "rotate":
+		// 					case "skewX":
+		// 					case "skewY":
+		// 						sVal +=s+"("+el.transform[s]+"deg) ";
+		// 						break;
+		// 					case "translateX":
+		// 					case "translate":
+		// 					case "translateY":
+		// 						sVal +=s+"("+el.transform[s]+"px) ";
+		// 						break;
+		// 					case "scaleX":
+		// 					case "scaleY":
+		// 					case "scale":
+		// 						sVal +=s+"("+el.transform[s]+") ";
+		// 						break;	
+		// 				}
+		// 				el.style.WebkitTransform = el.style.transform = sVal;
+		// 			}
+		// 		} else {
+		// 			val  = el.transform[attr];
+		// 			if(typeof val == "undefined" ) {
+		// 				if(attr == "scale" || attr == "scaleX" || attr == "scaleY"  ) {
+		// 					val = 1;
+		// 				} else {
+		// 					val = 0;
+		// 				}
+		// 			}
+		// 			return val;
+		// 		}
+		// 	}
+		// 	cssTF(box,'translate')
+		// }
 	</script>
 </body>
 </html>
