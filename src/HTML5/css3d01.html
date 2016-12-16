@@ -19,6 +19,7 @@
 			margin: 100px auto;
 			transform-style: preserve-3d;
 			transition: transform 5s linear;
+			backface-visibility: hidden;
 		}
 		.box:hover{transform: rotateY(-360deg);}
 		.box span{
@@ -32,8 +33,11 @@
 			color: #fff;
 			text-align: center;
 			background: #060;
-			 
+			backface-visibility: hidden;
+			
 		}
+		.box span:nth-of-type(2){background: #f60;}
+		.box span:nth-of-type(3){background: #f6c;}
 	</style>
 </head>
 <body>
@@ -46,11 +50,11 @@
 			var box = document.querySelector('.box');
 			var html = '';
 			var w = 100;
-			var n = 16;/*几个边*/
+			var n = 3;/*几个边*/
 			var deg = 360 / n;
-			var center = Math.floor (Math.tan((180-deg)/2*Math.PI/180)*w);
+			var center = Math.tan((180-deg)/2*Math.PI/180)*w.toFixed(4)-0.5;
 			for(var i=0;i<n;i++){
-				html+='<span style="transform: rotateY('+i*deg+'deg);transform-origin: center center '+-center+'px;">'+(i+1)+'</span>';
+				html+='<span style="transform: rotateY('+i*deg+'deg);transform-origin: center center '+-center+'px;z-index:'+(n-i)+';">'+(i+1)+'</span>';
 			}
 			box.innerHTML= html;
 			box.style.WebkitTransformOrigin = 'center center '+-center+'px';
