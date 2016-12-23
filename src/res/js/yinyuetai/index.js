@@ -88,8 +88,6 @@
 			}
 			oNav[0].children[num].classList.add('active');
 		}
-		
-
 	}
 
 	// 导航拖拽
@@ -249,6 +247,45 @@ function stopPropagation(e){
 	}
 }
 
+// 选择器
+function s(str){
+	if(!str){
+		return;
+	}
+	var arr = str.split(' ');
+	if(arr.length < 2){
+		if(arr[0].slice(0,1) == '#'){
+			return q(arr[0])
+		}else{
+			return qAll(arr[0]);
+		}
+	}else{
+		var obj = q(arr[0]);
+		for(var i=1; i<arr.length;i++){
+			obj = qEvent(obj,arr[i]);
+		}
+		return obj;
+	}
+	// 遍历查找多个元素
+	function qEvent(obj,str){
+		if(str.slice(0,1) != '#'){
+			return obj.querySelectorAll(str)
+		}else{
+			return obj.querySelector(str)
+		}
+		obj.querySelector(str);
+	}
+	// 查找一个数组
+	function qAll(str){
+		var elem = document.querySelectorAll(str);
+		return elem;
+	}
+	// 查找一个元素
+	function q(str){
+		return document.querySelector(str);
+	}
+}
+
 // cssTransform兼容写法
 function cssTransform(el,attr,val) {
 	if(!el.transform){
@@ -288,7 +325,6 @@ function cssTransform(el,attr,val) {
 		return val;
 	}
 }
-
 
 function navSwipe() {
 	var navScroll = document.querySelector('#navScroll');
@@ -360,6 +396,129 @@ function navSwipe() {
 			navs.style.transition = time+"ms " + type;
 			cssTransform(navs,"translateX",target);
 		}
-	);
-	
+	);	
 }
+
+function $L(){
+	return new $L.prototype._init(arguments[0]);
+}
+
+$L.prototype={
+	_init:function(){
+		this.elemArr= this._elemSelect(arguments[0]);
+	},
+	// 选择器
+	_elemSelect:function(){
+		var _elemArr = new Array();
+		var arr = [];
+		if(arguments[0] == ' ' || arguments[0] == 'underfind'){
+			return;
+		}else {
+			arr = arguments[0].split(' ');
+			if(arr.length < 2){
+				if(arr[0].slice(0,1) == '#'){
+					return q(arr[0])
+				}else{
+					return qAll(arr[0]);
+				}
+			}else{
+				var obj = q(arr[0]);
+				for(var i=1; i<arr.length;i++){
+					obj = qEvent(obj,arr[i]);
+				}
+				return obj;
+			}
+		}
+		// 遍历查找多个元素
+		function qEvent(obj,str){
+			if(str.slice(0,1) != '#'){
+				return obj.querySelectorAll(str)
+			}else{
+				return obj.querySelector(str)
+			}
+			obj.querySelector(str);
+		}
+		// 查找一个数组
+		function qAll(str){
+			var elem = document.querySelectorAll(str);
+			for(var i=0;i<elem.length;i++){
+				_elemArr[_elemArr.length]=elem[i];
+			}
+			return _elemArr;
+		}
+		// 查找一个元素
+		function q(str){
+			return _elemArr[_elemArr.length]=document.querySelector(str);
+		}
+	},
+	eq:function(){
+		this.elemArr = [this.elemArr[arguments[0]]];
+		return this;
+		
+	},
+	// cssTransform兼容写法
+	cssTransform:function(el,attr,val) {
+		if(!el.transform){
+			el.transform = {};
+		}
+		if(arguments.length>2) {
+			el.transform[attr] = val;
+			var sVal = "";
+			for(var s in el.transform){
+				switch(s) {
+					case "rotate":
+					case "rotateX":
+					case "rotateY":
+					case "rotateZ":		
+					case "skewX":
+					case "skewY":
+						sVal +=s+"("+el.transform[s]+"deg) ";
+						break;
+					case "translateX":
+					case "translateY":
+					case "translateZ":
+						sVal +=s+"("+el.transform[s]+"px) ";
+						break;
+					case "scaleX":
+					case "scaleY":
+					case "scale":
+						sVal +=s+"("+el.transform[s]+") ";
+						break;	
+				}
+				el.style.transform = sVal;
+				el.style.WebkitTransform = sVal;
+			}
+		} else {
+			val  = el.transform[attr];
+			if(typeof val == "undefined" ) {
+				if(attr == "scale" || attr == "scaleX" || attr == "scaleY"  ) {
+					val = 1;
+				} else {
+					val = 0;
+				}
+			}
+			return val;
+		}
+	},
+	html:function(){
+		console.log()
+		if(arguments[0]){
+			return this.elemArr[0].innerHTML = arguments[0];
+		}
+		return this.elemArr[0].innerHTML;
+	},
+	//css常用属性获取
+	height:function(){
+		if(arguments[0]){console.log(111)
+			return this.elemArr[0].clientHeight;
+		}else{console.log(222)
+			return this.elemArr[0].offsetHeight;
+		}
+	}
+}
+$L.prototype._init.prototype=$L.prototype;
+
+
+var arr = $L('.main-nav a');
+console.log(arr.eq(2).height())
+console.log(arr.eq(2).height('true'))
