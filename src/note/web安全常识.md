@@ -22,4 +22,66 @@ web上有资源有很多，有的只有读取权限，有的同时具有读和�
 
 >4.攻防不单一  
 一次完整的渗透，会用到各种攻击手法。  
-5.其他可能会被攻击的场景  
+5.其他可能会被攻击的场景    
+
+###二.前端安全之XSS  
+#####2-1概述  
+    全称为Cross Site Scriptiong，即跨站脚本。发生在目标网站中目标用户的浏览器层面上，当用户浏览器渲染整个HTML文档的过程会出现不被预期的脚本指令并执行时，XSS就会发生。  
+    目标网站的目标用户：强调了场景  
+    浏览器：因为这类攻击都是有浏览器来解释执行的。浏览器会严格执行共同的约定，同源策略，不符合的约定的就不会执行。  
+    不被预期的：就是很可能是攻击者在输入时提交了可控的脚本内容，然后输出后被浏览器解释并执行  
+
+##### 2-2“跨站脚本”重要的是脚本  
+    某些时候，并不按浏览器允许的策略执行（同源策略），那就是一次真正意义上的跨站了，跨站脚本突破的是浏览器的同源策略；  
+
+#####2-3XSS的类型  
+    有三类：反射型XSS(也叫非持久型XSS)、存储型XSS（也叫持久型XSS） 、DOM XSS；  
+    反射型XSS：浏览器发起请求的时候XSS代码出现在URL中，作为输入提交到服务器，服务器解析后返回给浏览器，最终浏览器解释执行。  
+    存储型XSS：存储型XSS和反射型XSS的区别在于，提交的XSS代码会存储在服务端，下次请求目标时不需要再次提交XSS代码；存储XSS代码的攻击是隐蔽的；  
+    DOM XSS：不需要服务器的参与，由浏览器解释执行；  
+
+#####   可能出现XSS攻击的地方  
+    所有可以解析HTML文档和JavaScript文档的环境；  
+
+#####   XSS的危害  
+    网页挂马，盗取cookie，盗取用户信息，劫持用户浏览器回话网络钓鱼...  
+
+### 三.CSRF  
+    CSRF的全称是 Cross Site Request Forgery，即跨站请求伪造。  
+    CSRF最关键的两点：跨站点的请求和请求是伪造的  
+
+##### CSRF类型  
+    按照请求：get类型与post类型  
+    按照攻击方式：HTML CSRF攻击，JSON HiJacking攻击，Flash CSRF攻击  
+
+-   HTML SCRF攻击  
+>发起CSEF请求都属于HTML发出的，被称为HTML SCRF；  
+HTML中能够设置src/href等连接地址的标签都可以发起一个get请求，  
+如：
+```
+<link rel="stylesheet" type="text/css" href="">  
+<img src="">  
+<img lowsrc="">  
+<img dynsrc="">  
+<iframe src="">
+<meta http-equiv="refresh" content="0" url="">  
+<a href=""></a>...等等  
+
+说明：img dynsrc可以用来插入各种多媒体，
+格式可以是Wav、Avi、AIFF、AU、MP3、Ra、Ram等等。url为音频或视频文件及其路径，可以是相对路径或绝对路径。 
+示例：<img dynsrc="your.avi">
+lowsrc 属性可设置或返回图像的低分辨率版本的 URL。  
+
+css样式中：  
+@import “”  
+backgroun： url(...);
+```  
+
+-   JSON HiJacking 攻击  
+>是对ajax响应中最常见的JSON 数据类型进行的劫持攻击。  
+
+-   flash CSRF攻击  
+>Flash 的世界遵循同源策略，发起的CSRF攻击时通过ActionScript叫本来完成的。  
+主要有：   
+1.跨域获取隐私数据  
+2.跨域提交数据操作，如（增，删，改查），这里不会获取到隐私数据
