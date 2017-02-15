@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>canvas-day01</title>
+	<style>
+		section{width: 1200px;}
+	</style>
+</head>
+<body>
+	<section>
+		<!-- 设置canvas标签的宽高是通过canvas标签的属性进行设置。不要用css去设置 -->
+		<canvas id="canvas" >
+			<!-- ie9以上才支持 -->
+			<span>你的浏览器不支持canvas 请升级</span>
+		</canvas>
+		<script>
+			// 第一步：拿到canvas的标签
+			var canvas = document.querySelector('#canvas');
+
+			// 第二步：拿到canvas的上下文
+			var ctx = canvas.getContext('2d');
+
+			// 第三部：绘制图形
+			//ctx.moveTo(100, 100);//把画笔移动到100,100
+			//ctx.lineTo(200, 100);//从画笔的位置 划一条直线200,100点
+			//ctx.lineTo(100,200);//从当前位置在画一条直线100,200点
+			//ctx.lineTo(100,100);
+			//ctx.closePath();//闭合路径
+			// 设置线宽
+			//ctx.lineWidth = 4;
+			//ctx.strokeStyle = '#a40000';//描边颜色 必须在描边之前设置
+			//ctx.stroke();//描边的意思
+
+			// 设置填充的颜色
+			//ctx.fillStyle="#eee";
+			// 填充
+			//ctx.fill();
+
+			// 绘制表格
+			var WH = 15;
+			canvas.width = 600;
+			canvas.height = 600;
+			canvas.style.border= "1px solid #eee";
+			canvas.style.margin="100px auto";
+
+			ctx.beginPath();
+			ctx.moveTo(0, 0);
+			ctx.lineWidth = 0.5;
+			ctx.strokeStyle='#ccc';
+
+			for(var i = 0; i <= canvas.width / WH;i++){
+				ctx.moveTo(i * WH, 0);
+				ctx.lineTo(i * WH, canvas.height);
+
+				ctx.moveTo( 0 ,i * WH);
+				ctx.lineTo( canvas.width, i * WH);
+
+			}
+			ctx.stroke();//描边的意思
+			ctx.beginPath();
+			// 垂直线条
+			ctx.moveTo(4*WH,canvas.width - WH *3);
+			ctx.lineWidth = 2;
+			ctx.strokeStyle="#a40000";
+			ctx.lineTo(4*WH,WH * 6);
+			ctx.stroke();//描边的意思
+			ctx.beginPath();
+
+			// 上三角
+			ctx.moveTo(3*WH,WH *7);
+			ctx.lineTo(4*WH,WH *6);
+			ctx.lineTo(5*WH,WH *7);
+			ctx.stroke();//描边的意思
+			ctx.beginPath();
+
+
+			// 水平的直线
+			ctx.moveTo(4*WH,canvas.height - WH *3);
+			ctx.lineTo(canvas.height - 4*WH,canvas.height - WH *3);
+			ctx.stroke();//描边的意思
+			ctx.beginPath();
+
+			// 水平线三角
+			ctx.moveTo(canvas.height - 5*WH,canvas.height - WH *4);
+			ctx.lineTo(canvas.height - 4*WH,canvas.height - WH *3);
+			ctx.lineTo(canvas.height - 5*WH,canvas.height - WH *2);
+			ctx.stroke();//描边的意思
+			ctx.beginPath();
+
+			// 开始绘制脉冲线
+			ctx.strokeStyle="#06c";
+			ctx.moveTo(6*WH,canvas.height - WH *6);
+			ctx.lineTo(10*WH,canvas.height - WH *14);
+			ctx.lineTo(16*WH,canvas.height - WH *10);
+			ctx.lineTo(22*WH,canvas.height - WH *16);
+			ctx.lineTo(28*WH,canvas.height - WH *18);
+			ctx.lineTo(36*WH,canvas.height - WH *10);
+			ctx.stroke();//描边的意思
+			ctx.beginPath();
+
+
+		</script>
+	</section>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>canvas 绘制图片</title>
+	<style>
+		section{width: 1200px;}
+	</style>
+</head>
+<body>
+	<section>
+		<!-- 设置canvas标签的宽高是通过canvas标签的属性进行设置。不要用css去设置 -->
+		<canvas id="canvas" >
+			<!-- ie9以上才支持 -->
+			<span>你的浏览器不支持canvas 请升级</span>
+		</canvas>
+<!-- ## 2.6 绘制图片（drawImage）  （重点）
+
+### 2.6.1 基本绘制图片的方式
+    context.drawImage(img,x,y);
+    参数说明： x,y 绘制图片左上角的坐标， img是绘制图片的dom对象。
+
+### 2.6.2 在画布上绘制图像，并规定图像的宽度和高度
+    context.drawImage(img,x,y,width,height);   
+    参数说明：width 绘制图片的宽度，  height：绘制图片的高度
+    如果指定宽高，最好成比例，不然图片会被拉伸</em>
+        等比公式：  toH = Height * toW   /  Width;  //等比 
+                 设置高 = 原高度 * 设置宽/ 原宽度;
+
+### 2.6.3 图片裁剪，并在画布上定位被剪切的部分
+    context.drawImage(img,sx,sy,swidth,sheight,x,y,width,height);
+    参数说明：
+        sx,sy 裁剪的左上角坐标，
+        swidth：裁剪图片的高度。 sheight:裁剪的高度 
+        其他同上
+
+### 2.6.4 用JavaScript创建img对象
+    第一种方式： 
+       var img = document.getElementById("imgId");
+    第二种方式：
+        var img = new Image();//这个就是 img标签的dom对象
+        img.src = "imgs/arc.gif";
+        img.alt = "文本信息";
+        img.onload = function() {
+            //图片加载完成后，执行此方法
+        } -->
+		<script>
+			// 第一步：拿到canvas的标签
+			var canvas = document.querySelector('#canvas');
+			canvas.width=600;
+			canvas.height=600;
+			canvas.style.border="1px solid #0c6";
+			// 第二步：拿到canvas的上下文
+			var ctx = canvas.getContext('2d');
+
+			// 第三部：创建对象
+			var img = new Image();
+			img.src='/res/img/HTML5/9.jpg';
+			var oH = img.height;
+			var oW = img.width;
+			img.onload = function(){
+				ctx.drawImage(img, 10,10)
+			}
+			console.log(oH)
+		</script>
+	</section>
+</body>
+</html>

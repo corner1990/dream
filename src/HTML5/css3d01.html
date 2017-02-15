@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>css3d-3棱柱</title>
+	<style>
+		.wrap{
+			width: 400px;
+			height: 400px;
+			margin: 200px auto;
+			border: 1px solid #e4e4e4;
+			perspective: 400px;
+			perspective-origin: center;
+		}
+		.box{
+			position: relative;
+			width: 200px;
+			height: 200px;
+			margin: 100px auto;
+			transform-style: preserve-3d;
+			transition: transform 5s linear;
+			backface-visibility: hidden;
+		}
+		.box:hover{transform: rotateY(-360deg);}
+		.box span{
+			position: absolute;
+			top: 0;
+			left: 0;
+			display: block;
+			width: 200px;
+			height: 200px;
+			font: 60px/200px '微软雅黑';
+			color: #fff;
+			text-align: center;
+			background: #060;
+			backface-visibility: hidden;
+			
+		}
+		.box span:nth-of-type(2){background: #f60;}
+		.box span:nth-of-type(3){background: #f6c;}
+	</style>
+</head>
+<body>
+	<div class="wrap">
+		<div class="box">
+		</div>
+	</div>
+	<script>
+		~function(){
+			var box = document.querySelector('.box');
+			var html = '';
+			var w = 100;
+			var n = 3;/*几个边*/
+			var deg = 360 / n;
+			var center = Math.tan((180-deg)/2*Math.PI/180)*w.toFixed(4)-0.5;
+			for(var i=0;i<n;i++){
+				html+='<span style="transform: rotateY('+i*deg+'deg);transform-origin: center center '+-center+'px;z-index:'+(n-i)+';">'+(i+1)+'</span>';
+			}
+			box.innerHTML= html;
+			box.style.WebkitTransformOrigin = 'center center '+-center+'px';
+		}();
+	</script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>filter</title>
+	<style>
+		/*css filter 练习*/
+		*{margin: 0;padding:0;border:0;}
+		.box{width: 100%;}
+		.img-wrap{width: 800px;margin:200px auto;}
+		.img-wrap img{
+			/*1.模糊*/
+			/*-webkit-filter: blur(2px);
+			filter: blur(2px);*/
+
+			/*2.灰度*/
+			/*-webkit-filter: grayscale(50%);
+			filter: grayscale(50%);*/
+
+			/*3.褐色*/
+			/*-webkit-filter : sepia(100%);
+			filter : sepia(100%);*/
+
+			/*4.饱和度 */
+				/*使用正整数作为值*/
+			/*-webkit-filter: saturate(5);
+			filter: saturate(5);*/
+
+			/*5.色相旋转*/
+			/*-webkit-filter: hue-rotate(180deg);
+			filter: hue-rotate(180deg);*/
+
+			/*6.invert 反色*/
+			/*-webkit-filter:invert(1);
+			filter:invert(1);*/
+
+			/*7.透明度*/
+			/*-webkit-filter: opacity(0.5);
+			filter: opacity(0.5);*/
+
+			/*8.亮度*/
+			/*取值范围为正整数*/
+			/*-webkit-filter: brightness(1);
+			filter: brightness(5);*/
+
+			/*9.对比度*/
+				/*可以有小数点 必须为正整数*/
+			/*-webkit-filter: contrast(-1);
+			filter: contrast(0.5);*/
+
+			/*10.阴影*/
+			/*-webkit-filter: drop-shadow(10px 10px  10px #c00);
+			filter: drop-shadow(10px 10px  10px #c00);*/
+		}
+	</style>
+</head>
+<body>
+	<div class="box">
+		<div class="img-wrap">
+			<img src="http://www.pcmoto.com.cn/userfiles/image/20141020/20102336668d296a903867.jpg" alt="">
+		</div>
+	</div>
+</body>
+</html>

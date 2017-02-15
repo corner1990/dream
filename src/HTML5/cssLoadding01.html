@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>css加载动画-条纹</title>
+	<style>
+		*{margin:0;padding:0;list-style: none;}
+		.wrap{position: relative;display:inline-block;width: 400px;height: 400px;background: #1abc9c;}
+		/*条纹加载动画*/
+		.load{position:absolute;top:50%;left:50%;margin: -25px 0 0 -41px;width: 82px;height: 60px;}
+		.load li{height: 100%;width: 6px;margin: 0 2px;display: inline-block;background: #f1f1f1;-webkit-animation: ainmationRun 1.2s infinite ease-in-out;animation: ainmationRun 1.2s infinite ease-in-out;}
+
+		.load li:nth-of-type(2){-webkit-animation-delay: -1.1s;animation-delay: -1.1s;}
+		.load li:nth-of-type(3){-webkit-animation-delay: -1.0s;animation-delay: -1.0s;}
+		.load li:nth-of-type(4){-webkit-animation-delay: -0.9s;animation-delay: -0.9s;}
+		.load li:nth-of-type(5){-webkit-animation-delay: -0.8s;animation-delay: -0.8s;}
+
+		@-webkit-keyframes ainmationRun{
+			0%,40%,100%{-webkit-transform: scaleY(0.4);}
+			20%,60%,80%{-webkit-transform: scale(1);}
+		}
+		@keyframes ainmationRun{
+			0%,40%,100%{-webkit-transform: scaleY(0.4);}
+			20%{-webkit-transform: scale(1);}
+		}
+
+		/*效果二 方块*/
+		/*perspective 属性指定了观察者与z=0平面的距离，使具有三维位置变换的元素产生透视效果。z>0的三维元素比正常大，而z<0时则比正常小，大小程度由该属性的值决定。
+
+		三维元素在观察者后面的部分不会绘制出来，即z轴坐标值大于perspective属性值的部分。
+
+		默认情况下，消失点位于元素的中心，但是可以通过设置perspective-origin属性来改变其位置。
+
+		属性值为0或负值或none（none是默认值）时，没有透视效果。
+
+		CCS3中的Transform是设置界面样式和动画的一大利器。而且在Chrome和FF中还支持3D变换。IE9不支持，IE10支持
+
+		只能选择透视方式，也就是近大远小的显示方式。
+		镜头方向只能是平行Z轴向屏幕内，也就是从屏幕正前方向里看。
+		可以调整镜头与平面位置：
+		a) perspective属性设置镜头到元素平面的距离。所有元素都是放置在z=0的平面上。比如perspective(300px)表示，镜头距离元素表面的位置是300像素。
+		b) perspective-origin属性规定了镜头在平面上的位置。默认是放在元素的中心*/
+
+
+		.block{position: absolute;top:50%;left: 50%;width: 50px;height: 50px;background: #78e039;margin: -25px 0 0 -25px;-webkit-animation: roatePlane 1.2s infinite ease-in-out;animation: roatePlane 1.2s infinite ease-in-out;}
+
+		@-webkit-keyframes roatePlane{
+			0%{-webkit-transform: perspective(120px);transform: perspective(120px);}
+			50%{-webkit-transform: perspective(120px) rotateX(180deg);transform: perspective(120px) rotateX(180deg);}
+			100%{-webkit-transform: perspective(120px) rotateX(180deg) rotateY(180deg);transform: perspective(120px) rotateX(180deg) rotateY(180deg);}
+		}
+	</style>
+</head>
+<body>
+	<div class="wrap">
+		<ul class="load">
+			<li class="load-item"></li>
+			<li class="load-item"></li>
+			<li class="load-item"></li>
+			<li class="load-item"></li>
+			<li class="load-item"></li>
+		</ul>
+	</div>
+	<div class="wrap">
+		<div class="block"></div>
+	</div>
+</body>
+</html>
