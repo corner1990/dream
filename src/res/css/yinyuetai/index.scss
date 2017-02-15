@@ -42,7 +42,7 @@ $rem : 20;
 @mixin box($y:center,$x:row,$just:space-between){display: flex; display: box; flex-direction: $x;justify-content: $just;align-items: $y;}
 .header{background: #171717;overflow: hidden;width: 100%;}
 .header img{ width: 4.2rem;height: 1.5rem;margin:0.35rem 0.2rem;}
-.header .btn-more{height: 26.6rem/$rem;width: 24rem/$rem;background: url(/res/img/yinyuetai/channel_ice.png) no-repeat 0 0;background-size: 24rem/$rem 68rem/$rem;margin: 0.42rem 0 0.25rem 0.4rem;}
+.header .btn-more{height: 26.6rem/$rem;width: 24rem/$rem;background: url(https://s.c.yinyuetai.com/v2/images/mobile/topbar/channel_ice.png) no-repeat 0 0;background-size: 24rem/$rem 68rem/$rem;margin: 0.42rem 0 0.25rem 0.4rem;}
 .header .bg-b{background-position:0 -28rem/$rem;}
 .header .btn-wrap{font-size: 0.6rem;color: #fff;line-height: 1.5rem;}
 .header .btn-wrap{font-size: 0.6rem;color: #fff;line-height: 1.5rem;}
