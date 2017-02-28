@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>frame</title>
+</head>
+<body>
+	<header id="header">框架练习</header>
+	<div class="g-box">
+		<label class="input-wrap">
+			<span class="input-tit">型号</span>
+			<input type="text" class="input">
+		</label>
+		<label class="input-wrap">
+			<span class="input-tit">品牌</span>
+			<input type="text" class="input">
+		</label>
+		<label class="input-wrap">
+			<span class="input-tit">数量</span>
+			<input type="text" class="input"></label>
+		<label class="input-wrap">
+			<span class="input-tit">出库时间</span>
+			<input type="text" class="input datetimepicker">至<input type="text" class="input datetimepicker">
+		</label>
+		<span class="input-wrap">
+			<span class="input-tit">型号</span>
+			<span class="mult-dropdown sel-sqfxs">
+				<span class="value" data-default="全部">全部</span>
+				<em class="drop-btn"><i class="ifont icon-crm36"></i></em>
+				<div class="drop-panel">
+				  <ul class="list">
+				    <li class="list-item"><label class="radio-wrap"><input type="checkbox" class="check-all">&nbsp;全部</label></li>
+				    <li class="list-item"><label class="radio-wrap"><input type="checkbox" class="sub-check">&nbsp;已出库</label></li>
+				    <li class="list-item"><label class="radio-wrap"><input type="checkbox" class="sub-check">&nbsp;未出库</label></li>
+				  </ul>
+				  <div class="bottom"><a class="btn btn-black btn-submit">确定</a><a class="btn btn-gray btn-cancel">取消</a></div>
+				</div>
+				<input type="hidden" value="-1">
+			</span>
+		</span>
+		<label class="input-wrap" style="margin-left:5px;"><a class="btn btn-black">查询</a>&nbsp;<a class="btn btn-gray">清除条件</a></label>
+	</div>
+	<script>
+		(function(win,undefined){
+			var $ = function(){
+				this.init();
+			}
+			$.prototype={
+				init:function(){
+					this.fnExtend()
+				},
+				//函数扩展
+				fnExtend:function(){
+					//给函数对象添加方法
+					Function.prototype.before = function(fn){
+						var _self = this;
+						return function(){
+							if(fn.apply(this,arguments) == false){
+								return false
+							}
+
+							return _self.apply(this,arguments)
+						}
+					},
+					Function.prototype.after = function(fn){
+						var _self = this;
+						return function(){
+							var _set = _self.apply(this,arguments);
+							if(_set == false){
+								return false
+							}
+
+							fn.apply(this,arguments);
+							return _set
+						}
+					}
+				},
+				//函数扩展
+			    strExtend:function(){},
+			    //函数扩展
+			    arrayExtend:function(){},
+			    //函数扩展
+			    DateExtend:function(){},
+			    //函数扩展
+			    numExtend:function(){},
+			    //去除左边空格
+			    ltrim:function(str){
+			    	return str.replace(/(^\s*)/g,'')
+			    },
+			    //去除右空格 
+			    rtrim:function(str){
+			    	return str.replace(/(\s*$)/g,'')
+			    },
+			    //去除空格  
+			    trim:function(str){
+			    	return str.replace(/(^\s*)|(\s*$)/g,'')
+			    },
+			    //ajax封装
+			    ajax:function(json){
+			    	//判断 要是传入的参数为空或者不是JSON
+			    	if(!json || (!Object.prototype.toString(json).toLowerCase() == '[object object]' && !json.length)){
+			    		return
+			    	}
+			    	//配置参数
+			    	var options = {
+			    		"url": json.url || '',
+			    		"method": json.method.toUpperCase() || "POST",
+			    		"async":json.asunc || true,
+			    		"data":json.data || '',
+			    		"requestData": '',
+			    		"success":json.success || function(){}
+			    	}
+
+			    	//创建对象
+			    	var xmlHttp = null;
+			    	if(XMLHttpRequest){
+			    		xmlHttp = new XmlHttpRequest();
+			    	}else{
+			    		xmlHttp = new ActiveXObject('Microsoft.XMLHTTP');
+			    	}
+
+			    	//判断请求类型 对data进行处理
+			    	var params = [];
+			    	for(var key in options.data){
+			    		params.push(key +'='+ options.data[key])
+			    	}
+			    	var postData = params.join('&');
+			    	//判断请求类型 发起请求
+			    	if(options.method == "POST"){
+			    		xmlHttp.open(options.method,options.url,options.async);
+			    		xmlHttp.setRequestHeader('Content-Type','appliaction/x-www-from-urlencoded;charset=UTF-8');
+			    		xmlHttp.send(postData)
+			    	}else if(options.method == 'GET'){
+			    		xmlHttp.open(options.method,options.url+'?'+postData,options.async);
+			    		xmlHttp.send();
+			    	}
+			     
+			     	xmlHttp.onreadystatechange = function(){
+			     		if(xmlHttp.readyState == 4 && (xmlHttp.status == 200 || xhr.status == 304)){
+			     			options.success(xmlHttp.responseText);
+			     		}else{
+			     			alert('报错啦')
+			     		}
+			     	}
+			    },
+			    //tab 组件封装
+			    tab:function(){
+
+			    },
+			    //给对象添加一个方法
+			    extendMany:function(){
+			    	var key,i=0,len = arguments.length,target=null,copy;
+			    	if(len === 0){
+			    		return
+			    	}else if(len === 1){
+			    		target = this
+			    	}else{
+			    		target = arguments[0]
+			    		i++;
+			    	}
+
+			    	for(;i <len;i++){
+			    		for(key in arguments[i]){
+			    			copy = arguments[i][key];
+			    			target[key]= copy;
+			    		}
+			    	}
+
+			    	return target
+			    },
+			    //copy 
+			    extend:function(tar,source){
+			    	for(var key in source){
+			    		tar[key] = source[key]
+			    	}
+			    },
+			    //数据类型转换
+			    isNumber:function(val){
+			    	return typeof val === 'number' && isFinite(val)
+			    },
+			    isBoolean:function(val){
+			    	return typeof val === 'boolean'
+			    },
+			    isString:function(val){
+			    	return typeof val === 'string'
+			    },
+			    isUndefined:function(val){
+			    	return typeof val === 'undefined'
+			    },
+			    isObj:function(str){
+			    	if(str === null || typeof str === 'undefined'){
+			    		return false
+			    	}
+
+			    	return typeof str === 'object'
+			    },
+			    isJson:function(val){
+			    	if(Object.prototype.toString(val).toLowerCase() && !val.length){
+			    		return true
+			    	}
+			    	return false
+			    }
+			    ,
+			    isNull:function(val){
+			    	return val === null
+			    },
+			    isArray:function(arr){
+			    	if(arr === null || typeof arr === 'undefined'){
+			    		return false
+			    	}
+
+			    	return arr.constructor === Array
+			    },
+			    isElem:function(obj){
+			    	return !!(obj && typeof window != 'undefined' && (obj === window || obj.nodeType))
+			    }
+			}
+			//在框架中实例化，这样外面使用的使用就不用实例化了
+			win.$ = $ = new $();
+
+			//封装选择框架
+			$.extend($,{
+				//id 选择器
+				doc :document,
+				$$:function(){
+					var dom,arr=[],i=0;
+					if(arguments.length===0){
+						return
+					}
+
+					arr = $.trim(arguments[0]).split(' ');
+					if(arr.length == 1){
+						return this._checkSelector(arr[0])
+					}else{
+						for(;i<arr.length;i++){
+							dom = this._checkSelector(arr[i])
+						}
+					}
+				},
+				$id:function(str){
+					return this.doc.getElementById(str)
+				},
+				//html5实现的选择器
+				$all:function(selector,context){
+					context = context || document;
+					return  context.querySelectorAll(selector);
+				},
+				$tag:function(){
+					
+					if(arguments.length === 1){
+						return this.doc.getElementsByTagName(arguments[0]);
+					}else{
+						return arguments[0].getElementsByTagName(arguments[1])
+					}
+				},
+				//class选择器
+				$class:function(className,context){
+					var i=0,len,dom=[],arr=[];
+					//如果传递过来的是字符串 ，则转化成元素对象
+					if($.isString(context)){
+						context = _checkSelector(context);
+					}else{
+						context = this.doc;
+					}
+					// 如果兼容getElementsByClassName
+					if(context.getElementsByClassName){
+						return context.getElementsByClassName(className);
+					}else{
+						//如果浏览器不支持
+						dom = context.getElementsByTagName('*');
+
+						for(i;len=dom.length,i<len;i++)
+						{
+							if(dom[i].className)
+							{
+								arr.push(dom[i]);
+							}
+						}
+					}
+					return arr;
+				},
+				_checkSelector:function(str){
+					var _str = str.slice(0,1);
+					if(_str === '#'){
+						return $.$id(str.slice(1))
+					}else if(_str === '.'){
+						return $.$class(str.slice(1))
+					}else{
+						return $.$tag(str)
+					}
+				}
+			}),
+
+			//封装css content：dom元素数组【选择器】 opt：需要设置【获取】的css属性
+			$.extend($,{
+				css:function(content,opt,val){
+					var i=0,key='',val= val || '',arr=[],dom=null,arg=arguments;
+					//判断传入的是一个数组 还是字符串
+					if($.isString(content)){
+						arr = $$(content)
+					}else if($.isArray(content)){
+						arr = content
+					}
+					
+					_setCss=function(dom,opt,val){console.log('setCss')
+						if($.isJson(opt)){
+							for(var pop in opt){
+							 dom.style[pop] = opt[pop];
+							}
+						}else{
+							dom.style[opt] = val;
+						}
+						return dom
+					}
+
+					_getCss=function(dom,key){console.log('getCss')
+						if(dom.currentStyle){
+							return dom.currentStyle[key]
+						}else{
+							return getComputedStyle(dom,null)[key]
+						}
+					}
+
+					_checkOpt=function(opt){
+						if(arg.length >=3 || $.isJson(opt)){
+							return _setCss
+						}else if($.isString(opt)){
+							return _getCss
+						}
+						
+					}
+
+					var fn = _checkOpt(opt);
+
+					for(;i< arr.length;i++){
+
+						fn(arr[i],opt,val)
+						
+					}
+
+
+				},
+				cssNum:function (context, key){
+					return parseFloat($$.css(context, key))
+				},
+				//显示
+				show:function (content){
+					var doms =  $.$all(content)
+					for(var i= 0,len=doms.length;i<len;i++){
+						$.css(doms[i], 'display', 'block');
+					}
+				},
+				//隐藏和显示元素
+				hide:function (content){
+					var doms =  $$.$all(content)
+					for(var i= 0,len=doms.length;i<len;i++){
+						$.css(doms[i], 'display', 'none');
+					}
+				},
+				//元素高度宽度概述
+				//计算方式：clientHeight clientWidth innerWidth innerHeight
+				//元素的实际高度+border，也不包含滚动条
+				Width:function (id){
+					return $.$$(id).clientWidth
+				},
+				Height:function (id){
+					return $.$$(id).clientHeight
+				},
+
+
+				//元素的滚动高度和宽度
+				//当元素出现滚动条时候，这里的高度有两种：可视区域的高度 实际高度（可视高度+不可见的高度）
+				//计算方式 scrollwidth
+				scrollWidth:function (id){
+					return$.$$(id).scrollWidth
+				},
+				scrollHeight:function (id){
+					return$.$$(id).scrollHeight
+				},
+
+
+				//元素滚动的时候 如果出现滚动条 相对于左上角的偏移量
+				//计算方式 scrollTop scrollLeft
+				scrollTop:function (id){
+					return$.$$(id).scrollTop
+				},
+				scrollLeft:function (id){
+					return$.$$(id).scrollLeft
+				},
+
+				//获取屏幕的高度和宽度
+				screenHeight:function (){
+					return  window.screen.height
+				},
+				screenWidth:function (){
+					return  window.screen.width
+				},
+
+				//文档视口的高度和宽度
+				wWidth:function (){
+					return document.documentElement.clientWidth
+				},
+				wHeight:function (){
+					return document.documentElement.clientHeight
+				},
+				//文档滚动区域的整体的高和宽
+				wScrollHeight:function () {
+					return document.body.scrollHeight
+				},
+				wScrollWidth:function () {
+					return document.body.scrollWidth
+				},
+				//获取滚动条相对于其顶部的偏移
+				wScrollTop:function () {
+					var scrollTop = window.pageYOffset|| document.documentElement.scrollTop || document.body.scrollTop;
+					return scrollTop
+				},
+				//获取滚动条相对于其左边的偏移
+				wScrollLeft:function () {
+					var scrollLeft = document.body.scrollLeft || (document.documentElement && document.documentElement.scrollLeft);
+					return scrollLeft
+				}
+			})
+
+			//封装事件框架
+			$.extend($,{
+				on:function(elem,type,fn){
+					var arr =[],i=0,len=0;
+					
+
+					arr = this._checkEl(elem)
+					
+					for(len=arr.length;i< len;i++){
+						this._bind(arr[i],type,fn);
+					}
+					
+				},
+				un:function(elem,type,fn){},
+				/*检查传入的参数elem  进行处理*/
+				_checkEl:function(elem){
+					if($.isString(elem)){
+						return $.$$(elem);
+
+					}else if($.isArray(elem)){
+						return elem
+					}
+				},
+				_bind:function(elem,type,fn){
+					//如果支持
+					//W3C版本 --火狐 谷歌 等大多数浏览器
+					//如果你想检测对象是否支持某个属性，方法，可以通过这种方式
+					if(document.addEventListener){console.log(elem,type,fn,'bind')
+						elem.addEventListener(type,fn,false)
+					}else if(document.detachEvent){
+						//如果是IE浏览器
+						elem.detachEvent('on'+type,fn)
+					}
+				},
+				_unbind:function(elem,type,fn){}
+			})
+		})(window,undefined)
+	</script>
+</body>
+</html>
