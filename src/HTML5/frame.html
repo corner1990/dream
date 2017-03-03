@@ -300,6 +300,8 @@
 						arr = $$(content)
 					}else if($.isArray(content)){
 						arr = content
+					}else if(isElem(content)){
+						arr.push(content)
 					}
 					
 					_setCss=function(dom,opt,val){console.log('setCss')
@@ -427,7 +429,6 @@
 				on:function(elem,type,fn){
 					var arr =[],i=0,len=0;
 					
-
 					arr = this._checkEl(elem)
 					
 					for(len=arr.length;i< len;i++){
@@ -435,15 +436,26 @@
 					}
 					
 				},
-				un:function(elem,type,fn){},
+				un:function(elem,type,fn){
+					var arr =[],i=0,len=0;				
+					arr = this._checkEl(elem)
+					
+					for(len=arr.length;i< len;i++){
+						this._unbind(arr[i],type,fn);
+					}
+				},
 				/*检查传入的参数elem  进行处理*/
 				_checkEl:function(elem){
+
 					if($.isString(elem)){
 						return $.$$(elem);
 
 					}else if($.isArray(elem)){
 						return elem
+					}else if(isElem(elem)){
+						return [elem]
 					}
+					
 				},
 				_bind:function(elem,type,fn){
 					//如果支持
@@ -451,13 +463,290 @@
 					//如果你想检测对象是否支持某个属性，方法，可以通过这种方式
 					if(document.addEventListener){console.log(elem,type,fn,'bind')
 						elem.addEventListener(type,fn,false)
-					}else if(document.detachEvent){
+					}else if(document.attachEvent){
 						//如果是IE浏览器
-						elem.detachEvent('on'+type,fn)
+						elem.attachEvent('on'+type,fn)
 					}
 				},
-				_unbind:function(elem,type,fn){}
+				_unbind:function(elem,type,fn){
+
+					//如果支持
+					//W3C版本 --火狐 谷歌 等大多数浏览器
+					//如果你想检测对象是否支持某个属性，方法，可以通过这种方式
+					if(document.addEventListener){
+
+						elem.removeEventListener(type,fn,false)
+					}else if(document.detachEvent){
+						//如果是IE浏览器
+						elem.detachEvent(type,fn)
+					}
+				},
+				trigger: function(content,type){
+					var dom = $.$$(content);
+					// 事件触发器
+					// 现代浏览器
+					if(dom.dispatchEvent){
+						// 创建事件
+						var evt = document.createEvent('Event');
+						// 定义事件的类型
+						
+						evt.initEvent(type, true, true);
+						// 触发事件
+						dom.dispatchEvent(evt);
+						// IE
+					} else if(dom.fireEvent){
+						dom.fireEvent('on' + type);
+					}
+				},
+				//事件基础
+				getEvent:function(event){
+					return event?event:window.event;
+				},
+				//获取目标
+				GetTarget :function(event){
+					var e = $$.getEvent(event);
+					return e.target|| e.srcElement;
+				},
+				//组织默认行为
+				preventDefault:function(event){
+					var event = $$.getEvent(event);
+					if(event.preventDefault){
+						event.preventDefault();
+					}else{
+						event.returnValue = false;
+					}
+				},
+				//组织冒泡
+				stopPropagation:function(event){
+					var event = $$.getEvent(event);
+					if(event.stopPropagation){
+						event.stopPropagation();
+					}else{
+						event.cancelBubble = true;
+					}
+				}
 			})
+
+			//内容框架
+			$.extend($,{
+				html:function(content,value){
+					var i =0,arr=[],len=0;
+					/*检查传入的参数elem  进行处理*/
+					checkEl=function(elem){
+
+						if($.isString(elem)){
+							return $.$$(elem);
+
+						}else if($.isArray(elem)){
+							return elem
+						}else if(isElem(elem)){
+							return [elem]
+						}
+						if(value){}
+					}
+
+					arr = checkEl(content);
+					if(value){
+						arr[0].innerHTML = value;
+						return true
+					}else{
+						return arr[0].innerHTML
+					}
+				}
+			})
+			//封装JSOn框架
+			$.extend($,{
+				JSON:function(json){
+					return JSON.parse(json)
+				},
+				sJson:function(json){
+					return JSON.stringify(json)
+				}
+			})
+
+			//缓存框架 
+			$.cache = {
+				data: [],
+				get:function(key){
+					var value = null;
+					console.log(this.data)
+					for(var i=0,len = this.data.length; i<len ;i++){
+						if(key == this.data[i].key){
+							value = this.data[i].value
+						}
+					}
+					return value
+				},
+				set:function(key,value){
+					var json = {key:key,value:value};
+					this.data.push(json);
+					
+				},
+				delete:function(key){
+					var status = false;
+					for(var i = 0, len=this.data.length;i<len;i++){
+						if(this.data[i].key == key){
+							this.slice(i,1);
+							status = true;
+							break;
+						}
+					}
+
+					return status
+				},
+				updata:function(key,value){
+					var status = false,i=0,len=0;
+					for(len=this.data.length;i<len;i++){
+						if(this.data[i].key.trim() == key.trim()){
+							this.data[i].value = value
+							status = true;
+							break;
+						}
+					}
+
+					return status
+				},
+				isHas:function(key){
+					var status = false,i=0,len=0,item=null;
+					for(len=this.data.length;i<len;i++){
+						if(this.data[i].key.trim() == key.trim()){
+							status = true;
+							break;
+						}
+					}
+					return status
+				}
+			}
+
+			// cookie 框架
+			$.cookie = {
+				//设置cookie
+				set:function(key,value,days,path){
+					var key = escape(key),
+					value = escape(value),
+					_expires = null,
+					expires = new Date();
+					expires.setTime(expires.getTime() + days * 24 * 60 * 60 * 1000);
+					path = path == ''? '' : ';paht='+path;
+					_expires = (typeof hours) == "string" ? '' : ';expires=' + expires.toUTCString()
+					document.cookie = name + '=' + value + _expires + path;
+
+				},
+				//获取cookie
+				get:function(name){
+					var allCookies='',
+					name = escape(name),
+					pos='';
+					//读取cookie 这里将返回文档所有的cookie
+					allCookies = document.cookie;
+					//查找名为name的cookie的开始位置
+					name += '=';
+					pos = allCookies.indexOf(name);
+					//如果找到了具有该名字的cookie，那么提取并使用它的值
+					if(pos != -1){//如果pos值为-1则说明搜索"version="失败
+						var statr = pos + name.length; //cookie值开始的位置
+						var end = allcookies.indexOf(';',start); //从cookie值开始的位置起搜索第一个";"的位置,即cookie值结尾的位置
+						if(end == -1){//如果end值为-1说明cookie列表里只有一个cookie
+							end = allcookies.length;
+							var value = allcookies.substring(start,end);
+							return unescape(value)//对它解码
+						}
+					}else{//搜索失败，返回空字符串
+						return ''
+					}
+				},
+
+				 //删除cookie
+				 delete:function(name,path){
+				 	var name = escape(name),
+				 	expires = new Date(0),
+				 	path = path == '' ? '' : ';path='+path;
+				 	document.cookie = name + '=' + ';expires=' + expires.toUTCString() + path; 
+				 }	
+			}
+
+			//本地存储框架
+			$.store = (function(){
+				var api = {},
+				win = window,
+				doc = document,
+				localStorageName = 'localStorage',
+				globalStorageName = 'globalStorage',
+				stroage;
+				api.set = function(key,value){};
+				api.get = function(key){};
+				api.remove = function(key){};
+				api.clear = function(){};
+
+				if(localStorageName in win && win[localStorageName]){
+					stroage = win[localStorageName];
+					api.set = function(key,val){stroage.setItem(key,val)};
+					api.get = function(key){return stroage.getItem(key)};
+					api.remove=function(key){stroage.removeItem(key);}
+					api.clear =function(){stroage.clear()}
+
+				}else if(globalStorageName in win && win[globalStorage]){
+					storage = win[globalStorage];
+					api.set = function(key,val){storage[key] = val};
+					api.get = function(key){storage[key] = val};
+					api.remove = function(key){delete storage[key]};
+					api.clear = function(){for(var key in storage){ delete storage[key]}}
+
+				}else if(doc.documentElement.addBehavior){
+					function getStorage(){
+						if(storage){return storage};
+						storage = doc.body.appendChild(doc.createElement('div'));
+						storage.style.display = 'none';
+						// See http://msdn.microsoft.com/en-us/library/ms531081(v=VS.85).aspx
+            			// and http://msdn.microsoft.com/en-us/library/ms531424(v=VS.85).aspx
+            			storage.addBehavior('#default#userData');
+            			storage.load(localStorageName);
+            			return storage;
+					}
+
+					api.set = function(key,val){
+						var storage = getStorage();
+						storage.setAttribute(key,val);
+						storage.save(localStorageName)
+					}
+
+					api.get = function(key){
+						var storage = getStorage();
+						return storage.getAttribute(key)
+					}
+
+					api.remove = function(key){
+						var storage =getStorage();
+						storage.removeAttribute(key);
+						storage.save(localStorageName)
+					}
+					api.clear = function () {
+			            var storage = getStorage();
+			            var attributes = storage.XMLDocument.documentElement.attributes;;
+			            storage.load(localStorageName);
+			            for (var i=0, attr; attr = attributes[i]; i++) {
+			                storage.removeAttribute(attr.name);
+			            }
+			            storage.save(localStorageName);
+			        }
+
+			        return api
+				}
+			})();
+			
+			//封装DOM框架 -- 放在后面
+			$.extend($,{
+				//选择
+				eq:function(){},
+				first:function(){},
+				last:function(){},
+				//元素的插入和删除 克隆
+				append:function(){},
+				empty:function(){},
+				remove:function(){},
+				clone:function(){}
+			})
+
 		})(window,undefined)
 	</script>
 </body>
