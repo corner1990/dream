@@ -140,6 +140,9 @@ SX： [darwin](http://npm.taobao.org/mirrors/node/v5.7.0/node-v5.7.0.pkg)
 > 注意：所有别名必须在新版本的 PowerShell 中使用  
 > 
 
+#### [NRM](https://github.com/Pana/nrm)   Node 镜像管理工具 
+#### [ICONV](https://www.npmjs.com/package/iconv) 编码转换插件
+
 >以下的笔记中$ 后边的都是命令 
 
         node 编辑器 https://code.visualstudio.com/docs/?dv=win
@@ -480,4 +483,71 @@ console.timeEnd('async');
 
 ### buffer  
 
-      读取文件是没有指定编码，默认
+      读取文件是没有指定编码，默认是utf8编码
+
+### 文件读取  
+
+- 异步文件读取   
+
+     `fs.readFile(file[,option],callback(err,data))`  
+
+- 同步文件读取  
+
+    `fs.readFileSync(file[,option])`  
+
+- 文件流的方式读取  
+    ```
+  fs.readStream(path[,options])
+
+  const path = require('path');
+  const fs = require('fs');
+  let fireName = path.join(__dirname+'/../note/crumb.md');
+
+  var str  = fs.createReadStream(fireName)
+  var data = '';
+  str.on('data',(chunk)=>{
+    data+=chunk;
+  })
+
+  str.on('end',()=>{
+    //通知结束  此时data是完整文档
+    console.log(data)
+  })
+    ```
+
+
+### 文件写入   
+
+    为了确保操作没有额外的问题，一定使用绝对路径的方式  
+
+- 异步文件写入  
+    
+     `fs.writeFile(file,data[,option],callback(err))`
+
+- 同步文件写入  
+
+     `fs.writeFileSync(file,data[,option])`
+
+- 流式文件写入    
+
+      `fs.createWriteStream(path[,option])`  
+
+- 文件默认写入是覆盖  
+- 异步追加  
+
+  `fs.appendFile(file,data[,opotions],callback(err))`
+
+- 同步追加  
+
+  `fs.appendFileSync(file,data[,options])`  
+
+### 其他文件操作  
+
+- 重命名文件或目录
+
+  `fs.rename(oldPath,newPath,callback)`  
+  `fs.renameSync(oldPath,newPath)`
+- 删除文件  
+
+  `fs.unlink(path,callback(err))`  
+  `fs.unlinkSync(path)`
