@@ -18,27 +18,38 @@ require('./timeformat');
 //获取当前有没有传入目标路劲
 let target = path.join(__dirname,process.argv[2] || './');
 
-let dirinfo = fs.readdirSync(target);
-let dirs = [];
-let files = [];
+paintParth(target,0);
 
-dirinfo.forEach(info =>{
-	let stats = fs.statSync(path.join(target,info))
-	if(stats.isFile()){
-		files.push(info)
-	}else{
-		dirs.push(info)
-	}
-})
+function paintParth(target,depth){
 
-'└─'
-dirs.forEach(file =>{
-	console.log(`├─${file}`);
-	//当前是一个目录
-})
+	let dirinfo = fs.readdirSync(target);
+	let dirs = [];
+	let files = [];
 
-let count = files.length - 1;
-files.forEach(file=>{
-	console.log(`${count-- ? '├─' : '└─'}${file}`)
-})
+	let depthStr = new Array(depth + 1).join('│ ');
+
+	dirinfo.forEach(info =>{
+		let stats = fs.statSync(path.join(target,info))
+		if(stats.isFile()){
+			files.push(info)
+		}else{
+			dirs.push(info)
+		}
+	})
+
+	//'└─'
+
+	dirs.forEach(file =>{//打印文件夹
+		console.log(`${depthStr}'├─'}${file}`);
+		
+		paintParth(path.join(target,`${file}`),depth + 1)
+		
+	})
+
+	let count = files.length - 1;
+	files.forEach(file=>{//打印文件
+		console.log(`${depthStr}${count-- ? '─' : '└'}${file}`)
+	})
+}
+
 

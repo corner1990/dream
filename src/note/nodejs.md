@@ -551,3 +551,26 @@ console.timeEnd('async');
 
   `fs.unlink(path,callback(err))`  
   `fs.unlinkSync(path)`
+
+### 目录操作 
+- 创建一个目录  
+    + fs.mkdir(path[,model],callback)
+    + fs.mkdirSync(path[,model])
+- 删除一个空目录  
+    + fs.rmdir(path,callback)
+    + fs.rmdirSync(path,callback)
+- 读取一个目录  
+    + fs.readdir(path,callback(err,files))
+    + fs.readdirSync(path) //=> files  
+
+### 文件监视  
+- 利用文件监视实现自动markdown文件转换  
+    + [marken](hhttps://github.com/chjj/marked)
+    + [Browsersync](https://github.com/Browsersync/browser-sync)
+
+- 实现思路  
+    + 利用`fs`模块的文件监视功能监视指定的MD文件 
+    + 当文件发生变化后借助`marked`to`html`功能将改变后的MD文件转换为HTML  
+    + 再将得到的HTML替换到模板中
+    + 最后利用Browse人死于农村实现浏览器自动刷新  
+        browsersync需要用到Python
