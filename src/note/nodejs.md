@@ -573,4 +573,33 @@ console.timeEnd('async');
     + 当文件发生变化后借助`marked`to`html`功能将改变后的MD文件转换为HTML  
     + 再将得到的HTML替换到模板中
     + 最后利用Browse人死于农村实现浏览器自动刷新  
-        browsersync需要用到Python
+        browsersync需要用到Python  
+
+###  文件流  
+- 文件流就是以面向对象的概念对文件数据进行的抽象
+- 文件定义了一些对文件数据操作方式
+- 现实过程中  
+    +  水  
+
+- 在程序开发的概念中  
+
+    + 流是程序输入或输出的一个连续的字节序列  
+    + 文件流、网络流
+    + 设备（鼠标、键盘、显示器、调制解调器...）等设备的输入和输出都是用流来处理的
+
+###  Node中的文件流操作
+
+- 在nonde核心模块fs中定义了一些与流相关的API  
+- `fs.cerateReadStream()`=>得到了一个ReadableStream
+- `fs.createWriteStream()`=>得到了一个WritableStream
+
+- `pipe()`方法 虹吸的方式  
+
+- [node-progress](https://github.com/visionmedia/node-progress)  
+     + node进度条插件 Flexible ascii progress bar.   
+
+### Node  网络操作   
+
+- http基础  
+
+
