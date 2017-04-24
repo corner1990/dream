@@ -60,12 +60,12 @@
 //mongo的安装盘符
 lixinglong@JY-PC-2010142 C:>e:
 //进入安装目录
-lixinglong@JY-PC-2010142 E:\cd mongodb 
+lixinglong@JY-PC-2010142 E:\mongodb 
 //进入程序所在目录
-lixinglong@JY-PC-2010142 E:\cd mongodb > cd bin
+lixinglong@JY-PC-2010142 E:\mongodb > cd bin
 //启动数据库服务
-lixinglong@JY-PC-2010142 E:\cd mongodb\bin> mongod.exe --dbpath "e:\mongodb\blog" 
-
+lixinglong@JY-PC-2010142 E:\mongodb\bin> mongod.exe --dbpath "e:\mongodb\blog" 
+E:\mongodb\bin> mongo.exe
 ```
 
 - 这里显示等待连接的控制台输出消息，指示mongo.ese成功运行

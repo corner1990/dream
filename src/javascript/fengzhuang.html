@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>对象封装的常用方式</title>
+</head>
+<body>
+	<script>	
+		// 常规封装
+		// function Person(name,age,sex){
+		// 	this.name = name;
+		// 	this.age = age;
+		// 	this.sex = sex;
+		// }
+
+		// Person.prototype = {
+		// 	constructor : Person,
+		// 	sayHello:function(){
+		// 		console.log('hello')
+		// 	}
+		// }
+		// 
+		// // new 执行原理
+		//  var myNew = function(constructor, args) {
+	 //        var o = {};
+	 //        o.__proto__ = constructor.prototype;
+	 //        var res = constructor.apply(o, args);
+	 //        var type = typeof res;
+	 //        if (['string', 'number', 'boolean', 'null', 'undefined'].indexOf(type) !== -1) {
+	 //            return o;
+	 //        }
+	 //        return res;
+	 //    }
+
+		// function Person(name) {
+	 //        this.name = name;
+	 //    }
+	 //    Person.prototype.sayHello = function() {
+	 //        console.log(this.name);
+	 //    }
+	 //    var o1 = myNew(Person, ['leo']);
+	 //    console.log(o1);
+	 //    o1.sayHello();
+	 //    
+	//  //    jquery闭包封装
+	//  var Person = (function(window){
+	//     var Person = function(name){
+	//         return new Person.fn.init(name)
+	//     }
+
+	//     Person.fn = Person.prototype = {
+	//         constructor : Person,
+	//         init : function(name){
+	//             this.name = name;
+	//             this.sayHello = function(){
+	//                 this.makeArray()
+	//             }
+	//         },
+	//         makeArray : function(){
+	//             console.log(this.name)
+	//         }
+	//     }
+
+	//     Person.fn.init.prototype = Person.fn;
+	//     return Person
+	// })(window)
+
+	// var p = Person('leo');
+	// console.log(p);
+	// p.sayHello()
+	//
+	// js原生提供的方法 
+	var Person = {
+	    name :"leo",
+	    sayHello : function(){
+	    console.log(this.name)
+	    }
+	}
+	var p = Object.create(Person);
+	console.log(p)
+	p.sayHello()
+	</script>
+</body>
+</html>

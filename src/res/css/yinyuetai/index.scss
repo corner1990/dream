@@ -42,13 +42,13 @@ $rem : 20;
 @mixin box($y:center,$x:row,$just:space-between){display: flex; display: box; flex-direction: $x;justify-content: $just;align-items: $y;}
 .header{background: #171717;overflow: hidden;width: 100%;}
 .header img{ width: 4.2rem;height: 1.5rem;margin:0.35rem 0.2rem;}
-<<<<<<< HEAD
+
 .header .btn-more{height: 26.6rem/$rem;width: 24rem/$rem;background: url(https://s.c.yinyuetai.com/v2/images/mobile/topbar/channel_ice.png) no-repeat 0 0;background-size: 24rem/$rem 68rem/$rem;margin: 0.42rem 0 0.25rem 0.4rem;}
 .header .bg-b{background-position:0 -28rem/$rem;}
-=======
+
 .header .btn-more{height:30.8rem/$rem;width: 24rem/$rem;background: url(/res/img/yinyuetai/channel_ice.png) no-repeat 2rem/$rem 0;background-size: 20rem/$rem 60rem/$rem;margin: 0.42rem 0 0.25rem 0.4rem;}
 .header .bg-b{background-position:0 -30rem/$rem;}
->>>>>>> 7d195d8314a2d01145705865df1f665139901fb4
+
 .header .btn-wrap{font-size: 0.6rem;color: #fff;line-height: 1.5rem;}
 .header .btn-wrap{font-size: 0.6rem;color: #fff;line-height: 1.5rem;}
 .header .btn-wrap .btn{margin: 0.4rem 0.4rem 0 0;color:#fff;height: 1.4rem;padding: 0 0.5rem;background: #690;line-height: 1.4rem;border-radius: 0.12rem;}
@@ -73,7 +73,7 @@ $rem : 20;
 	img{width: 320rem /$rem;height: 182rem/$rem;}
 	.nav{overflow: hidden;position: absolute;top: 160rem / $rem;right: 30rem /$rem;
 		li{width: 12rem / $rem; height: 12rem / $rem; @include bg(#efefef); @include BR();margin: 0 10rem/$rem 0 0;}
-		.active{@include bg(#690);}
+		.active{@include bg(#dd0302);}
 	}
 }
 
