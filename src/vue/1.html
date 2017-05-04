@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>demo01</title>
+	<script src="/res/js/global/vue.js"></script>
+</head>
+<body>
+<a href="www.baidu.com"></a>
+	<h1 id="header">{{title}}</h1>
+
+	<p class="title-small" v-bind:title="title">我是小标题 我有title</p>
+
+	<div id="show" v-if="show">你可以看到我</div>
+
+	<ul class="list">
+		<li class="item"  v-for="todo in todos">{{todo.text}}</li>
+	</ul>
+
+	<button class="button" v-on:click="consoleText">{{message}}</button>
+	<!-- 有问题 后期解决 -->
+	<!-- <button class="button" @click="consoleText">{{message}}</button> -->
+
+	<div class="bind-info">
+		<p>{{info}}</p>
+		<input type="text" v-model="info">
+	</div>
+
+	<ol class="ol-origin">
+		<origin v-for="key in list" v-bind:item="key"></origin>
+	</ol>
+</body>
+<script>
+	// 绑定数据
+	var header = new Vue({
+		el: '#header',
+		data:{
+			title : 'hello Vue ceshi'
+		}
+	});
+
+	// 使用v-bind 绑定变量
+	var titleSmall = new Vue({
+		el : '.title-small',
+		data : {
+			title: '哈哈，就知道你会看'
+		}
+	})
+
+	// 使用if 过滤输出
+	var show = new Vue({
+		el:'#show',
+		data:{
+			show: true
+		}
+	});
+
+	// 循环输出多条信息
+	var list = new Vue({
+		el: '.list',
+		data:{
+			todos:[
+				{text:'hello '},
+				{text:'my name is vue'},
+				{text:'nice metting you'}
+			]
+		}
+	});
+
+	// 绑定事件
+	var printText = new Vue({
+		el:'.button',
+		data:{
+			message: 'click Me'
+		},
+		methods:{
+			consoleText:function(){
+				var $me = this;
+				console.log($me.$el.innerHTML+new Date().getTime())
+			}
+		}
+	})
+
+	// 数据双向绑定
+	var bindInfo = new Vue({
+		el : '.bind-info',
+		data : {
+			info : '你以为你以为的就是你以为的么'
+		}
+	});
+
+	// 组件化构建
+	Vue.component('origin',{
+		props : ['item'],
+		template : '<li>{{item.text}}</li>'
+	})
+
+	var originApp = new Vue({
+		el : '.ol-origin',
+		data:{
+			list:[
+				{text:'leo'},
+				{text:'join'},
+				{text:'jam'}
+			]
+		}
+	})
+
+
+
+
+</script>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>自定义事件</title>
+	<script src="/res/js/global/jquery.min.js"></script>
+</head>
+<body>
+	<h2>测试jquery自定义</h2>
+	<script>
+  
+   // jquery 兼容的滚轮事件
+	$(document).on("mousewheel DOMMouseScroll", function (e) {
+	    
+	    var delta = (e.originalEvent.wheelDelta && (e.originalEvent.wheelDelta > 0 ? 1 : -1)) ||  // chrome & ie
+	                (e.originalEvent.detail && (e.originalEvent.detail > 0 ? -1 : 1));              // firefox
+
+	    
+	    if (delta > 0) {
+	        // 向上滚
+	        console.log("wheelup");
+	    } else if (delta < 0) {
+	        // 向下滚
+	        console.log("wheeldown");
+	    }
+
+	    console.log(e.originalEvent)
+	}); 
+
+	</script>
+</body>
+</html>

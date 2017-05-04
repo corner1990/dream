@@ -35,7 +35,7 @@ gulp.task('js-demo01',function(){
 });
 
 gulp.task('html-demo01', function () {
-    gulp.src('src/demo01/*.html')
+    gulp.src('src/demo01/*.shtml')
     .pipe(gulp.dest("dist/demo01"))
     .pipe(browserSync.stream());
 
@@ -97,6 +97,48 @@ gulp.task("css-HTML5", function () {
     .pipe(browserSync.stream());
 })
 
+/*
+*crumb 工作中的小练习 
+ */
+gulp.task('js-crumb',function(){
+    return gulp.src(['src/res/js/crumb/*.js'])
+    .pipe(jshint())
+    .pipe(jshint.reporter('default'))
+    .pipe(concat('*.js'))
+    .pipe(gulp.dest('dist/res/js/crumb'))
+    .pipe(rename({suffix:'.min'}))
+    .pipe(uglify({
+        output:{
+            ascii_only:true
+        }
+
+    }))
+    .pipe(gulp.dest('dist/res/js/crumb'))
+    .pipe(browserSync.stream());
+});
+
+gulp.task('html-crumb', function () {
+    return gulp.src('src/crumb/*.html')
+    .pipe(gulp.dest("dist/crumb/"))
+    .pipe(browserSync.stream());
+
+});
+gulp.task("css-crumb", function () {
+    return gulp.src('src/res/css/crumb/*.css')
+    .pipe(autoprefixer({
+        browsers: ['> 1%'],
+        cascade: false
+    }))
+    .pipe(gulp.dest('dist/res/css/HTML5'))
+    .pipe(rename({ suffix: '.min' }))
+    .pipe(minifycss({ compatibility: 'ie8' }))
+    .pipe(gulp.dest('dist/res/css/HTML5'))
+    .pipe(browserSync.stream());
+})
+
+/*
+* angulr
+ */
 gulp.task('js-angular',function(){
     return gulp.src(['src/res/js/angular/*.js'])
     .pipe(jshint())
@@ -141,6 +183,7 @@ gulp.task('html-yinyuetai', function () {
 
 });
 
+
 gulp.task('js-yinyuetai',function(){
     return gulp.src(['src/res/js/yinyuetai/index.js'])
     .pipe(jshint())
@@ -169,6 +212,46 @@ gulp.task("css-yinyuetai", function () {
       .pipe(rename({ suffix: '.min' }))
       .pipe(minifycss({ compatibility: 'ie8' }))
       .pipe(gulp.dest('dist/res/css/yinyuetai'))
+})
+
+/*
+* vue 学习
+ */
+gulp.task('html-vue', function () {
+    gulp.src('src/vue/*.html')
+    .pipe(gulp.dest("dist/vue"))
+    .pipe(browserSync.stream());
+
+});
+
+gulp.task('js-vue',function(){
+    return gulp.src(['src/res/js/vue/*.js'])
+    .pipe(jshint())
+    .pipe(jshint.reporter('default'))
+    .pipe(concat('index.js'))
+    .pipe(gulp.dest('dist/res/js/vue'))
+    .pipe(rename({suffix:'.min'}))
+    .pipe(uglify({
+        output:{
+            ascii_only:true
+        }
+
+    }))
+    .pipe(gulp.dest('dist/res/js/vue'))
+    .pipe(browserSync.stream());
+});
+
+gulp.task("css-vue", function () {
+    return gulp.src('src/res/css/vue/*.scss')
+    .pipe(sass({ style: 'expanded' }))
+      .pipe(autoprefixer({
+          browsers: ['> 1%'],
+          cascade: false
+      }))
+      .pipe(gulp.dest('dist/res/css/vue'))
+      .pipe(rename({ suffix: '.min' }))
+      .pipe(minifycss({ compatibility: 'ie8' }))
+      .pipe(gulp.dest('dist/res/css/vue'))
 })
 
 // ES6
@@ -264,4 +347,30 @@ gulp.task('es6',function(){
     gulp.watch('src/res/css/es6/*.scss', ['css-es6']).on('change', browserSync.reload);
     gulp.watch('src/res/js/es6/*.js', ['js-es6']).on('change', browserSync.reload);
 
+});
+
+//crumb 静态服务器
+gulp.task('crumb',function() {
+    browserSync.init({
+        server: {
+            baseDir: "dist",
+             directory: true
+        }
+    });
+    gulp.watch("src/crumb/*.html", ['html-crumb']).on('change', browserSync.reload);
+    gulp.watch('src/res/css/crumb/*.scss', ['css-crumb']).on('change', browserSync.reload);
+    gulp.watch('src/res/js/crumb/*.js', ['js-crumb']).on('change', browserSync.reload);
+});
+
+//vue 学习
+gulp.task('vue',function() {
+    browserSync.init({
+        server: {
+            baseDir: "dist",
+             directory: true
+        }
+    });
+    gulp.watch("src/vue/*.html", ['html-vue']).on('change', browserSync.reload);
+    gulp.watch('src/res/css/vue/*.scss', ['css-vue']).on('change', browserSync.reload);
+    gulp.watch('src/res/js/vue/*.js', ['js-vue']).on('change', browserSync.reload);
 });

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>实例</title>
+	<script src="/res/js/global/vue.js"></script>
+</head>
+<body>
+	<h2>我是2.html 页面</h2>
+	<div id="wrap">
+		<p>origin message:"{{message}}"</p>
+		<p>Computed reversed message : "{{reversedMessage}}"</p>
+	</div>
+
+	<div id="watch">{{three}}</div>
+	<script>
+		var vm = new Vue({
+			el : '#wrap',
+			data:{
+				message:'hello leo!'
+			},
+			computed:{
+				reversedMessage:function(){
+					return 666
+				}
+			}
+		});
+
+		// var watchInfo = new Vue({
+		// 	el:'#watch',
+		// 	data:{
+		// 		one:'one',
+		// 		two:'two',
+		// 		three:'one two'
+		// 	},
+		// 	watch:{
+		// 		one:function(val){
+		// 			this.three = val + ' ' + this.two;
+		// 		},
+		// 		two:function(val){
+		// 			this.two = this.one +' '+ val
+		// 		}
+		// 	}
+		// });
+
+		var computedInfo = new Vue({
+			el:'#watch',
+			data:{
+				one:'one',
+				two:'two',
+			},
+			computed:{
+				three:function(){console.log(2222)
+					return this.three = this.one+' '+this.two
+				}
+			}
+		});
+	</script>
+</body>
+</html>
