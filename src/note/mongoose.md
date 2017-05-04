@@ -340,4 +340,4 @@ function getByPager(){
 
     - `Model.findOneAndRemove(conditions, [options], [callback])` //查找一条记录并删除
 
-    - `Model.findOneAndUpdate([conditions], [update], [options], [callback])` //查找一条记录并更新
+    - `Model.findOneAndUpdate([conditions], [update], [options], [callback])` //查找一条记录并更新 
