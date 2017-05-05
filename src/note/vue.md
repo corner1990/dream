@@ -499,9 +499,245 @@ var sccStyle = new Vue({
 
 ## 条件渲染
 ### `v-if`
+- 在字符串模板中
 ```
-//在字符串模板中
 {{#if true}}
     <span>如果上边的判断为true的话才可以看到我</span>
 {{/if}}
 ```
+- 在页面中
+```
+//ok 为一个变量
+<span v-if="ok">如果上边的判断为true的话才可以看到我</span>
+```
+- 还可以使用v-else
+```
+<h1 v-if="ok">Yes</h1>
+<h1 v-else>No</h1>
+```
+- template中v-if 条件组
+```
+//可以把一个 <template> 元素当做包装元素，并在上面使用 v-if。最终的渲染结果不会包含 <template> 元素。
+<template v-if="ok">
+  <h1>Title</h1>
+  <p>Paragraph 1</p>
+  <p>Paragraph 2</p>
+</template>
+```
+- v-else
+```
+<template v-if="ok">
+  <h1>Title</h1>
+  <p>Paragraph 1</p>
+  <p>Paragraph 2</p>
+</template>
+```
+- v-else-if
+```
+<div v-if="type === 'A'">
+  A
+</div>
+<div v-else-if="type === 'B'">
+  B
+</div>
+<div v-else-if="type === 'C'">
+  C
+</div>
+<div v-else>
+  Not A/B/C
+</div>
+```
+
+- 用 `key` 管理可复用的元素
+>Vue会尽可能搞笑的渲染元素，通常会复用元素，而不是从头开始渲染  
+
+```
+//js
+// 切换值查看vue可复用元素
+        var toggleLoginType = new Vue({
+            el:'#keyWrap',
+            data:{
+                loginType:'username'
+            },
+            methods:{
+                toggleLoginTypeFn:function(){
+                    if(this.loginType == 'username'){
+                        return this.loginType = ''
+                    }else{
+                        return this.loginType = 'username'
+                    }
+                    console.log(this.loginType)
+                }
+            }
+
+
+        })
+
+//两个元素是完全独立的——不要复用它们”。只需添加一个具有唯一值的 key 属性
+<div id="keyWrap">
+        <template v-if="loginType === 'username'">
+            <label>用户名：</label>
+            <input placeholder="输入用户名" key="name">
+        </template>
+        <template v-else>
+            <label>邮箱</label>
+            <input placeholder="输入邮箱" key="email">
+        </template>
+        <button id=“btnToggle” v-on:click="toggleLoginTypeFn">更改loginType的值</button>
+    </div>
+```
+
+- `v-show` 
+> 另一个用于根据条件展示元素选项
+```
+// 带有 v-show 的元素始终会被渲染并保留在 DOM 中。v-show 是简单地切换元素的 CSS 属性 display 。
+<span v-show="ok">HELLO</span>
+
+//注意， v-show 不支持 <template> 语法，也不支持 v-else。
+```
+
+### 列表渲染  
+>用 v-for 指令根据一组数组的选项列表进行渲染。 v-for 指令需要以 item in items 形式的特殊语法， items 是源数据数组并且 item 是数组元素迭代的别名。
+
+- `v-for`
+```
+//html 
+<ul id="example-1">
+  <li v-for="item in items">
+    {{ item.message }}
+  </li>
+</ul>
+
+//js 
+var example1 = new Vue({
+  el: '#example-1',
+  data: {
+    items: [
+      {message: 'Foo' },
+      {message: 'Bar' }
+    ]
+  }
+})
+
+//在 v-for 块中，我们拥有对父作用域属性的完全访问权限。 v-for 还支持一个可选的第二个参数为当前项的索引。
+
+//html
+<ul id="example-2">
+  <li v-for="(item, index) in items">
+    {{ parentMessage }} - {{ index }} - {{ item.message }}
+  </li>
+</ul>
+
+//js 同上
+
+//可以用 of 替代 in 作为分隔符，因为它是最接近 JavaScript 迭代器的语法
+<div v-for="item of items"></div>
+```
+- Template v-for
+```
+//如同 v-if 模板，你也可以用带有 v-for 的 <template> 标签来渲染多个元素块
+<ul>
+  <template v-for="item in items">
+    <li>{{ item.msg }}</li>
+    <li class="divider"></li>
+  </template>
+</ul>
+
+//v-for 可以通过对象的属性来迭代
+//html 
+<ul id="repeat-object" class="demo">
+  <li v-for="value in object">
+    {{ value }}
+  </li>
+</ul>
+
+//js 
+new Vue({
+  el: '#repeat-object',
+  data: {
+    object: {
+      FirstName: 'John',
+      LastName: 'Doe',
+      Age: 30
+    }
+  }
+})
+
+// 得到键 ，索引
+<div v-for="(value, key, index) in object">
+  {{ index }}. {{ key }} : {{ value }}
+</div>
+
+//整数迭代
+<div>
+  <span v-for="n in 10">{{ n }}</span>
+</div>
+```
+## 事件处理器
+### 监听事件
+    用 v-on 指令监听DOM时间来触发一些javascript
+```
+//html
+<div class="demo01">
+    <button v-on:click="clickMe">点击加1</button>
+    <p>点击了{{counrter}}次</p>
+</div>
+//js
+var demo01 = new Vue({
+            el:'.demo01',
+            data:{
+                counrter:0
+            },
+            methods:{
+                clickMe:function(){
+                    this.counrter++
+                }
+            }
+        })
+```
+
+### 方法事件处理器
+- v-on 可以接收一个定义的方法来调用。
+```
+!-- 自定义方法调用 -->
+    <div class="demo02">
+        <!-- clickMe02 是下边定义的方法明 -->
+        <button v-on:click="clickMe02">clickMe</button>
+    </div>
+
+    var demo02 = new Vue({
+            el:'.demo02',
+            data:{
+                content:'我是先锋'
+            },
+            methods:{
+                clickMe02:function(even){
+                    console.log(even,this)
+                }
+            }
+        });
+```
+
+### 内联处理方法
+```
+//html
+<div class="demo03">
+      <button v-on:click="clickMe03('hi')">Say hi</button>
+      <button v-on:click="clickMe03('what')">Say what</button>
+    </div>
+
+//js
+var demo03 = new Vue({
+            el:'.demo03',
+            methods:{
+                clickMe03:function(mes){
+                    console.log(mes)
+                }
+            }
+        });
+```
+
+
+
+
+

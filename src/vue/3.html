@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>事件处理</title>
+</head>
+<body>
+	<!-- 监听事件 -->
+	<div class="demo01">
+		<button v-on:click="clickMe">点击加1</button>
+		<p>点击了{{counrter}}次</p>
+	</div>
+
+	<!-- 自定义方法调用 -->
+	<div class="demo02">
+		<!-- clickMe02 是下边定义的方法明 -->
+		<button v-on:click="clickMe02">clickMe</button>
+	</div>
+
+	<div class="demo03">
+	  <button v-on:click="clickMe03('hi')">Say hi</button>
+	  <button v-on:click="clickMe03('what')">Say what</button>
+	</div>
+
+	<script src="/res/js/global/vue.js"></script>
+	<script>
+		var demo01 = new Vue({
+			el:'.demo01',
+			data:{
+				counrter:0
+			},
+			methods:{
+				clickMe:function(){
+					this.counrter++
+				}
+			}
+		})
+
+		var demo02 = new Vue({
+			el:'.demo02',
+			data:{
+				content:'我是先锋'
+			},
+			methods:{
+				clickMe02:function(even){
+					console.log(even,this)
+				}
+			}
+		});
+
+		var demo02 = new Vue({
+			el:'.demo03',
+			methods:{
+				clickMe03:function(mes){
+					console.log(mes)
+				}
+			}
+		});
+	</script>
+</body>
+</html>

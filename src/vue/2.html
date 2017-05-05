@@ -30,7 +30,19 @@
 	<div class="css-style" v-bind:style="[baseStyle,overFlow]">内联样式测试丫丫丫</div>
 
 	<span v-if="ok">如果上边的判断为true的话才可以看到我</span>
-
+	<div></div>
+	<!-- 使用key 管理复用的元素 -->
+	<div id="keyWrap">
+		<template v-if="loginType === 'username'">
+			<label>用户名：</label>
+			<input placeholder="输入用户名" key="name">
+		</template>
+		<template v-else>
+			<label>邮箱</label>
+			<input placeholder="输入邮箱" key="email">
+		</template>
+		<button id=“btnToggle” v-on:click="toggleLoginTypeFn">更改loginType的值</button>
+	</div>
 	<script>
 		var vm = new Vue({
 			el : '#wrap',
@@ -134,30 +146,50 @@
 		// })
 		// 
 		// 绑定class 测试
-		var bindClass=new Vue({
-			el:'.bind-class',
+		// var bindClass=new Vue({
+		// 	el:'.bind-class',
+		// 	data:{
+		// 		isActive:true,
+		// 		hasError: false,
+		// 		classObj:{
+		// 			active:false,
+		// 			textdenger:true
+		// 		}
+		// 	}
+		// })
+
+		// var sccStyle = new Vue({
+		// 	el:'css-style',
+		// 	data:{
+		// 		baseStyle:{
+		// 			color:'#dd0302',
+		// 		},
+		// 		overFlow:{
+		// 			fontSize:'30px'
+		// 		},
+		// 		ok:false
+				
+		// 	}
+
+		// })
+
+		// 切换值查看vue可复用元素
+		var toggleLoginType = new Vue({
+			el:'#keyWrap',
 			data:{
-				isActive:true,
-				hasError: false,
-				classObj:{
-					active:false,
-					textdenger:true
+				loginType:'username'
+			},
+			methods:{
+				toggleLoginTypeFn:function(){
+					if(this.loginType == 'username'){
+						return this.loginType = ''
+					}else{
+						return this.loginType = 'username'
+					}
+					console.log(this.loginType)
 				}
 			}
-		})
 
-		var sccStyle = new Vue({
-			el:'css-style',
-			data:{
-				baseStyle:{
-					color:'#dd0302',
-				},
-				overFlow:{
-					fontSize:'30px'
-				},
-				ok:false
-				
-			}
 
 		})
 	</script>
