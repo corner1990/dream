@@ -7,12 +7,30 @@
 </head>
 <body>
 	<h2>我是2.html 页面</h2>
+	<!-- 计算dmeo -->
 	<div id="wrap">
 		<p>origin message:"{{message}}"</p>
 		<p>Computed reversed message : "{{reversedMessage}}"</p>
 	</div>
 
+
 	<div id="watch">{{three}}</div>
+
+	<!-- 监听demo -->
+	<div id="wath-example">
+		<p>Are you crazy:<input type="text" name="" v-model="quustion"></p>
+		<p v-html="answer"></p>
+	</div>
+
+	<!-- 绑定 HTML class -->
+
+	<div v-bind:class="classObj" class="bind-class">我是属性绑定测试</div>
+
+	<!-- 绑定内联样式 -->
+	<div class="css-style" v-bind:style="[baseStyle,overFlow]">内联样式测试丫丫丫</div>
+
+	<span v-if="ok">如果上边的判断为true的话才可以看到我</span>
+
 	<script>
 		var vm = new Vue({
 			el : '#wrap',
@@ -43,6 +61,19 @@
 		// 	}
 		// });
 
+		// var computedInfo = new Vue({
+		// 	el:'#watch',
+		// 	data:{
+		// 		one:'one',
+		// 		two:'two',
+		// 	},
+		// 	computed:{
+		// 		three:function(){console.log(2222)
+		// 			return this.three = this.one+' '+this.two
+		// 		}
+		// 	}
+		// });
+		//计算demo
 		var computedInfo = new Vue({
 			el:'#watch',
 			data:{
@@ -50,11 +81,85 @@
 				two:'two',
 			},
 			computed:{
-				three:function(){console.log(2222)
-					return this.three = this.one+' '+this.two
+				three:{
+					get:function(){//getter
+						return this.one +' '+this.two
+						},
+					set:function(val){//setter
+						var name = val.split(' ');
+						this.one = name[name.length-1]
+						}
 				}
 			}
 		});
+
+		//监听 有问题 暂时跳过
+		
+		// var wathExample = new Vue({
+		// 	el:'#wath-example',
+		// 	data:{
+		// 		question:'',
+		// 		answer:'你猜'
+		// 	},
+		// 	watch:{
+		// 		question:function(newQuestion){
+		// 			this.answer='你想干嘛???';
+		// 			this.getAnswer();
+		// 		}
+		// 	},
+		// 	methods:{
+		// 		// _.debounce 是一个通过 lodash 限制操作频率的函数。
+		// 	    // 在这个例子中，我们希望限制访问yesno.wtf/api的频率
+		// 	    // ajax请求直到用户输入完毕才会发出
+		// 		getAnswer:_.debounce(
+		// 			var vm = this;
+		// 			if(this.question.indexOf('?') === -1){}
+		// 				vm.answer = '别闹了，乖啊！';
+		// 				return
+					
+		// 			}
+
+		// 			vm.answer = '不理你了。。。。';
+		// 			axios.get('https://yesno.wtf/api')
+		// 			.then(function(){
+		// 				vm.answer = _.capitalize(response.data.answer)
+		// 			})
+		// 			.catch(function(err){
+		// 				vm.answer = '被你玩坏了！！';
+		// 			}),
+		// 			// 用户停止输入的等待毫秒数
+		// 			500
+		// 		)
+		// 	}
+		// })
+		// 
+		// 绑定class 测试
+		var bindClass=new Vue({
+			el:'.bind-class',
+			data:{
+				isActive:true,
+				hasError: false,
+				classObj:{
+					active:false,
+					textdenger:true
+				}
+			}
+		})
+
+		var sccStyle = new Vue({
+			el:'css-style',
+			data:{
+				baseStyle:{
+					color:'#dd0302',
+				},
+				overFlow:{
+					fontSize:'30px'
+				},
+				ok:false
+				
+			}
+
+		})
 	</script>
 </body>
 </html>

@@ -377,3 +377,131 @@ var computedInfo = new Vue({
         }
     });
 ```
+
+### 计算setter
+计算属性默认只有getter，不过在需要的时候提供一个setter
+```
+var computedInfo = new Vue({
+            el:'#watch',
+            data:{
+                one:'one',
+                two:'two',
+            },
+            computed:{
+                three:{
+                    get:function(){//getter
+                        return this.one +' '+this.two
+                        },
+                    set:function(val){//setter
+                        var name = val.split(' ');
+                        this.one = name[name.length-1]
+                        }
+                }
+            }
+        });
+
+// 在three发生改变的时候调用set函数
+```
+
+### 观察 Watchers
+    `watcher`主要在数据变化响应时，执行异步操作或开销较大的操作的时候时候使用
+
+## class 于 Style绑定
+    数据绑定一个常见需求是操作元素的 class 列表和它的内联样式。因为它们都是属性 ，我们可以用v-bind 处理它们：只需要计
+    算出表达式最终的字符串。不过，字符串拼接麻烦又易错。因此，在 v-bind 用于 class 和 style 时， Vue.js 专门增强了它。
+    表达式的结果类型除了字符串之外，还可以是对象或数组。
+
+### 绑定class
+
+```
+//1.可以传给 v-bind:class 一个对象，以动态地切换 class 
+<div v-bind:class="{active:isActive}" class="bind-class">我是属性绑定测试</div>
+
+data:{
+    isActive:true
+}
+
+//2.可以在对象中传入更多属性用来动态切换多个 class 。此外， v-bind:class 指令可以与普通的 class 属性共存。
+<div v-bind:class="{active:isActive,'text-danger': hasError}" class="bind-class">我是属性绑定测试</div>
+
+
+var bindClass=new Vue({
+            el:'.bind-class',
+            data:{
+                isActive:true,
+                hasError: false
+            }
+        })
+
+//3.也可以直接绑定一个对象
+<div v-bind:class="classObj" class="bind-class">我是属性绑定测试</div>
+
+        var bindClass=new Vue({
+            el:'.bind-class',
+            data:{
+                isActive:true,
+                hasError: false,
+                classObj:{
+                    active:false,
+                    textdenger:true
+                }
+            }
+        })
+
+// 同样可以绑定在组件上边
+
+```
+
+### 绑定内联样式
+- 对象语法
+- 数组语法
+- 自动添加前缀
+
+```
+//1.对象语法
+//-bind:style 的对象语法十分直观——看着非常像 CSS ，其实它是一个 JavaScript 对象。
+//CSS 属性名可以用驼峰式（camelCase）或短横分隔命名（kebab-case）
+
+//html
+<div class="css-style" v-bind:style="{color: color,fontSize:fontSize+'px'}">内联样式测试丫丫丫</div>
+
+//js
+var sccStyle = new Vue({
+            el:'.css-style',
+            data:{
+                color:'#323232',
+                fontSize:30
+            }
+
+        })
+
+//2.数组语法
+//v-bind:style 的数组语法可以将多个样式对象应用到一个元素上
+//html
+<div class="css-style" v-bind:style="[baseStyle,overFlow]">内联样式测试丫丫丫</div>
+
+//js
+var sccStyle = new Vue({
+            el:'.css-style',
+            data:{
+                baseStyle:{
+                    color:'#dd0302',
+                },
+                overFlow:{
+                    fontSize:'30px'
+                }
+                
+            }
+
+        })
+
+```
+
+## 条件渲染
+### `v-if`
+```
+//在字符串模板中
+{{#if true}}
+    <span>如果上边的判断为true的话才可以看到我</span>
+{{/if}}
+```
