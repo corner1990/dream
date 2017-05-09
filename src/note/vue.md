@@ -737,7 +737,81 @@ var demo03 = new Vue({
         });
 ```
 
+### 事件修饰符
+- 在事件处理程序中调用 event.preventDefault() 或 event.stopPropagation() 是非常常见的需求。尽管我们可以在 methods 中轻松实现这点，但更好的方式是：methods 只有纯粹的数据逻辑，而不是去处理 DOM 事件细节。
+- Vue.js 为 v-on 提供了 事件修饰符。通过由点(.)表示的指令后缀来调用修饰符。
+- `.stop`
+- `.prevent`
+- `.capture`
+- `.self`
+- `.once`
+```
+<!-- 阻止单击事件冒泡 -->
+<a v-on:click.stop="doThis"></a>
 
+<!-- 提交事件不再重载页面 -->
+<form v-on:submit.prevent="onSubmit"></form>
 
+<!-- 修饰符可以串联  -->
+<a v-on:click.stop.prevent="doThat"></a>
+
+<!-- 只有修饰符 -->
+<form v-on:submit.prevent></form>
+
+<!-- 添加事件侦听器时使用事件捕获模式 -->
+<div v-on:click.capture="doThis">...</div>
+
+<!-- 只当事件在该元素本身（而不是子元素）触发时触发回调 -->
+<div v-on:click.self="doThat">...</div>
+
+<!-- 点击事件将只会触发一次  2.1.4新增-->
+<a v-on:click.once="doThis"></a>
+```
+
+### 按键修饰符
+    在监听键盘时间是，需要监测常见的键值mVue允许为v-on在监听键盘事件是添加按键修饰符
+
+```
+<!-- 只有在 可以Code是13 时调用vm.submit -->
+<input v-on:keyup.13="submit">
+
+<!-- 记住所有的 keyCode比较困难，可以使用常用的按键别名 -->
+
+<!-- 同上 -->
+<input v-on:keyup.enter="submit">
+<!-- 缩写语法 -->
+<input @keyup.enter="submit">
+```
+
+- 全部按键别名
+    + `.enter`
+    + `.tab`
+    + `.delete`（捕获‘删除’和‘退格’键）
+    + `.esc`
+    + `.space`
+    + `.up`
+    + `.down`
+    + `.left`
+    + `.right`
+- 可以通过全局 'config.keyCodes'对象自定义按键修饰符
+
+### 2.1新增按键修饰符
+- 按键修饰符
+    + `.ctrl`
+    + `.alt`
+    + `.shift`
+    + `.meta`
+- html中监听事件的场景
+    + 扫一眼HTML模板便能轻松定位javaScript代码里对应的方法
+    + 无需在javascript里手动绑定事件，ViewModel代码可以非常纯粹的逻辑，和DOM完全解耦。更易于测试
+    + 当一个ViewModel被销毁是，所有的事件处理器都会自动被删除，无需手动清理。
+
+## 表单控件绑定
+### 基础语法
+    可以使用 `v-model` 指令在表单控件元素上创建双向数据绑定。它会根据控件类型自动获取正确的方法来更新元素。
+
+> `v-model`不甘心表单控件的初始化所生成的值。因为它会选择Vue实例数据来作为具体的值。
+> 
+> 对于要求IME（如中文，日语，韩语）语言，
 
 

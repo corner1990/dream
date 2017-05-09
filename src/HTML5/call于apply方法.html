@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>call yu apply</title>
+</head>
+<body>
+
+	<script>
+	/*
+	* apply() 与call() 的区别
+	*  基本语法
+	*  apply() 方法
+	*  fn.apply(fn2[,arg])
+	*  call() 方法
+	*  fn.call(fn2[,arg[,arg2[,arg]]])
+	*
+	* 方法的定义
+	* apply:应用某一对象的一个方法，用另一个对象替换当前对象。
+	* call:调用一个对象的方法，以另一个对象替换当前对象。
+	*
+	* 方法的共同点 
+	* 都可以用来替代另一个对象调用一个方法，将一个函数的对象上下文改变为指定的新对象。
+	*
+	* 方法的不同点
+	* apply：最多只能有两个参数--新this对象和一个数组argArr。如果该方法传递多个参数，需要把参数全部写在argArr，如果argArr不是一个有效的数组或arguments对象就是包TypeError。如果没有提供argArr和新的对象，那么Global对象将被作为新对象，并且无法被传递任何参数。
+	*
+	* call：可以接收多个参数，第一个参数和apply一样，后边则是一串参数列表。方法主要在js对象各方法相互调用的时候，使当前this保持一致。或者在特殊情况下需要改变this指向。如果没有指定对象，那么Global对象被作为新指定对象。
+	 */
+		~function(){
+			// 基本用法
+			function add(a,b){
+				// console.log(this,'add',arguments)
+				return a+b
+			}
+
+			function sub(a,b){
+				// console.log(this,'sub',arguments)
+				return a-b
+			}
+
+			var a1 = add.apply(sub,[4,2]);
+			var a2 = sub.apply(add,[4,2])
+			
+
+			//实现继承
+			function Person(name){
+				this.name = name;
+				this.showName = function(){
+					console.log(this.name)
+				}
+			}
+
+			function Person2(name){
+				//apply
+				// Person.apply(this,[name])
+				// call
+				Person.call(this,name)
+			}
+
+			var per = new Person2('leo');
+			per.showName()
+			// console.log(per)
+
+
+			//多重继承
+			function fn3(){
+			  this.showSub = function(a,b){
+			        alert(a - b);
+			    }   
+			}
+
+			function fn4(){
+			  this.showAdd = function(a,b){
+			        alert(a + b);
+			    }  
+			}
+
+			function fn5(){
+			  fn3.apply(this);
+			  fn4.apply(this);   
+			  // fn3.call(this);
+			  //Class11.call(this);  
+			}
+
+			var c2 = new fn5();
+
+			// apply 小技巧
+		// 	（1）Math.max 可以实现得到数组中最大的一项：
+
+		// 　　　　因为Math.max不支持Math.max([param1,param2])也就是数组，但是它支持Math.max(param1,param2...)，所以可以根据apply的特点来解决 var max=Math.max.apply(null,array)，这样就轻易的可以得到一个数组中的最大项（apply会将一个数组转换为一个参数接一个参数的方式传递给方法）
+		//           这块在调用的时候第一个参数给了null，这是因为没有对象去调用这个方法，我只需要用这个方法帮我运算，得到返回的结果就行，所以直接传递了一个null过去。
+		// 　　　 用这种方法也可以实现得到数组中的最小项：Math.min.apply(null,array)
+		 
+		// 　　（2）Array.prototype.push可以实现两个数组的合并
+		// 　　　　同样push方法没有提供push一个数组，但是它提供了push(param1,param2...paramN)，同样也可以用apply来转换一下这个数组，即：
+		//  　　　 1.var arr1=new Array("1","2","3");
+		//           2.var arr2=new Array("4","5","6");
+		//           3.Array.prototype.push.apply(arr1,arr2);    //得到合并后数组的长度，因为push就是返回一个数组的长度
+		//           也可以这样理解，arr1调用了push方法，参数是通过apply将数组转换为参数列表的集合
+		//           
+		
+		var arr = [1,2,3,4,5,6],
+			maxNum = Math.max.apply(null,arr),
+			minNum = Math.min.apply(null,arr);
+
+			console.log(maxNum,minNum);
+
+		//合并两个数组 返回新数组
+		//
+			var arr1 = [3,6,9,12,15],
+				arr2 = [2,3,4,5];
+			console.log(arr1,'arr3')
+		}()
+	</script>
+</body>
+</html>
