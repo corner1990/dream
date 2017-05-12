@@ -14,7 +14,7 @@
 const fs = require('fs');
 const path = require('path');
 require('./timeformat');
-
+Encoding.default_external = Encoding.find('utf-8')
 //获取当前有没有传入目标路劲
 let target = path.join(__dirname,process.argv[2] || './');
 
@@ -51,5 +51,6 @@ function paintParth(target,depth){
 		console.log(`${depthStr}${count-- ? '─' : '└'}${file}`)
 	})
 }
+
 
 

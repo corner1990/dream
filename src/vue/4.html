@@ -5,6 +5,22 @@
 	<title>表单控件绑定</title>
 </head>
 <body>
-	
+	<div class="bind-text">
+		<p>{{text}}</p>
+		<input type="text" v-model="text">
+		<p></p>
+		<input type="checkbox" id="checkbox" v-model="checked">
+		<label for="checkbox">{{ checked }}</label>
+	</div>
+	<script src="/res/js/global/vue.js"></script>
+	<script>
+		var bindText =new Vue({
+			el : '.bind-text',
+			data:{
+				text:'输入文字试试看',
+				checked:true
+			}
+		});
+	</script>
 </body>
 </html>

@@ -813,5 +813,28 @@ var demo03 = new Vue({
 > `v-model`不甘心表单控件的初始化所生成的值。因为它会选择Vue实例数据来作为具体的值。
 > 
 > 对于要求IME（如中文，日语，韩语）语言，会发现那v-model不会在 ime 构成中得到更新。如果你也想实现更新，请使用 input事件。
+> 
+### 文本
+### 多行版本
+```
+    //文本绑定
+    <div class="bind-text">
+        <p>{{text}}</p>
+        <input type="text" v-model="text">
+    </div>
+    <script src="/res/js/global/vue.js"></script>
+    <script>
+        var bindText =new Vue({
+            el : '.bind-text',
+            data:{
+                text:'输入文字试试看'
+            }
+        });
+
+        //多行文字只需要把input替换为txtarea
+</script>
+```
+
+## 组件
 
 
