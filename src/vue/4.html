@@ -12,6 +12,22 @@
 		<input type="checkbox" id="checkbox" v-model="checked">
 		<label for="checkbox">{{ checked }}</label>
 	</div>
+
+	<div class="tab-wrap">
+		<tab></tab>
+	</div>
+
+	<!-- data 测试 -->
+	<div class="data-example">
+		<new-tab></new-tab>
+		<new-tab></new-tab>
+		<new-tab></new-tab>
+	</div>
+
+	<!-- prop 传递数据 -->
+	<div class="prop">
+		<prop-example data="hello vue"></prop-example>
+	</div>
 	<script src="/res/js/global/vue.js"></script>
 	<script>
 		var bindText =new Vue({
@@ -21,6 +37,207 @@
 				checked:true
 			}
 		});
+
+		//注册组建
+		Vue.component('tab',{
+			template:'<div>wo shi zu jian ce shi</div>'
+		})
+
+		//创建实例
+		new Vue({
+			el:'.tab-wrap'
+		})
+
+		var tabHd = {
+			template:'<h2>我是头部</h2>'
+		}
+
+		// 局部注册
+		Vue.component('tab',{
+			templates:{
+				// tab 将只能在父模版中使用
+				'tab':tabHd
+			}
+		})
+		// var data = {message:0};
+		Vue.component('new-tab',{
+			template:'<button v-on:click="message += 1">{{ message }}</button v-on:click="">',
+			data:()=>{
+				return {message:0}
+			}
+		})
+
+		new Vue({
+			el:'.data-example'
+		})
+
+		Vue.component('prop-example',{
+			//申明 props
+			props:['data'],
+			template:'<span>{{ data}}</span>'
+		})
+
+		new Vue({
+			el:'.prop'
+		})
+
+
+        $.fn.lazyload_DOM =function(select,beginHeight){
+            //功能：当div完整出现在屏幕时，加载动画。
+            //参数select，需要进行懒加载的元素的类名，要取一样的名字
+            //参数beginHeight，滚动条滚到哪里，开始监听
+            if(!select) {
+                console.error("lazyload_DOM方法中缺少className参数");
+                return;
+            }
+            if(!beginHeight) beginHeight=0;
+            lazyDivList=$(select);
+            $(window).scroll(function(){
+                srcTop=$(window).scrollTop();
+                if(srcTop>=beginHeight){
+                    lazyDivList.trigger("lazyme",$(window).scrollTop());
+                }                
+            });
+            lazyDivList.bind("lazyme",function(e,scrTop){
+            	var $me = $(this),
+                	offset=$(this).offset().top,
+                	interval=$(window).height()-$(this).height(),//当前页面可视高度
+                	sumB=offset,
+                	sumS=offset-interval,
+
+                if(scrTop>=sumS && scrTop<=sumB){
+                    $(this).offset().top=offset
+                }
+            });
+        }
+
+ 		  // 检测浏览器信息
+        //浏览器信息
+		var Browser = function(userAgent){
+			var u = userAgent||navigator.userAgent;
+			var _this = this;
+			var match = {
+				//内核
+				Trident: u.indexOf('Trident')>0||u.indexOf('NET CLR')>0,
+				Presto: u.indexOf('Presto')>0,
+		        WebKit: u.indexOf('AppleWebKit')>0,
+		        Gecko: u.indexOf('Gecko/')>0,
+				//浏览器
+				UC: u.indexOf('UC')>0||u.indexOf(' UBrowser')>0,
+				QQBrowser: u.indexOf('QQBrowser')>0,
+				QQ: u.indexOf('QQ/')>0,
+				Baidu: u.indexOf('Baidu')>0||u.indexOf('BIDUBrowser')>0,
+				Maxthon: u.indexOf('Maxthon')>0,
+				LBBROWSER: u.indexOf('LBBROWSER')>0,
+				Sogou: u.indexOf('MetaSr')>0||u.indexOf('Sogou')>0,
+				IE: u.indexOf('MSIE')>0||u.indexOf('Trident')>0,
+				Firefox: u.indexOf('Firefox')>0,
+				Opera: u.indexOf('Opera')>0||u.indexOf('OPR')>0,
+				Safari: u.indexOf('Safari')>0,
+				Chrome:u.indexOf('Chrome')>0||u.indexOf('CriOS')>0,
+				Wechat:u.indexOf('MicroMessenger')>0,
+				Taobao:u.indexOf('AliApp(TB')>0,
+				Alipay:u.indexOf('AliApp(AP')>0,
+				Weibo:u.indexOf('Weibo')>0,
+				Suning:u.indexOf('SNEBUY-APP')>0,
+				iQiYi:u.indexOf('IqiyiApp')>0,
+				//系统或平台
+				Windows:u.indexOf('Windows')>0,
+				Linux:u.indexOf('Linux')>0,
+				Mac:u.indexOf('Macintosh')>0,
+				Android:u.indexOf('Android')>0||u.indexOf('Adr')>0,
+				WP:u.indexOf('IEMobile')>0,
+				BlackBerry:u.indexOf('BlackBerry')>0||u.indexOf('RIM')>0||u.indexOf('BB')>0,
+				MeeGo:u.indexOf('MeeGo')>0,
+				Symbian:u.indexOf('Symbian')>0,
+				iOS:u.indexOf('like Mac OS X')>0,
+				iPhone: u.indexOf('iPh')>0,
+				iPad:u.indexOf('iPad')>0,
+				//设备
+				Mobile:u.indexOf('Mobi')>0||u.indexOf('iPh')>0||u.indexOf('480')>0,
+				Tablet:u.indexOf('Tablet')>0||u.indexOf('iPad')>0||u.indexOf('Nexus 7')>0
+			};
+			//修正
+			if(match.Mobile){
+				match.Mobile = !match.iPad;
+			}
+			//基本信息
+			var hash = {
+				engine:['WebKit','Trident','Gecko','Presto'],
+				browser:['Safari','Chrome','IE','Firefox','Opera','UC','QQBrowser','QQ','Baidu','Maxthon','Sogou','LBBROWSER','Wechat','Taobao','Alipay','Weibo','Suning','iQiYi'],
+				os:['Windows','Linux','Mac','Android','iOS','iPhone','iPad','WP','BlackBerry','MeeGo','Symbian'],
+				device:['Mobile','Tablet']
+			};
+			_this.device = 'PC';
+			_this.language = (function(){
+				var g = (navigator.browserLanguage || navigator.language).toLowerCase();
+				return g=="c"?"zh-cn":g;
+			})();
+			for(var s in hash){
+				for(var i=0;i< hash[s].length;i++){
+					var value = hash[s][i];
+					if(match[value]){
+						_this[s] = value;
+					}
+				}
+			}
+			//版本信息
+			var version = {
+				'Chrome':function(){
+					return u.replace(/^.*Chrome\/([\d.]+).*$/,'$1');
+				},
+				'IE':function(){
+					var v = u.replace(/^.*MSIE ([\d.]+).*$/,'$1');
+					if(v==u){
+						v = u.replace(/^.*rv:([\d.]+).*$/,'$1');
+					}
+					return v!=u?v:'';
+				},			
+				'Firefox':function(){
+					return u.replace(/^.*Firefox\/([\d.]+).*$/,'$1');
+				},
+				'Safari':function(){
+					return u.replace(/^.*Version\/([\d.]+).*$/,'$1');
+				},
+				'Maxthon':function(){
+					return u.replace(/^.*Maxthon\/([\d.]+).*$/,'$1');
+				},
+				'QQBrowser':function(){
+					return u.replace(/^.*QQBrowser\/([\d.]+).*$/,'$1');
+				},
+				'QQ':function(){
+					return u.replace(/^.*QQ\/([\d.]+).*$/,'$1');
+				},
+				'Baidu':function(){
+					return u.replace(/^.*BIDUBrowser[\s\/]([\d.]+).*$/,'$1');
+				},
+				'UC':function(){
+					return u.replace(/^.*UC?Browser\/([\d.]+).*$/,'$1');
+				},
+				'Wechat':function(){
+					return u.replace(/^.*MicroMessenger\/([\d.]+).*$/,'$1');
+				},
+				'Taobao':function(){
+					return u.replace(/^.*AliApp\(TB\/([\d.]+).*$/,'$1');
+				},
+				'Alipay':function(){
+					return u.replace(/^.*AliApp\(AP\/([\d.]+).*$/,'$1');
+				},
+				'Weibo':function(){
+					return u.replace(/^.*weibo__([\d.]+).*$/,'$1');
+				},
+				'Suning':function(){
+					return u.replace(/^.*SNEBUY-APP([\d.]+).*$/,'$1');
+				},
+				'iQiYi':function(){
+					return u.replace(/^.*IqiyiVersion\/([\d.]+).*$/,'$1');
+				}
+			};
+			_this.version = '';
+			if(version[_this.browser]){
+				_this.version = version[_this.browser]();
+			}
+		};
 	</script>
 </body>
 </html>

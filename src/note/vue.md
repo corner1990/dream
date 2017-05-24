@@ -835,6 +835,52 @@ var demo03 = new Vue({
 </script>
 ```
 
-## 组件
+## 组件 
+
+### 使用组建
+- 注册组建 `Vue.compoent(tab,options)`
+- 对于自定义标签明，Vue.js不强制要求遵循[W3C规则]()(小写并包含一个短杠)
+- 组建在注册以后，便可以在父实例的模块中已自定义元素的形式使用，要确保在初始化实例之前注册了组件
+- 局部注册
+    + 不必在全局注册每个组件。通过使用组件实例注册，可以使组建仅在另一个实例/组建的作用域中可用
+
+
+```
+//  注册组建
+Vue.component('tab',{
+    template:'<div>wo shi zu jian ce shi</div>'
+})
+
+// html文档
+<div class="tab-wrap">
+    <tab></tab>
+</div>
+
+// js 创建实例
+new Vue({
+    el:'.tab-wrap'
+})
+
+// 局部注册
+var tabHd = {
+    template:'<h2>我是头部</h2>'
+}
+
+Vue.component('tab',{
+    templates:{
+        // tab 将只能在父模版中使用
+        'tab':tabHd
+    }
+})
+```
+
+### DOM 模板解析说明
+当使用DOM作为模板是，会有一些限制，Vue只有在浏览器解析标准化HTML后才能获取模板内容。像这些元素 `<ul>`` ，`<ol>`，`<table>` ，`<select>` 限制了能被它包裹的元素， 而一些像 <option> 这样的元素只能出现在某些其它元素内部。
+
+### `data` 必须是函数
+- 通过Vue构造器传入的各种选项大多数都可以在组建立用。但是data必须函数
+
+
+
 
 
