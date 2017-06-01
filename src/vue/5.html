@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>自定义事件</title>
+</head>
+<body>
+	<div id="counter">
+		<p>{{total}}</p>
+		<btn-count v-on:increment="incrementTotal"></btn-count>
+		<btn-count v-on:increment="incrementTotal"></btn-count>
+	</div>
+
+<script src="/res/js/global/vue.js"></script>
+<script>
+	Vue.component('btnCount', {
+		data: function () {
+			return {
+				count: 0
+			}
+		},
+		methods: {
+			increment: function () {
+				this.count += 1
+				this.$emit('increment')
+			}
+		},
+		template: '<button v-on:click="increment">{{count}}</button>'
+	})
+
+	new Vue({
+		el: '#counter',
+		data: {
+			total: 0
+		},
+		methods: {
+			incrementTotal: function () {
+				this.total += 1
+			}
+		}
+	})
+
+</script>
+</body>
+</html>
