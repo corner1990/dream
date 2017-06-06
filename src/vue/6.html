@@ -10,7 +10,11 @@
 		<btn-count v-on:increment="incrementTotal"></btn-count>
 		<btn-count v-on:increment="incrementTotal"></btn-count>
 	</div>
-	<currency v-model="price"></currency>
+	
+	<br>
+	<div id="curreny">
+		<curreny v-model="price"></curreny>
+	</div>
 
 <script src="/res/js/global/vue.js"></script>
 <script>
@@ -41,28 +45,33 @@
 		}
 	})
 
-	// 自定义表单输入元素
-	Vue.component('currency', {
-		props: ['val'],
+	Vue.component('curreny', {
+		template: `
+			<span>$ <input ref="input" :value="value" v-on:input="updata($event.target.value)">
+			</span>
+		`,
+		props:['value'],
 		methods: {
-			//不是直接更新值，而是使用此方法对输入值进行格式化和位数限制
-			updataVal: function (val){
-				var formattedVal = val
-					//删除两侧空格
+			updata: function (value) {
+				let fornmattedVal = value
 					.trim()
-					//保留2 小数位
-					.slice(0, value.index.of('.') + 3)
-
-					//如果不统一，手动覆盖保持一致
-					if (formattedVal !== val) {
-						this.$ref.input.value = formattedVal
+					.slice(0, value.indexOf('.') + 3)
+					if (fornmattedVal !== value) {
+						this.$refs.input.value = fornmattedVal
 					}
-
-					// 通过input事件发出值
-					this.$emit('input', Number(formattedVal))
+					console.log(fornmattedVal)
+				this.$emit('input', Number(fornmattedVal))
 			}
-		},
-		template: '<button>count</button>'
+		}
+	})
+
+	new Vue({
+		el: '#curreny',
+		data: function () {
+			return {
+				price: 0
+			}
+		}
 	})
 
 </script>
