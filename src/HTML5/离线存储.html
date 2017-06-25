@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>离线存储</title>
+</head>
+<body>
+<button type="button">clicke Me</button>
+<script>
+	//离线检测
+	// if (navigator.onLine) {
+	// 	console.log('正常工作')
+	// } else {
+	// 	console.log('离线')
+	// }
+	//html5 提供的两个事件 online，offline
+
+	// window.addEventListener('online', () => {
+	// 	console.log('online')
+	// }, false)
+
+	// window.addEventListener('offline', () => {
+	// 	console.log('offsline')
+	// }, false)
+
+	//cookie 
+	var CookieUntil = {
+		get: function (name) {
+			let cookie = document.cookie
+			let cookieName = encodeURIComponent(name)
+			let cookieStart = cookie.indexOf(cookieName)
+			let cookieVal = null
+
+			if (cookieStart > -1) {
+				var cookieEnd = cookie.indexOf(';', cookieStart)
+				if (cookieEnd == -1) {
+					cookieEnd = cookie.length
+				}
+				cookieVal = decodeURIComponent(cookie.substring(cookieStart + cookieName.length +1, cookieEnd))
+			}
+
+			return cookieVal
+		},
+		set: function (name, val, expries, path, domain, secure){
+			var cookieText = encodeURIComponent(name) + '=' + encodeURIComponent(val);
+
+			//expries 设置过期时间
+			if (expries instanceof Date) {
+				cookieText += '; expries=' + expries.toGMTString()
+			}
+
+			//设置路径 path
+			if (path) {
+				cookieText += '; path=' + path
+			}
+
+			// 是否设置域 
+			if (domain) {
+				cookieText += '; domain=' + domain
+			}
+
+			//设置Source 只能通过SSL链接才能传输
+			if (secure) {
+				cookieText+= '; secure'
+			}
+
+			document.cookie = cookieText
+		},
+		unset: function (name, path, domain, secure) {
+			this.set(name, '', new Date(0), path, domain, secure)
+		}
+	 }
+
+	 // 函数绑定 
+	 var on = function (el, type ,fn) {
+	 	el.addEventListener(type, fn, false)
+	 }
+	 var hander = {
+	 	mes: 'event handled',
+	 	handleclick: function (event) {
+	 		console.log(this.mes,event.type,this)
+	 	}
+	 }
+
+	var btn = document.querySelector('button')
+	
+	// on(btn, 'click', function (event) {
+	// 	hander.handleclick(event)
+	// })
+
+// function bind (fn, context) {
+// 	return function () {
+// 		console.log(context,arguments)
+// 		return fn.apply(context,arguments)
+// 	}
+// }
+
+	// on(btn, 'click', bind(hander.handleclick, hander))
+	on(btn, 'click' ,hander.handleclick.bind(hander))
+
+	function add (num1, num2) {
+		return num1 + num2
+	}
+
+	function curriedAdd (num) {
+		return add(5, num)
+	}
+
+	function  curry (fn) {
+		let args = Array.prototype.slice.call(arguments, 1)
+		return function () {
+			let innerArgs = Array.prototype.slice.call(arguments)
+			let finalArgs = args.concat(innerArgs)
+			console.log(args, 'args')
+			console.log(innerArgs, 'innerArgs')
+			console.log(finalArgs, 'finalArgs')
+			return fn.apply(null, finalArgs)
+		}
+	}
+	console.log(curriedAdd(3))
+
+	function bind (fn, context) {
+		var args = Array.prototype.slice.call(arguments, 2)
+		return function () {
+			var innerArgs = Array.prototype.slice.call(arguments)
+			var finalArgs = args.concat(innerArgs)
+
+			return fn.apply(context, finalArgs)
+		}
+	}
+
+	var handler = {
+		mes: 'event handler',
+		handleclick: function (name, event) {
+			console.log(this.mes + ':' + name + ':' + event.type, this)
+		}
+	}
+	// 函数绑定 
+	 var on = function (el, type ,fn) {
+	 	el.addEventListener(type, fn, false)
+	 }
+
+	var btn = document.querySelector('button')
+
+	on(btn, 'click', bind(handler.handleclick, handler, 'myBtn'))
+
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
