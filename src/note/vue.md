@@ -33,7 +33,7 @@ resolve : {
     }
 }
 ```
-    
+
 ## 起步
 - 页面直接通过标签引用vue
 ```
@@ -117,7 +117,7 @@ var list = new Vue({
 ```
 
 - 绑定事件
-以用 v-on 指令绑定一个事件监听器  
+  以用 v-on 指令绑定一个事件监听器  
 
 ```  
 //html
@@ -160,7 +160,7 @@ var list = new Vue({
 ```
 
 - 自定义组建  
-组件系统是 Vue 的另一个重要概念，因为它是一种抽象，允许我们使用小型、自包含和通常可复用的组件构建大型应用。
+  组件系统是 Vue 的另一个重要概念，因为它是一种抽象，允许我们使用小型、自包含和通常可复用的组件构建大型应用。
 ```
 // html
 <ol class="ol-origin">
@@ -811,9 +811,9 @@ var demo03 = new Vue({
     可以使用 `v-model` 指令在表单控件元素上创建双向数据绑定。它会根据控件类型自动获取正确的方法来更新元素。
 
 > `v-model`不甘心表单控件的初始化所生成的值。因为它会选择Vue实例数据来作为具体的值。
-> 
+>
 > 对于要求IME（如中文，日语，韩语）语言，会发现那v-model不会在 ime 构成中得到更新。如果你也想实现更新，请使用 input事件。
-> 
+>
 ### 文本
 ### 多行版本
 ```
@@ -875,12 +875,201 @@ Vue.component('tab',{
 ```
 
 ### DOM 模板解析说明
-当使用DOM作为模板是，会有一些限制，Vue只有在浏览器解析标准化HTML后才能获取模板内容。像这些元素 `<ul>`` ，`<ol>`，`<table>` ，`<select>` 限制了能被它包裹的元素， 而一些像 <option> 这样的元素只能出现在某些其它元素内部。
+当使用DOM作为模板是，会有一些限制，Vue只有在浏览器解析标准化HTML后才能获取模板内容。像这些元素 `<ul>`，`<ol>`，`<table>` ，`<select>` 限制了能被它包裹的元素， 而一些像 <option> 这样的元素只能出现在某些其它元素内部。
 
 ### `data` 必须是函数
 - 通过Vue构造器传入的各种选项大多数都可以在组建立用。但是data必须函数
 
+### 使用Prop 
+
+-  使用Prop传递数据
+-  组件实例的作用域是孤立的。这意味着不能(也不应该)在子组件的模板内直接引用父组件的数据。要让子组件使用父组件的数据，我们需要通过子组件的props选项。
+-  子组件要显示的用`props`选项声明他期待获得的数据
+```
+Vue.component('child', {
+    // 声明 props
+    props: ['message'],
+    //像data一样，prop 可以用在模板内
+    //同样也可以在vm实例中，'this.message' 调用
+    template: '<span>{{this.message}}</span>'
+})
+```
+
+### camelCase.kebab-case
+HTML特性是不区分大小写，当使用的不是字符串模版，camelCased（驼峰）命名的prop需要转换为相对应的kebab-case（短横线隔开）命名
+
+```
+Vue.component('child', {
+    //js使用驼峰命名
+    props: ['myMes'],
+    template: '<span>{{myMes}}</span>'
+})
+
+//html使用横线隔开
+<child my-mes="hello"></child>
+```
+
+### 动态Prop
+于绑定到任何普通的HTML特性相类似，就是用`v-bind`,然后当父元素组建的人数据变化时，该变化也会传到给组件
+
+```
+<div>
+    <input type="text" v-model="parentMsg"><br>
+    <child v-bind:my-mes="parentMsg"></child>
+</div>
+
+//小tip : v-bind简写
+<child :my-mes="parentMsg"></child>
+```
+
+### 字面量语法VS动态语法
+
+```
+//字符串方式
+<com some-prop="1"></com>
+
+//传一个数值
+<com :some-prop="1"></com>
+```
+
+### 单项数据流
+Prop是单项绑定的：当父组件的属性变化时，将传导给子组件，但是不会反过来。这么设置主要是避免子组件无意间修改了父组件的状态。
+
+### Prop 验证
+- 可以为组建的`props`指定验证规格，如果传入的数据不符合规范，Vue就会发出警告。
+- 要指定验证规格，需要用对象的形式，不能使用字符串数据
+
+```
+Vue.component('example', {
+     props: {
+        // 基础类型检测 （`null` 意思是任何类型都可以）
+        propA: Number,
+        // 多种类型
+        propB: [String, Number],
+        // 必传且是字符串
+        propC: {
+          type: String,
+          required: true
+        },
+        // 数字，有默认值
+        propD: {
+          type: Number,
+          default: 100
+        },
+        // 数组／对象的默认值应当由一个工厂函数返回
+        propE: {
+          type: Object,
+          default: function () {
+            return { message: 'hello' }
+          }
+        },
+        // 自定义验证函数
+        propF: {
+          validator: function (value) {
+            return value > 10
+          }
+        }
+      }
+})
+```
+
+- `type`可以是下边原生构造器
+    + String
+    + number
+    + Boolean
+    + function
+    + Object
+    + Array
+- `type`也可以h是一个自定义构造函数。使用`instanceof`检测。
 
 
+## 自定义事件
+父组件是使用 props 传递数据给子组件，如果子组件要把数据传递回去就需要用自定义事件实现
 
+### 使用`v-on` 绑定自定义事件
+    每个Vue实例都实现了事件接口(Events interface)
+- `$on(eventNmae)` 监听事件
+- `$emit(eventNmae)` 触发事件
+- Vue的事件系统分离自浏览器的EventTarget API。尽管它们的运行类似，但是$on 和 $emit 不是addEventListener 和 dispatchEvent 的别名。
+- 父组件可以在使用子组件的地方直接用 v-on 来监听子组件触发的事件
+- 不能用$on侦听子组件抛出的事件，而必须在模板里直接用v-on绑定
+
+```
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>自定义事件</title>
+</head>
+<body>
+    <div id="counter">
+        <p>{{total}}</p>
+        <btn-count v-on:increment="incrementTotal"></btn-count>
+        <btn-count v-on:increment="incrementTotal"></btn-count>
+    </div>
+
+<script src="/res/js/global/vue.js"></script>
+<script>
+    Vue.component('btnCount', {
+        data: function () {
+            return {
+                count: 0
+            }
+        },
+        methods: {
+            increment: function () {
+                this.count += 1
+                this.$emit('increment')
+            }
+        },
+        template: '<button v-on:click="increment">{{count}}</button>'
+    })
+
+    new Vue({
+        el: '#counter',
+        data: {
+            total: 0
+        },
+        methods: {
+            incrementTotal: function () {
+                this.total += 1
+            }
+        }
+    })
+
+</script>
+</body>
+</html>
+```
+
+- 想在某个组件的根元素上监听一个原生事件。可以使用 .native 修饰 v-on 。
+
+```
+ <btn-count v-on:click.native="handerFn"></btn-count>
+```
+### 使用自定义事件的表单元素
+
+自定义事件可以用来创建自定义表单输入组件，使用`v-model`来进行数据双向绑定。
+
+### 非父子组件通信
+
+简单的场景，可以使用一个空的vue实例作为事件总线
+
+```javascript
+let bus =  new Vue()
+
+//触发事件a中的事件
+bus.$emit('id-selected', 1)
+
+//在组件b中创建钩中监听事件
+bus.$on('id-selected', function (id) {
+  //do something
+})
+```
+
+## 使用Slot分发内容
+
+为了让组件可以组合，需要一种方式来混合父组件的内容与子组件自己的模板，这个过程被称为内容分发
+
+### 编译作用域
 

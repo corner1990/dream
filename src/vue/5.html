@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>自定义事件</title>
+</head>
+<body>
+	<div id="counter">
+		<p>{{total}}</p>
+		<btn-count v-on:increment="incrementTotal"></btn-count>
+		<btn-count v-on:increment="incrementTotal"></btn-count>
+	</div>
+	<currency v-model="price"></currency>
+
+<script src="/res/js/global/vue.js"></script>
+<script>
+	Vue.component('btnCount', {
+		data: function () {
+			return {
+				count: 0
+			}
+		},
+		methods: {
+			increment: function () {
+				this.count += 1
+				this.$emit('increment')
+			}
+		},
+		template: '<button v-on:click="increment">{{count}}</button>'
+	})
+
+	new Vue({
+		el: '#counter',
+		data: {
+			total: 0
+		},
+		methods: {
+			incrementTotal: function () {
+				this.total += 1
+			}
+		}
+	})
+
+	// 自定义表单输入元素
+	Vue.component('currency', {
+		props: ['val'],
+		methods: {
+			//不是直接更新值，而是使用此方法对输入值进行格式化和位数限制
+			updataVal: function (val){
+				var formattedVal = val
+					//删除两侧空格
+					.trim()
+					//保留2 小数位
+					.slice(0, value.index.of('.') + 3)
+
+					//如果不统一，手动覆盖保持一致
+					if (formattedVal !== val) {
+						this.$ref.input.value = formattedVal
+					}
+
+					// 通过input事件发出值
+					this.$emit('input', Number(formattedVal))
+			}
+		},
+		template: '<button>count</button>'
+	})
+
+</script>
+</body>
+</html>
