@@ -55,7 +55,7 @@
 ## 环境配置  
 
 SX： [darwin](http://npm.taobao.org/mirrors/node/v5.7.0/node-v5.7.0.pkg)
-  + Windows：
++ Windows：
     * [x64](http://npm.taobao.org/mirrors/node/v5.7.0/node-v5.7.0-x64.msi)
     * [x86](http://npm.taobao.org/mirrors/node/v5.7.0/node-v5.7.0-x86.msi)
 - 安装操作：
@@ -138,7 +138,7 @@ SX： [darwin](http://npm.taobao.org/mirrors/node/v5.7.0/node-v5.7.0.pkg)
   + 别名：rm
 
 > 注意：所有别名必须在新版本的 PowerShell 中使用  
-> 
+>
 
 #### [NRM](https://github.com/Pana/nrm)   Node 镜像管理工具 
 #### [ICONV](https://www.npmjs.com/package/iconv) 编码转换插件
@@ -154,23 +154,23 @@ SX： [darwin](http://npm.taobao.org/mirrors/node/v5.7.0/node-v5.7.0.pkg)
         $ node --use_strict  
         $ .exit 退出环境  
 
--   执行脚本    
+- 执行脚本    
         $ node -e 'console.log("hello world")'  
 
--   运行脚本    
+- 运行脚本    
     +   $ node index.js
     +   $ node path/index.js
     +   $ node path/index
-    
--   查看帮助 
+
+- 查看帮助 
     +   node --help 
 
 ### 全局对象  
 -   globa  
         类似于客户端JavaScript环境中的window
--   process  
+- process  
         用于获取当前Node进程信息，一般用于获取环境变量之类的信息  
--   console  
+- console  
         Node中内置的console模块，提供操作控制台的输入输出功能，常见的使用法师月客户端类似
 
 ### 异步操作  
@@ -182,16 +182,16 @@ SX： [darwin](http://npm.taobao.org/mirrors/node/v5.7.0/node-v5.7.0.pkg)
 
 - 什么是I/O
         可以理解为从输入到输出之间的转化过程
--   node采用chrome V8引擎处理JavaScript脚本，V8最大的特点就是单线程运行，一次只能运行一个任务  
--   Node 大量采用了异步编程（asynchronous operation），即任务不是马上执行，而是常在队列的尾部，等前面的任务执行完后再执行。
--   提到代码的响应能力
+- node采用chrome V8引擎处理JavaScript脚本，V8最大的特点就是单线程运行，一次只能运行一个任务  
+- Node 大量采用了异步编程（asynchronous operation），即任务不是马上执行，而是常在队列的尾部，等前面的任务执行完后再执行。
+- 提到代码的响应能力
 
 ### 回调函数的设计
 - 如果函数需要回调，一定是在参数的最后边  
 - 错误优先的的回调函数  
   +   因为之后的操作大多数都是一步的方式，无法听过trycatch捕获异常
-  +   错误优先的回到函数
-<br>
+  + 错误优先的回到函数
+    <br>
 
         约定第一个参数为上一步的错误对象 
 
@@ -345,7 +345,7 @@ SX： [darwin](http://npm.taobao.org/mirrors/node/v5.7.0/node-v5.7.0.pkg)
     + 将npm目录配置到其他目录时，必须将该目录放到环境变量中，否则无法再全局使用  
 
 - [NPM 常用命令](https://docs.npmjs.com/)  
-  
+
     + `$ npm config`
     + `$ npm init`
     + `$ npm info`
@@ -497,7 +497,8 @@ console.timeEnd('async');
 
 - 文件流的方式读取  
     ```
-  fs.readStream(path[,options])
+    fs.readStream(path[,options])
+    ```
 
   const path = require('path');
   const fs = require('fs');
@@ -513,7 +514,7 @@ console.timeEnd('async');
     //通知结束  此时data是完整文档
     console.log(data)
   })
-    ```
+    ​```
 
 
 ### 文件写入   
@@ -521,7 +522,7 @@ console.timeEnd('async');
     为了确保操作没有额外的问题，一定使用绝对路径的方式  
 
 - 异步文件写入  
-    
+
      `fs.writeFile(file,data[,option],callback(err))`
 
 - 同步文件写入  
@@ -602,4 +603,13 @@ console.timeEnd('async');
 
 - http基础  
 
+
+
+
+### 测试服务器性能 
+
+- `ab -n1000 -c10 http://127.0.0.1:5000/`
+  + `-n1000` 请求数
+  + `-c10` 并发请求数
+  + http地址后边必须要有斜线
 

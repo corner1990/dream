@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>实现tab选项卡功能</title>
+	<style type="text/css">
+		*{padding: 0;margin: 0}
+        #app{
+            width: 500px;height: 300px;margin: 0 auto;background-color: #def3ff;
+        }
+        .top{
+            height: 50px;line-height: 50px;width: 100%;background-color: #51988e;
+        }
+        .top ul li{display: inline-block;padding:0 10px;}
+        .top .active{background: #2a715a;}
+        .top ul li a{text-decoration: none;color: white;}
+        .bottom{
+        }
+	</style>
+</head>
+<body>
+<div id="app">
+	<div class="top">
+		<ul>
+			<li v-for="tab in tabs" :class="{active: tab === currentView}"><a href="javascript:;" @click="tabToggle(tab)">{{tab}}</a></li>
+		</ul>
+	</div>
+	<div class="content">
+		<compoents :is="currentView" keep-alive></compoents>
+	</div>
+</div>
+<script src="/res/js/global/vue.js"></script>
+<script>
+	let tab01 = Vue.extend({
+		template: '<p>我是tab01</p>'
+	})
+	let tab02 = Vue.extend({
+		template: '<p>我是tab02</p>'
+	})
+
+	let app = new Vue({
+		el: '#app',
+		data: {
+			tabs: ["tab01", "tab02"],
+			currentView: 'tab01'
+		},
+		components: {
+			tab01: tab01,
+			tab02: tab02
+		},
+		methods: {
+			tabToggle: function (tabText) {
+				this.currentView = tabText
+			}
+		}
+	})
+</script>
+</body>
+</html>
