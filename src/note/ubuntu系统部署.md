@@ -1,4 +1,4 @@
-# Ubuntu系统部署
+# Linux系统部署
 
 ### 链接 
 ```
@@ -10,6 +10,37 @@
  $ ssh admin@127.0.0.1
  输入管理员密码、登录到服务器
 ```
+### 系统部署是遇到的错误
+
+```
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+IT IS POSSIBLE THAT SOMEONE IS DOING SOMETHING NASTY!
+Someone could be eavesdropping on you right now (man-in-the-middle attack)!
+It is also possible that a host key has just been changed.
+The fingerprint for the RSA key sent by the remote host is
+SHA256:FhiDxUUEBbiKRSHu5TywcDhS1DOV6Ce9uUCu0Ea1LrA.
+Please contact your system administrator.
+Add correct host key in /Users/corner/.ssh/known_hosts to get rid of this message.
+Offending ECDSA key in /Users/corner/.ssh/known_hosts:4
+RSA host key for 你的服务器地址 has changed and you have requested strict checking.
+Host key verification failed.
+
+//最后得解决方法
+在终端使用终端删除原来的配置，具体步骤如下
+1. $ vi .ssh
+2. 使用上下键选择 known_hosts 文件，然后回车，删除你服务器的配置 大概如下
+	你的服务器IP地址 ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAtLNvJz6i25pbuJIHMwAX/tPJbboD4el+7bB/pEZ3rTHAotugbDbRECPErP+OjQF1M1F3FMngdV7gtrfGcH0iKO9Zlhs0ZX6Xi6DmwJgvRFKSYPNXtejTdG+D+Zwc1SX2SS69kTiv6hRAt5vmu9P0NmDTDqp+3j+NLmI3N0zwlUVnasUTTijdtHV1NJF/q95eXOwnlWUTmPhAHMXk+QPb9c+Stzx7GKypzuBV0POgOXXbJRkUErG5z+NtPo/82M8yafOoumeP8YlmY7I2vl0+q+k9ovdabe8+Uzwho++7FnoCR2VViwCdCS/igad7cLHEjmKSrQBKinCD4yLGWxL25Q==
+
+3.ssh-keygen -R +输入服务器的IP
+4.重新连接服务器，进入第五步
+5.Are you sure you want to continue connecting (yes/no)?
+6.输入yes，然后回车
+```
+
+
+
 ### 安装nvm
 
 ```
@@ -29,9 +60,36 @@
 	使用nvm ls-remote查看所有远端版本。
 	使用nvm install安装某个版本，如nvm install v5.3.0。
 	使用nvm use切换到某个版本，如nvm use v5.3.0使用5.3.0，nvm use system使用系统版本。
+```
+### 在安装完成上述步骤以后做一个Demo
 
 ```
+const http = require('http');
+const hostname = '0.0.0.0';
+const port = 3000;
+const server = http.createServer((req, res) => {
+res.statusCode = 200;
+res.setHeader('Content-Type', 'text/plain');
+res.end('Hello World\n');
+});
+server.listen(port, hostname, () => {
+console.log(`Server running at http://${hostname}:${port}/`);
+});
+
+//然后发现公网并不能访问，后来经过查资料，发现需要配置网络和安全组那里
+1.进入exs控制面板
+2.进入在左侧菜单找到网络和安全，选择子项目安全组
+3.点击配置规则按钮
+4.添加安全组规则
+5.写自己服务监听的端口 格式：80/80
+6.授权对象： 0.0.0.0/0   //这个具体我也不是很清楚反正这么写可以用
+7.再使用浏览器访问,就可以了
+```
+
+
+
 ###  安装nginx
+
 ```javascript
 javascript
 //使用cd命令切换到下载目录 我直接安装在跟目录
