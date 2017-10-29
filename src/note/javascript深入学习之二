@@ -1,0 +1,361 @@
+    
+### call深入理解
++ call方法的作用：
+    - 首先我们让原型上的call方法执行，在执行call方法的时候，让我们的fn方法中的this变为第一个参数值obj，然后再把这个函数执行`fn.call(ibj)`
+    
+```
+function fn () {
+    console.log(this)
+}
+//自己模拟内置call方法
+Function.prototype.myCall = function (content) {
+    //-> myCall方法中的this关键字变为context的值->obj
+    //-> 让this这个函数中的"this"关键字变为context
+    //eval(this.toString().replace('this', 'obj'))
+    //-> 让fn方法执行
+    
+}
+fn.myCall(obj) //方法中的this是fn
+my.myCall(obj) //方法中的this是my
+
+function fn1() {console.log(1, this)}
+function fn2() {console.log(2, this)}
+fn1() //1 window
+fn2() //2 window
+fn1.call(fn2) //方法首先在执行的时候按照原型链机制，找到Function.prototype 上的call方法，执行call方法，此时call方法中的this是我们要操作的fn1，在call方法执行的过程中首先让‘this’关键字变为fn2，然后执行fn1方法 -> 1， fn2
+
+//只要出现一下多个(两个以上都是)call的情况下，调用的都是后边的方法,fn1只是用来查找call的方法
+fn1.call.call.call(fn2) //fn2()
+//执行过程
+1.找到fn1原型上的call -> this -> fn1.prototype
+2.在this.call -> 通过原型链机制从原型上找到自己
+3.在this.call -> 通过原型链机制从原型上找到自己
+4.this -> this = fn2
+5.this()
+```
+
+### call、apply、bind的区别
+- apply和call方法的作用完全相同，都是改变this关键字并且执行方法，而且在严格模式和非严格模式下对于第一个参数特殊值的处理是一样的，
+- apply和call的区别在于call给fn传递参数的时候是一个一个的传递，apply传递值是把要传递的值统一放在一个数组里边，进行操作，但是也相当于一个一个的传参
+- 使用场景，给fn传参比较少，并且确定的情况下使用call，参数较多或者不确定的时候使用apply
+- bind方法：这个方法在IE-6-8不兼容，-> 和call、apply作用类似，用来改变this关键字，区别在于bind方法只是改变this关键字，并没有立即执行函数，执行bind会有一个返回值，就是改变this后的返回当前函数，
+- 预处理：事先改变为我们想要的结果，在需要的用到的时候，就可以直接调用
+
+```
+    var obj = {name: 'leo', age: 12}
+    function fn (n1, n2) {console.log(this, n1 + n2)}
+    
+    //在非严格模式下, 我们第一个参数传什么值，函数里的this就是什么值，默认不写或者是null, undefined的情况下都是window
+    fn(2, 3) //window 5
+    fn.call(2, 3) //2 NAN
+    fn.call(obj, 2, 3) //obj 5
+    fn.call() //window
+    fn.call(null) //window
+    fn.call(undefined) //window
+    
+    //在严格模式下 ‘use strict’
+    //传谁就是谁，不传就是undefined
+    fn.call() // undefined
+    fn.call(null) //null
+    fn.call(undefined) //undefined
+    
+    var tempFn = fn.bind(obj, 1, 2)
+    tempFn() //obj ， 3
+```
+### 获取数组中的最大/最小值
+
+```
+var arr = [1,23, 34, 45, 67, 88, 200]
+1。数组排序法 ->数组排序->获取arr的第一个和最后一个
+arr.sort(function (a, b) {return a - b})
+var min = arr.shift()
+var max = arr.pop()
+
+2.使用Math对象的min和max方法
+//思路：调用Math.min方法，因为min、max需要一个的进行传参，顾使用apply修改this > Math.min.apply(window, arr)
+var min = Math.min.apply(window, arr)
+var max = Math.max.apply(window, arr)
+
+3.假设发，假设数组中的第一个值就是最大/最小值然后和其他值做对比
+var max = arr[0]
+for (var i =1; i< arr.length; i++) {
+    if (max < arr[i]) max = arr[i]
+}
+
+var min = arr[0]
+for (var i =1; i< arr.length; i++) {
+    if (min > arr[i]) min = arr[i]
+}
+
+4.eval实现，首先进行字符串拼接，把“Math.min(“ + arr.toString()+  ”)“
+然后使用eval解析这个字符串
+var max = eval("Math.max(" + arr.toString()+  ")“)
+var min = eval("Math.min(" + arr.toString()+  ")“)
+
+//括号表达式，里边的内容用","号隔开，执行的时候只取最后一项
+(fn1,fn2)() // fn2()
+```
+
+### 获取数组中的平均值
+
+```
+//去掉一个最高分，去掉一个最低分，取平均分
+//实现思路，首先对数组机型排序，然后使用arr.jion方法使用‘+’拼接字符串，最后用eval执行
+var arr = [7, 9.8, 9.87, 9.96, 9.9, 9.6]
+1.数组排序
+arr.sort(function (a, b) {return a*100 -b*100})
+//因为js浮点数的机制，可能没法排序，使用假小数点后边保留两位，那么使用‘*100‘修正
+2.去除最低分
+arr.shit()
+3.去除最高分
+arr.pop()
+4.得到平均树
+var num = (eval(arr.join('+'))/arr.length).toFixed(2)
+
+//累数组转换为数组
+var fn = function () {
+    var agv = arguments
+    //1.//遍历法
+    var arr = []
+    
+    for (var i=0, len = agv.length; i < len ; i++) {
+        arr[i] = agv[i]
+    }
+    //打判断arr是否为数组
+    console.log(arr instanceof Array)
+    console.log(Array.prototype.toString.call(arr))
+    console.log( typeof arr == "object" && arr.constructor == Array)
+    //2.借用数组slice方法
+    //var arr = Array.prototype.slice.call(agv)
+    //简写的方式 可以通过Array的实例对象找到Array上的所有方法
+    var arr = [].slice.call(agv)
+}
+
+//对agv操作的时候可以借用Array上的方法
+```
+
+### sort 深入学习
+- 回调函数：把一个函数A当做值传递给另一个函数B，B方法执行的时候我们根据业务需求决定在某个时机调用函数A
+```
+var arr = [10, 90, 36, 78, 85, 21]
+arr.sort() //在不传参数的情况下只能处理10以内的数字排序
+
+arr.sort(function(a, b){
+    //a是遍历数组当前项
+    //b是数组项a的下一项
+    //arr为栗子： a = arr[0] -> b = arr[1]
+    //返回值是 >0 || <= 0
+    
+    return a - b //升序
+    return b - a //降序
+    return (a - b) //降序
+})
+
+//多维数组排序
+var  arr2 = [
+    {name: '张三',age: 20}, 
+    {name: '李思', age: 30},
+    {name: '王武', age: 80},
+    {name: 'leo', age: 256},
+    {name: 'luce', age: 15},
+]
+
+arr2.sort(function (a, b) {
+    return a.age - b.age
+})
+
+//排序时使用name排序的问题
+arr2.sort(function (a, b) {
+ //使用localeCompare方法，该方法首先会把当前文字转换为26拼音，然后按照从前往后遍历，按照英文字母在26的字母的顺序返回，a在b的后边返回1，否则返回-1；如果拼音完全一样，该方法就会按照文字在Unicode编码的位置做对比
+	return a.name.localeCompare(b.name)
+})
+})
+
+```
+### 正则表达式
+    正则: 式就是一种规则，用来处理字符串。  
+    处理： 1.判断一个字符串是否符合我们制定的规则。 //reg.test(str)  2.把字符串中符合我们制定的规则的内容捕获到。 //reg.exec(str)  
+
+- 创建正则
+    + 字面量：  var reg = /\d+/ig;
+    + 实例的方式创建： var reg = new RegExp('\d');
+
+- 元字符： 元字符就是在正则表达式之间具有特殊意义的字符。；每一个正则表达式都由元字符和修饰符组成。
+    + \: 转义符，转义后边的字符代表的含义
+    + ^: 以某个元字符开始
+    + $: 以某个元字符结束
+    + \n: 匹配一个换行符
+    + .: 匹配除了\n以外的任意字符
+    + 代表次数的量词元字符：
+        - *: 出现零到多次
+        - +: 出现一到多次
+        - ?: 出现零次或者多次
+        - {n}: 出现多次
+        - {n,}: 至少出现多次
+        - {n, m}: 至少出现n次，最多出现m次
+    + 分组： 把一个大正则划分成多个小正则 var reg = /^(\s*) | (\s*)$/;
+        - x|y: x或者y中的任意一个；
+        - [xyz]: x,y,z 中的任意一个
+        - [^xyz]： 除了xyz的其他任意字符
+        - [a-z]: 小写a-z之间的任意字符
+        - [^a-z]： 除了小写a-z之间任意字符的字符
+        - \d: 0-9之间的数字
+        - \b: 一个边界符
+        - \w: 数字，字母，下划线中的任意字符; [a-zA-z0-9_]
+        - \s: 匹配一个 空白祖父，空格，一个制表符，换页符...
+    + 有效的数组正则，正数，负数，零，小数
+        - '.': 可以出现，但是后边必须有数字
+        - 最开始可以是[+|-],
+        - 整数部分：一位可以是0-9，多位的时候第一个不可以是0
+        - var reg = /^[+-]?(\d| ([1-9]\d+))(\.\d+)$/
+- 正则的两种创建方式的区别： 
+- 在字面量的方式中，//中间的所有字符都是元字符，有的具有特殊意义，大部分是代表本身的普通元字符
+- 字面量的方式中一切都是元字符，所以不能进行字符串拼接。而使用实例的方式穿件的时候就可以。
+- 字面量的时候`\d`就可以，而实例的话需要转义`\\d`
+
+
+```
+//简单的正则表达式
+1. 检测年龄 18-65之间 
+//思路： 把18-19分为一组，20-59分为一组，60-65分为一组 1[89] | [2-5]\d | 6[0-5]
+var reg = /^(1[89]|[2-5]\d|6[0-5])$/
+```
+
+- exec -> 正则捕获 
+    + 每一个捕获都会返回一个结果，如果捕获不到匹配的内容，就返回null，如果捕获到匹配的内容返回一个数组
+    + 捕获内容的格式
+        - 捕获到的内容是一个数组
+        - 数组的第一项是当前大正则不活动内容
+        - index：数组的第二项是当前捕获内容的开始下标
+        - input：捕获的原始字符串
+    + 正则捕获的特点
+        - 懒惰性 -> 每一次执行exec捕获第一个匹配内容，在不进行任何处理的情况下，执行多次匹配得到的结果始终是第一个匹配结果。
+        - lastIndex：是正则每一次在字符串中开始缠着的位置，默认值是0；每次捕获都会从lastIndex的位置开始，如果我没不做特殊的处理，lastIndex永远是0；
+        - 解决正则的懒惰性：在正则表达式的后边添加修饰符g
+        - 原理：加了全局修饰符，正则每一次捕获结束以后，lastIndex会变为最新的值，下一次不过从最新的位置开始
+        - 修饰符
+            + g: globale 代表全局
+            + i；ignoreCase 忽略大小写
+            + m: multiline: 多行匹配
+    + 正则匹配的贪婪性：正则表达式每次都会捕获可以匹配的最长的结果，如/\d+/.exec('2012hello2017'),2符合匹配规则，2012也匹配规则，正则匹配出来的就是2012，这就是正则的贪婪性。
+    + 如何解决正则的贪婪性 -> 在量词元字符后边添加一个 `?`号即可； 例如/\d+?/g;
+    + `?`号在正则中的作用
+        - 放在普通元字符中后边代表出现0-1次; /\d?/ -> 表示出现0-1次0-9的数字
+        - 出现在一个量词后边，表示解决正则的贪婪性；/\d+?/g;
+        - f 
+    + 字符串中的match方法可以捕获所有的正则匹配的字符串，返回一个数组
+    + 正则分组
+        - 改变优先级
+        - 分组引用 `var reg = /^(\w)\1(\w)\2$/` \1代表和第一个分组出现一模一样的内容;\2代表和第二个分组出现一模一样的内容
+        - 分组捕获 -> 正则在捕获的时候不仅仅吧大正则匹配的内容捕获到而且还可以吧小分组匹配的内容捕获到
+        - (?:\d+) -> 表示不匹配的内容
+
+```
+//打印每次正则匹配的结果
+var str = '1234hello490world567'
+var reg = /\d+/g;
+var arr = []
+var res = reg.exec(str)
+while(res) {
+    arr.push(res[0]);
+    res = reg.exec(str)
+}
+console.log(arr)
+
+//字符串中的match方法捕获所有的匹配内容
+
+var str = '1234hello490world567'
+var reg = /\d+/g;
+//返回值是一个数组，里边是所有正则匹配的内容
+var arr = str.match(reg)
+console.log(arr) // ["1234", "490", "567"]
+
+//注：虽然m字符串的match方法可以捕获所有的内容，使用起来要不exec方便很多，但是macth中存在一些自己处理不了的问题，在分组捕获的情况下，match只能捕获到大正则匹配的内容，而对于小正则捕获的内容，是无法获取的。
+
+//正则中的分组捕获
+// \1代表和第一个分组出现一模一样的内容；
+// \2代表和第二个分组出现一模一样的内容
+// 一模一样：表示里边的内容也要一模一样
+var reg = /^(\w)\1(\w)\2$/;
+var str = 'hhaa';
+console.log(reg.exec(str))
+
+//分组捕获
+var reg = /(\d{2})(\d{4})(\d{4})(\d{2})(\d{2})(\d)(\d|X)/g;
+var str = '622425199011258339';
+var arr = reg.exec(str);  //["6224251990112583", "62", "2425", "1990", "11", "25", "8", "3", index: 0, input: "622425199011258339"]
+//arr[0] : 大正则匹配的内容
+//arr[1] : 第一个分组捕获的内容
+//arr[2] : 第二个分组捕获的内容
+//arr[3] : 第三个分组捕获的内容
+//arr[n] : 第n个分组捕获的内容
+
+```
+
+- replace方法 -> 把原有的字符贴换成新的字符，在不使用正则的情况下，replace只能替换一个字符  
+    + 正则的原理：首先我们和exec捕获一样，把所有的和我们正则匹配的都捕获到，然后把捕获的内容替换成我们需要替换的内容  
+    + `/\d+/g` 把所有匹配的都替换为我们想要的。  
+    + 当replace方法的第二个参数是一个匿名函数的时候，正则匹配了多少个内容，匿名函数就会被调用多少次。  
+    + 每一次执行匿名函数，传入的`arguments`内容和我们使用正则exec捕获返回的内容很相似(即使正则有分组，我们也可以通过`arguments`获取到分组捕获的内容)  
+    + `return` —> 返回什么，就相当于把匹配的内容替换成什么。
+
+```
+var reg = /\d+/g;
+var str = 'hello123hello456hello';
+str.replace('hello', 'haha')
+//在不使用正则的情况下，replace只能替换一个字符
+console.log(str) //"haha123hello456hello"
+//当replace方法的第二个参数是一个匿名函数的时候，正则匹配了多少个内容，匿名函数就会被调用多少次。
+var iNum = 0;
+var str = 'hello123hello456hello';
+str.replace(reg, function () {
+    console.log(arguments);
+    //第一次打印： ["123", 5, "hello123hello456hello", callee: ƒ, Symbol(Symbol.iterator): ƒ]
+    //第二次打印： ["456", 13, "hello123hello456hello", callee: ƒ, Symbol(Symbol.iterator): ƒ]
+    console.log(`第${++iNum}次调用`) //打印出来了调用的次数
+    return 'world'
+    })
+console.log(str) //"helloworldhelloworldhello"
+
+
+```
+
+
+### 类型检测的四种方法
+- `typeos` ：饭hide都是字符串，字符串对应的是数据类，例如：`number`, `string`, `boolean`, `undefined`, `function`, `object`
+    + 使用方法 `console.log(typeof 'a')` //'string'
+    + 局限性：`console.log(typeof null)` -> 'object'；不能具体的细分是数组还是正则，还是对象中其他的值，因为使用typeof检测对象类型数据，返回的都是'object'
+- `instance`: 检测某一个实例是否属于某一个类
+    + `consle.log([] instanceof Array)` -> true;
+    + 局限性: 不能用来处理字面量方式创建出来的基本数据类型值
+    + 对于基本数据类型来说，字面量方式创建出来的结果和实例方式创建出来的结果是有一定区别的，从严格的意义上来讲，只有实例创建出来的结果才是标准的对象数据类型值。也是标准的Number这个类的一个实例，对于字面量方式创建出来的结果是基本数据类型值，不是严谨的实例，但是由于js的松散特点，导致了可以使用Number,prototype上提供的方法
+    + `console.log(1 instanceof Number) ` -> false; `console.log(new Number(1) instanceof Number)` -> true
+    + `instanceof`的特性，只要在当前实例的原型链上，我们用`instanceof`检测出来的结果都是true。
+- `construceor`: 构造函数 作用和`instanceof`非常相似
+    + `console.log([].constructor === Array)` -> true; `console.log([].constructor === Regexp)` -> false;
+    + 可以处理基本数据类型的检测；`var num = 1; console.log(num.constructor === Number)`
+    + `constructor`检测Object和instanceof不一样，一般情况下是经检测不了的 `console.log(/\d/.constructor === RegExp)`-> true;`console.log(/\d/.constructor === Object)` -> false
+    + 局限性：我们可以把类的原型链进行重写，在重写的过程中很有可能出现把之前constructor给覆盖了，这样检测的结果解释不准确的  
+    + 对于特殊的数据类型null和undefined，他们的所属类是Null和Undefined，但是被浏览器保护起来了，不允许我们在外面访问使用。
+```
+//以下情况的改写，会导致constructor被覆盖
+function Fn() {}
+Fn.prototype = new Array;
+var f = new Fn();
+console.log(f.constructor) // Array()
+```
+- `Object.prototype.toString.call()` 相对前边三个，最常用，最准确的数据类型检测方式；
+    + 思路：首先获取Object原型上的toString方法，让方法执行，并且改变方法中的this关键字的指向
+    + 用法: `var num = 1; console.log(Object.prototype.toString.call(num))` -> '[object Number]'
+
+- toString的理解
+    + 通常情况下是转换为字符串，但是在某些toString方法不仅仅是转换为字符串
+    + 对于Number、String、Boolean、Array、RegExp、Date、Function原型链上的toString都是把当前的数据类型转换为字符串的类型(他们的作用仅仅是用来转换为字符串的)
+    + `Object.prototype.toString` 并不是用来转换字符串的，他是返回当前方式执行主体(this关键字)所属类的详细信息
+    + `console.log((1).toString())`//->number.Prototype.toString  ->'1' 转换为字符串
+    + `console.log((1).__proto__.__proto__.toString())` //-> Objcet.prototype.toString  -> "[object Objcet]"
+    + `console.log((128).toString(2))` -> 10000000 //转换为二进制，参数可以是2，8，10...
+
+
+
+
