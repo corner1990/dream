@@ -90,7 +90,7 @@
 				arc : function(){
 					this.renderStart();
 					console.log(this.type);
-				
+
 					this.ctx.arc(this.x,this.y,100,this.startAngle*Math.PI/180,this.endAngle*Math.PI/180);
 					this.renderEnd();
 				},
@@ -105,7 +105,6 @@
 				text : function(){
 					this.renderStart();
 					console.log('绘制文字',this.txt);
-					
 					this.ctx.font = this.txtfz + 'px "微软雅黑"';
 					this.ctx.txtBaseLine = 'bottom';
 					this.ctx.txtAlign = this.textAlign;
@@ -122,7 +121,7 @@
 
 					this.ctx.width = this.w;
 					this.ctx.lineTo(this.TX,this.TY);
-					
+
 				},
 				// 保存原始状态太
 				renderStart:function(){
