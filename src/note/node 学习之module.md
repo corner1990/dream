@@ -1,13 +1,54 @@
-//common.js规范 规定了没一个文件都是一个模块，模块之间是相互独立的
-//规范规定了 导出的时候使用module.exports
-//定义了如何引用一个模块require
+# node 学习之module
 
+### 模块分为三大类：
+
+- 核心模块
+- 第三方模块
+- 文件模块，我们自己写的自定义模块
+
+### 几个常用的方法
+
+- `const fs = require('fs')` fs:文件操作模块
+
+  - `fs.access('file path')`： 新增方法，判断一个文件是否存在，如果不存在会报错，存在则不会发生任何异常（Linux经典原则：没有消息就是好消息）
+
+- `const path = require('path')` node 路径处理模块
+
+  - `__dirname` 当前文件所在的文件路径，和cwd是有区别的
+
+  - `path.resolve()` 方法用来解析绝对路径 `path.resolve(__dirname, '1.txt')`：就能拿到1.txt的绝对路径了
+
+  - `path.join`  拼接路径使用，可以传递多个参数; `path.join('a', 'n')`
+
+  - `path.basename: ` 经常使用，获取去除了后缀名的名字 `path.basename('1.txt', '.txt')` 
+
+  - `console.log(path.extname('1.txt'));` 获取文件的后缀名(最后一个.后边的内容)
+
+  - `path.posix.delimite` //win下得到的是; mac&linux下是:
+
+  - `console.log(path.sep)` //获取路径分割符： win下是\ Linux下是/
+
+  - ` vm 虚拟机 模块 runinThisContext` 使用方法如下：
+
+    ```javascript
+    let vm = require('vm') //eval是依赖于环境的
+    let a = 1;
+    vm.runInThisContext('console.log(a);');
+    ```
+
+### 实现module模块
+
+- `common.js` 规范 规定了没一个文件都是一个模块，模块之间是相互独立的
+- 规范规定了 导出的时候使用module.exports
+- 定义了如何引用一个模块require
+
+```javascript
 //一个模块外边给你加了一个闭包(function (exports, require, module, __dirname, __filename) {})
 //模块可以省略后缀 如果是js或者json或者node文件可以省略后缀
 console.time('school');
 // let res = require('./school')
 // 同步读取，并且为了节约性能，还有缓存，将 module.exports 后边的结果进行缓存， 如果又缓存，直接返回结果
-
+//引入需要的模块
 let path = require('path')
 let fs = require('fs')
 let vm = require('vm')
@@ -137,5 +178,8 @@ let json = req('./school.json')
 console.log(json);
 console.time('school');
 
+```
 
+### 总结
 
+通过以上代码，实现了简单的module模块，并处理的缓存，代码也不难，主要就是几个方法之间调用的时候需要理清思路，然后在根据方法的作用，理解做了什么。

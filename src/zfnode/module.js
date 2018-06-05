@@ -18,7 +18,7 @@ const path = require('path')
 // console.log(path.resolve('./1.txt')); //解析绝对路径
 // console.log(path.resolve(__dirname, '1.txt'));
 // path.join : 拼接路径使用，可以传递多个参数
-// console.log(path.join('a', 'n')); 
+console.log(path.join('a', 'n'));
 
 // 获取基本路径
 // path.basename: 经常使用，获取去除了后缀名的名字
