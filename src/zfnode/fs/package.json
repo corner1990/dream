@@ -1,0 +1,12 @@
+{
+  "name": "fs",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "iconv-lite": "^0.4.23"
+  },
+  "bin": {
+    "test-bin": "bin/a.js"
+  }
+}
