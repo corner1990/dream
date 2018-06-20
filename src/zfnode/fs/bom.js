@@ -30,7 +30,6 @@ console.log(res)
 
 //专门处理node不支持的编码处理
 //第三方模块： iconv-lite
-
 let iconv = require('iconv-lite')
 let fs = require('fs')
 let path = require('path')
@@ -72,7 +71,7 @@ console.log(sd.write(buf2).toString())
 // 3.在命令行输入我们配置的命令 test-bin: 终端执行a.js的内容
 
 
-//fs fileStstem 文件系统，提供了很多方法，每个方法都有一个同步和一个异步的方法
+//fs fileSystem 文件系统，提供了很多方法，每个方法都有一个同步和一个异步的方法
 // 例如： readFileSync readFile
 // 异步的就多了一个callback函数
 // node所有函数的第一个参数都是error。这是规范
@@ -216,18 +215,3 @@ function copy (source, target) {
 copy('2.txt', '3.txt') 
 
 
-// 关闭文件
-// 文件打开是需要关闭的，因为linux打开的文件数是有限制的
-let fs = require('fs')
-let path = require('path')
-fs.open(path.join(__dirname, '2.txt'), 'w', (err, wFd) => {
-    fs.write(wFd, Buffer.from('环球易购'), 0, 12, 0, (err, bytesWritted) => {
-        //当write方法触发了毁掉函数，并不是真正的的文件写入了，先把内容写入到缓存去，
-        // 我们们使用fs.fsync强制将缓存区的内容写入后关闭文件
-        fs.fsync(wFd, ()=> {
-            fs.close(wFd, ()=> {
-                console.log('关闭')
-            })
-        })
-    })
-})
