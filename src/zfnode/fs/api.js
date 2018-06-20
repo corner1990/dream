@@ -95,9 +95,10 @@ const path = require('path')
  * 
  * @param {string} dir 
  */
-function rmDir(dir) {
+function removeDir(dir) {
     // 读取到文件内容
     let files = fs.readdirSync(dir) 
+    // 假如文件加不为空，则进入循环，为空的话直接跳过循环，直接删除当前代码
     for (var i =0; i < files.length; i++) {
         let newPath = path.join(dir, files[i])
         //判断文件是文件夹还是文件
@@ -105,11 +106,46 @@ function rmDir(dir) {
         
         if (stat.isDirectory()) {
             // 如果是文件夹就一直递归走下去
-            rmDir(newPath)
+            removeDir(newPath)
         } else { //如果是文件，则直接删除当前文件
             fs.unlinkSync(newPath)
         }
     }
+    // 等代码循环完毕，最后删掉文件夹
+    fs.rmdirSync(dir)
 }
 
-rmDir('a')
+removeDir('a')
+
+// 异步删除 
+// promise实现
+const fs = require('fs')
+const path = require('path')
+function rmPromise (dir) {
+    //返回一个promise对象
+    return new Promise((resolve, reject) => {
+        //拿到文件状态
+        fs.stat(dir, (err, stat) => {
+            //如果文件是文件夹，则走这里，否则走else逻辑
+            if (stat.isDirectory()) {
+                fs.readdir(dir, (err, files) => {
+                    // 如果又错误，则世界抛出错误
+                    if (err) reject(err)
+                    // 使用map方法映射，得到新的路径
+                    files = files.map(file => path.join(dir, file))
+        
+                    //遍历文件夹，读取内容，然后调用自身
+                    files = files.map(file => rmPromise(file))
+                    
+                    //使用promise.all拿到所有promise执行后的结果，并删除当前目录
+                    Promise.all(files).then(()=> {fs.rmdir(dir, resolve)})
+                })
+            } else {
+                //如果dir是文件，则直接删除，并且把resolve作为回调函数
+                fs.unlink(dir, resolve)
+            }
+            
+        }) 
+    })
+}
+rmPromise('a')
