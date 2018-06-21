@@ -1,14 +1,26 @@
-// 创建文件夹
-// fs.mkdirSync
-// 目录创建必须确保父级文件夹存在
+# FileSystem学习（二）
+
+### 创建文件夹
+
+- `fs.mkdirSync` 同步创建
+- `fs.mkdir` 异步创建
+- 需要注意的是创建目录必须确保父级文件夹存在，默认创建的文件加会在当前目录的更目录
+
+```javascript
+//简单的使用示例
 const fs = require('fs')
 fs.mkdir('a', err => {
     if (err) throw Error(err)
 })
 
-//创建目录 make mkdir a/b/c
+```
+
+- 同步创建文件夹（性能低）
+
+```javascript
 //同步创建 性能低
-// const fs = require('fs')
+
+const fs = require('fs')
 /**
  * @desc 创建文件加函数
  * @param  {string} dir 需要创建的文件夹名
@@ -22,7 +34,7 @@ fs.mkdir('a', err => {
 function makep (dir) {
     // 分割拿到路经数组
     let paths = dir.split('/')
-
+   
    // 对路径数组遍历，确保每一级目录都存在
     for (let i = 1; i < paths.length; i++) {
         let newPath = paths.slice(0, i).join('/')
@@ -37,7 +49,11 @@ function makep (dir) {
     }
 }
 makep('a/b/c/d')
+```
 
+- 异步创建目录, 异步创建性能会比同步好很多，但是异步创建不能使用`for` 循环，只能递归回调
+
+```javascript
 // 异步创建目录 性能相对比较好
 // 需要注意的是，异步使用的时候永远不能使用for循环
 const fs = require('fs')
@@ -45,7 +61,7 @@ const fs = require('fs')
  * @desc 异步创建目录
  * @param  {string} dir 我们创建目录传入的目录名称
  *
- * 实现思路：
+ * 实现思路： 
  * 1.在函数内内部创建遍历，保存路径数组（paths），偏移量（index）
  * 2.内部创建一个方法，建立作用于，然后函数调用自身实现创建
  */
@@ -88,21 +104,29 @@ function makep (dir) {
 makep('a/b/c/d/e/f', function () {
     console.log('创建完毕')
 })
+```
 
 
-// 删除文件夹
-const fs = require('fs', err => {
-    console.log(err)
-})
 
-// fs.rmdir('a')
-fs.rmdirSync('a')
+### 删除文件目录
 
-//删除文件
-fs.unlink('a.js', err => {})
-fs.unlinkSync('b.js')
+> 删除文件目录和创建文件目录刚好相反，需要删除的文件夹必须为空才能删除成功，否则就会报错，为了实现这个，我们需要先了解几个api
 
-//查看文件加的内容，是文件还是文件夹
+- `fs.unlink || fs.unlinkSync` 删除文件
+
+  ```javascript
+  // 异步会有回调，同步直接返回结果
+  fs.unlink('a.js', err => {})
+  fs.unlinkSync('b.js')
+  ```
+
+- `fs.stat || fs.statSync`查看文件目录内容
+
+  - 返回值`stat`, 会有一些方法
+  - `stat.isFile()` 当前文件是不是文件
+  - `stat.isDirectory()`当前文件是不是文件目录
+
+```javascript
 // fs.stat
 const fs = require('fs')
 fs.stat('a', (err, stat) => {
@@ -117,15 +141,14 @@ fs.stat('a', (err, stat) => {
     }
     console.log(stat)
 })
+	
+```
 
-// 删除文件夹
-// 同步实现
-const fs = require('fs')
-const path = require('path')
+- 同步删除文件目录
 
+```javascript
 /**
- *
- * @param {string} dir
+ * @param {string} dir 要删除的文件目录
  *
  * 实现思路：
  *  1.拿到文件目录之后使用fs.readdirSync同步读取文件目录的内容
@@ -157,43 +180,73 @@ function removeDir(dir) {
 
 removeDir('a')
 
-// 异步删除
-// promise实现
-const fs = require('fs')
-const path = require('path')
+```
 
-/**
- * @description  promsie 实现异步删除目录
- * @param  {string} dir 需要删除的目录
- * 实现思路：
- *    1.拿到目录以后使用fs.stat读取当前目录
- *    2.判断是否是文件目录， 如果是，则回调自己，如果是文，就直接删除文件
- */
-function rmPromise (dir) {
-    //返回一个promise对象
-    return new Promise((resolve, reject) => {
-        //拿到文件状态
-        fs.stat(dir, (err, stat) => {
-            //如果文件是文件夹，则走这里，否则走else逻辑
-            if (stat.isDirectory()) {
-                fs.readdir(dir, (err, files) => {
-                    // 如果又错误，则世界抛出错误
-                    if (err) reject(err)
-                    // 使用map方法映射，得到新的路径
-                    files = files.map(file => path.join(dir, file))
+- 异步删除目录 `Promise`实现
 
-                    //遍历文件夹，读取内容，然后调用自身
-                    files = files.map(file => rmPromise(file))
+  ```javascript
+  const fs = require('fs')
+  const path = require('path')
+  
+  /**
+   * @description  promsie 实现异步删除目录
+   * @param  {string} dir 需要删除的目录
+   * 实现思路：
+   *    1.拿到目录以后使用fs.stat读取当前目录
+   *    2.判断是否是文件目录， 如果是，则回调自己，如果是文，就直接删除文件
+   */
+  function rmPromise (dir) {
+      //返回一个promise对象
+      return new Promise((resolve, reject) => {
+          //拿到文件状态
+          fs.stat(dir, (err, stat) => {
+              //如果文件是文件夹，则走这里，否则走else逻辑
+              if (stat.isDirectory()) {
+                  fs.readdir(dir, (err, files) => {
+                      // 如果又错误，则世界抛出错误
+                      if (err) reject(err)
+                      // 使用map方法映射，得到新的路径
+                      files = files.map(file => path.join(dir, file))
+  
+                      //遍历文件夹，读取内容，然后调用自身
+                      files = files.map(file => rmPromise(file))
+  
+                      //使用promise.all拿到所有promise执行后的结果，并删除当前目录
+                      Promise.all(files).then(()=> {fs.rmdir(dir, resolve)})
+                  })
+              } else {
+                  // 如果dir是文件，则直接删除，并且把resolve作为回调函数
+                  fs.unlink(dir, resolve)
+              }
+  
+          })
+      })
+  }
+  rmPromise('a')
+  
+  ```
 
-                    //使用promise.all拿到所有promise执行后的结果，并删除当前目录
-                    Promise.all(files).then(()=> {fs.rmdir(dir, resolve)})
-                })
-            } else {
-                // 如果dir是文件，则直接删除，并且把resolve作为回调函数
-                fs.unlink(dir, resolve)
-            }
+  
 
-        })
-    })
-}
-rmPromise('a')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
