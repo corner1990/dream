@@ -197,3 +197,55 @@ function rmPromise (dir) {
     })
 }
 rmPromise('a')
+
+
+// 异步删除文件目录(深度遍历删除法)
+const fs = require('fs')
+const path = require('path')
+
+function rmDir(dir, fn) {
+    console.log(dir)
+    fs.access(dir, (err) => {
+        //读取文件目录，如果没有，则直接报错
+        if (err) throw new Error(err)
+
+        //如果有目录存在，则读取目录内容
+        fs.readdir(dir, function (err, files) {
+            
+             //使用next方法递归文件目录
+             function next (index) {
+                 console.log('index', index)
+                if (index == files.length) return ''
+                //拼接新路径
+                let newPath = path.join(dir, files[index])
+                //读取目录内容，如果是
+                fs.stat(newPath, (err, stat) => {
+                    if (stat.isDirectory()) {
+                        rmDir(newPath, () =>  next(index++))
+                    }
+                })
+            }
+
+            next(0)
+        })
+        
+    })
+}
+
+rmDir('a', ()=>{console.log('文件删除完毕')})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
