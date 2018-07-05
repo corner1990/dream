@@ -5,14 +5,7 @@ let ReadStream = require('./ReadStream')
 
 //常见的可读流： socket、req
 //创建一个可读流，使用new ReadStream 返回一个可读流对象
-let rs = new ReadStream(path.join(__dirname, '1.txt'), {
-    flags: 'r', // 文件操作都是读取操作
-    // encoding: 'utf8', //默认是null， null代表的是buffer
-    autoClose: true, //文件读取完毕以后是否自动关闭
-    highWaterMark: 3, //默认是64k， 60*1024b
-    start: 0, //开始读取文件的位置
-    end: 8, //读取文件的结束位置， 需要注意的是包前又包后(0-9 = 10) ,即闭区间
-})
+let rs = new ReadStream(path.join(__dirname, '1.txt'))
 
 // 默认情况下不会将文件中的内容输出
 // 内容回先创建一个buffer对象，并先读取3b， 如果没有监听data事件，则不会继续读取，直到我们监听data事件以后，就会疯狂的触发该事件

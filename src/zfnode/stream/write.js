@@ -63,15 +63,20 @@ let ws = fs.createWriteStream(path.join(__dirname, './1.txt'), {
     start: 0, //从那个为止开始往内部写
 })
 let i = 9;
+/**
+ * @description 一个写入文件方法
+ * 循环写入--i 到指定的文件，当flag等于false的时候，
+ */
 function write () {
     let flag = true;
+    // flag不等于true的时候，说明node正在写入文件，在读取到的内容会被添加到缓存区，等我们全部写入完毕以后，flag就会改变为true
     while(i > 0 && flag) {
         flag = ws.write(--i+'', 'utf8', ()=>{})
     }
 }
 
 
-
+// 每次消费光缓区中的内容，就会触发这个事件，我们就可以继续写入文件了
 ws.on('drain', () => {
     write()
     console.log('drain')

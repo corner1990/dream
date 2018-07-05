@@ -4,7 +4,7 @@ let fs = require('fs')
 let path = require('path')
 
 class WriteStream extends EventEmitter {
-    constructor (path, options) {
+    constructor (path, options = {}) {
         super()
         this.path = path
         this.flags = options.flags || 'w'
@@ -78,31 +78,45 @@ class WriteStream extends EventEmitter {
             })
         } else {
             // 专门用来将内容放入文件内存 写入到文件内
-            this.writing = true
             this._write(chunk, encoding, ()=>{
                 this.clearBuffer()
             })
         }
         return res
     }
+    /**
+     * @description 情况缓存区方法
+     */
     clearBuffer () {
         // 使用shift拿到一个buffer
         let buffer = this.buffers.shift()
         // 判断对象是否存在，存在则继续写入，如果不存在，则调用callback，触发drain事件
         if (buffer) {
             this._write(buffer.chunk, buffer.encoding, ()=>{
+                //回调函数继续调用自己，直到缓存区没有文件
                 this.clearBuffer()
-
             })
         } else {
             // 判断是否需要触发drain事件
+            this.writing = true
             if (this.needDrain) {
                 this.needDrain = false
                 this.emit('drain')
             }
-            // callback()
+            //这里的callback是我们在write那里传的回调函数
+            try {
+                // 莫名其妙的这里报错
+                callback()
+            } catch (e) {}
+            
         }
     }
+    /**
+     * @description 私有写入方法
+     * @param {buffer || String} chunk 需要写入的内容
+     * @param {String} encoding  写入文件的编码，默认为utf8
+     * @param {Function} callback 写入完成以后的回调函数
+     */
     _write (chunk, encoding, callback) {
         // 首先进行判断， 如果说文件没有打开，帮顶一个事件，监听open，等待open事件触发以后，回掉自己
         if (typeof this.fd !== 'number') {
