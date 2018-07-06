@@ -19,24 +19,30 @@ class LineReader extends EventEmitter {
         // 读出来的内容都是buffer类型
         while (char = this._rs.read(1)) {
           let current = char[0]
+          // console.log(current)
           // 在这里处理数据
           switch (current) {
             // 当遇到 \r时表示这一行就ok了
-            case this.RETURN:
-              console.log(this.RETURN)
+            // case this.RETURN:
+            case 13:
               // 将数据转换成buffer对象，然后tostring
-              this.emit('line', Buffer.from(this.buffer))
+              this.emit('line', Buffer.from(this.buffer).toString())
               // 发射完数据后将缓存去清空
               this.buffer.length = 0
 
               let c = this._rs.read(1)
-              if (c[0] !== this.LINE) this.buffer.push(c)
+              // if (c[0] !== this.LINE) this.buffer.push(c[0])
+              if (c[0] !== '0a') this.buffer.push(c[0])
               break;
             case this.LINE:
-
+            case '0a':
+              this.emit('line', Buffer.from(this.buffer).toString())
+              // 发射完数据后将缓存去清空
+              this.buffer.length = 0
               break;
           
             default:
+              // console.log(current == this.RETURN)
               this.buffer.push(current)
               break;
           }
@@ -46,7 +52,7 @@ class LineReader extends EventEmitter {
     
     this._rs.on('end', () => {
       // 结束时添加最后一行，然后发送出去
-      this.emit('line', Buffer.from(this.buffer))
+      this.emit('line', Buffer.from(this.buffer).toString())
       this.buffer.length = 0;
     })
   }
