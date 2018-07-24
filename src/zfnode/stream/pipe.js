@@ -55,7 +55,6 @@ let path = require('path')
 let rs = fs.createReadStream(path.join(__dirname, './1.txt'), {
   highWaterMark: 3 //这里为了展示读多少，写多少，在这里设置highWaterMark为3字节
 })
-
 rs.on('readable', () => {
   let res = rs.read(1)
   // rs._readableState.length 缓存区的个数
