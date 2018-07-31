@@ -12,12 +12,12 @@ let nickNames = []
 // 自己的说的话，不应该通知自己，应该通知别人呢
 /**
  * @description 重命名
- * @param {string} id 
- * @param {string} name 
+ * @param {string} id
+ * @param {string} name
  */
 function rename (id, name) {
   // 如果存在这个用户，就赋值
-  let res 
+  let res
   // 判断是否又当前用户名
   nickNames.forEach(key => {
     if (clients[key].nickName === name) res = true
@@ -30,24 +30,26 @@ function rename (id, name) {
 }
 /**
  * @description 私聊
- * @param {*} nickname 
- * @param {*} msg 
+ * @param {string} nickname 私聊的目标用户
+ * @param {string} msg 发送的消息
  */
 function private(nickname, msg, id) {
   let users
+  // 从连接列表拿到当前用的昵称
   let form = clients[id].nickName
+  // 找到当前用户要@的人，这里默认用户名不能重复
   nickNames.forEach(name => {
     if(clients[name].nickName === nickname) {
       users = clients[name]
     }
   })
-
+  // 发送消息给用户
   users.scoket.write(`${form}: ${msg}\r\n`)
 }
 
 /**
  * 展示用户列表
- * @param {string} id 
+ * @param {string} id 用户位移表示
  */
 function  showUsers(id, scoket) {
   let str = '当前在线用户：\r\n'
@@ -64,8 +66,8 @@ function  showUsers(id, scoket) {
 
 /**
  * @description 广播消息
- * @param {*} id 
- * @param {*} msg 
+ * @param {*} id 用户唯一标识
+ * @param {*} msg 发送的消息
  */
 function broadcast(id, msg) {
   // 广播消息的用户昵称
