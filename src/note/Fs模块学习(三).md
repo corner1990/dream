@@ -1,196 +1,367 @@
-# Fs模块学习(三)
+# TCP/IP学习(三)
 
-> 这里主要是进一步使用其他方法删除目录，提高自己对fs模块提供的api的熟悉度
+> 这里写一个简单的聊天室，用来理解和使用net的api，方便自己理解，
 
-### 异步删除（深度模式）
+### 聊天室设计
 
-> 核心思想就是遍历完成某一个目录以后，在遍历另外一个目录，最后开始冒泡删除
+> 可以展示当前在线人数，在线用户，使用指定命令进行操作
+
+- 默认情况下用户应该是匿名状态
+- 通过关机命令改名：r: newName
+-  支持显示在线用户列表 l
+-  广播功能： b: xxx
+-  私聊的功能： p:nickName: msg
+
+### 创建服务器
 
 ```javascript
-const fs = require('fs')
-const path = require('path')
+const net = require('net')
+const clients = {} // 保存用户
+// 保存所有的用户名
+let nickNames = []
 
-/**
- *
- * @desc 异步深度循环删除目录
- * @param {string} dir 需要删除的目录
- * @param {function} callback 回调函数
- *
- * 实现思路：
- * 1.读取文件目录拿到当前目录所有的files
- * 2.调用next方法，并从0开始遍历files
- * 3.遍历结束，调用callbanck
- */
-function rmdir (dir, callback) {
-fs.readdir(dir, (err, files) => {
-    /**
-     * @desc 内部循环遍历使用的工具函数
-     * @param {Number} index 表示读取files的下标
-     */
-    function next(index) {
-        // 如果index 等于当前files的时候说明循环遍历已经完毕，可以删除dir，并且调用callback
-        if (index == files.length) return fs.rmdir(dir, callback)
-        // 如果文件还没有遍历结束的话，继续拼接新路径，使用fs.stat读取该路径
-        let newPath = path.join(dir, files[index])
-        // 读取文件，判断是文件还是文件目录
+const server = net.createServer(function (scoket) {
+  server.maxConnections = 20
+  // 创建用户ID
 
-        fs.stat(newPath, (err, stat) => {
-            if (stat.isDirectory() ) {
-                // 因为我们这里是深度循环，也就是说遍历玩files[index]的目录以后，才会去遍历files[index+1]
-                // 所以在这里直接继续调用rmdir，然后把循环下一个文件的调用放在当前调用的callback中
-                rmdir(newPath, () => next(index+1))
-            } else {
-                // 如果是文件，则直接删除该文件，然后在回调函数中调用遍历nextf方法，并且index+1传进去
-                fs.unlink(newPath, () => next(index+1))
-            }
-        })
-    }
-    next(0)
+
+  // 用户名
+  scoket.setEncoding('utf8')
+  scoket.on('data', chunk => {
+  })
 })
-}
+let port = 3000
+server.listen(port, 'localhost', () => {
+  console.log(`server start ${port}`)
+})
 
- rmdir('a', () => {console.log('文件删除完毕')})
+// 当服务端发生错误时，会调用监听函数
+server.on('error', err => {
+  if (err.code == 'EADDRINUSE') server.listen(++port)
+  if (err) console.log(err)
+})
+
+// 当服务器错误时
+server.on('close', () => {
+  console.log('服务端关闭')
+})
+```
+
+### 设置默认参数
+
+```javascript
+// 默认情况下用户应该是匿名状态
+// 通过关机命令改名：r: newName
+// 支持显示在线用户列表 l
+// 广播功能： b: xxx
+// 私聊的功能： p:nickName: msg
+
+const net = require('net')
+const clients = {} // 保存用户
+// 保存所有的用户名
+const server = net.createServer(function (scoket) {
+  server.maxConnections = 20
+  // 创建用户ID
+  let key = scoket.remoteAddress + scoket.remotePort
+  clients[key] = {nickName: '匿名', scoket}
+  nickNames.push(key)
+
+  server.getConnections((err, count) => {
+    scoket.write(`欢迎来到聊天室 当前用户数量：${count}个， 请输入用户名\r\n`);
+  })
+
+  // 用户名
+  scoket.setEncoding('utf8')
+  scoket.on('data', chunk => {
+    // 处理换行回车的问题
+    chunk = chunk.replace(/(\r\n)|(\r)/, '')
+    let chars = chunk.split(':')
+
+    switch (chars[0]) {
+      case 'r':
+        //改名
+        rename(key, chars[1])
+        break;
+      case 'l':
+        //展示用户列表
+        showUsers(key, scoket)
+        break;
+      case 'b':
+        //广播
+        broadcast(key, chars[1])
+        break;
+      case 'p':
+        //私聊
+        private(chars[1], chars[2], key)
+        break;
+      default:
+        scoket.write('您输入的问题无法解毒，请重新输入\r\n')
+        break;
+    }
+  })
+})
+let port = 3000
+server.listen(port, 'localhost', () => {
+  console.log(`server start ${port}`)
+})
+
+// 当服务端发生错误时，会调用监听函数
+server.on('error', err => {
+  if (err.code == 'EADDRINUSE') server.listen(++port)
+  if (err) console.log(err)
+})
+
+// 当服务器错误时
+server.on('close', () => {
+  console.log('服务端关闭')
+})
 
 ```
 
-### 同步删除目录(广度模式)
-
-> 核心思想：遍历目录，把所有的路径都放入一个程序池，然后循环删除所有文件
+### 完成设置（修改）昵称
 
 ```javascript
 /**
- * 广度遍历删除文件
+ * @description 重命名
+ * @param {string} id
+ * @param {string} name
  */
-const fs = require('fs')
-const path = require('path')
-/**
- * @desc 同步广度删除
- * @param {string} dir 需要删除的目录
- *
- * 实现思路
- * 1.创建需要的变量，arr=> 保存所有的路径的文件池 current => 当前遍历到的路径 index => 记录比遍历的下标
- * 2.使用while循环，拿到所有的路径
- * 3.使用fs.stat判断，如果当前路径是一个目录，使用fs.readdirSync 读取所有文件内容，
- * 4.使用map函数映射files路经(拼接当前遍历到的carrent和file),
- * 5.添加到文件池中去
- */
-function rmdir(dir) {
-    let arr = [dir]
-    let current = null
-    let index = 0
-
-    while(current = arr[index++]) {
-        // 读取当前文件，并做一个判断，文件目录分别处理
-        let stat = fs.statSync(current)
-        //如果文件是目录
-        if (stat.isDirectory()) {
-            //读取当前目录，拿到所有文件
-            let files = fs.readdirSync(current)
-            // 将文件添加到文件池
-            arr = [...arr, ...files.map(file => path.join(current, file))]
-        }
-    }
-    //遍历删除文件
-    for (var i = arr.length - 1; i >= 0; i--) {
-        // 读取当前文件，并做一个判断，文件目录分别处理
-        let stat = fs.statSync(arr[i])
-        // 目录和文件的删除方法不同
-        if (stat.isDirectory()) {
-            fs.rmdirSync(arr[i])
-        } else {
-            fs.unlinkSync(arr[i])
-        }
-    }
+function rename (id, name) {
+  // 如果存在这个用户，就赋值
+  let res
+  // 判断是否又当前用户名
+  nickNames.forEach(key => {
+    if (clients[key].nickName === name) res = true
+  })
+  // 如果当前用户名已经存在，提示用户重新填写用户名
+  // 如果目前没有存在该用户名，则让用户修改
+  if (res) return clients[id].scoket.write('当前用户名已经存在，请重新输入\r\n')
+  else clients[id].nickName = name
+  clients[id].scoket.write(`您修改昵称成功，当前昵称${name}\r\n`)
 }
-
-rmdir('a')
-
+// 链接服务器：输入 r:new name 
+// 服务器会返回给你结果
 ```
 
-### 广度删除（异步调用）
 
-> 实现思路和同步模式一样，只是讲调用方式改成了异步
+
+### 实现广播逻辑
 
 ```javascript
 /**
- * 广度遍历删除文件 异步删除文件
+ * @description 广播消息
+ * @param {*} id 用户唯一标识
+ * @param {*} msg 发送的消息
  */
-const fs = require('fs')
-const path = require('path')
-
-/**
- * @desc 广度遍历删除文件目录
- * @param {String}     需要删除的目录
- * @param {FUnction}   任务完成以后执行的回调函数
- * 
- * 实现思路：
- * 1.创建文件池（arr），创建一个current对象，遍历的时候使用
- * 2.创建一个next方法，遍历查找文件和读取文件目录使用
- * 3.创建一个rm方法，主要用来删除文件
- */
-function rmdir (dir, callback) {
-    var arr = [dir] //文件池，保存所有的文件
-    var current = null //遍历文件的时候保存临时文件
-
-    /**
-     * 
-     * @param {Number} index 表示遍历文件池的下标 
-     */
-    function next (index) {
-        current = arr[index] //拿到当前遍历的值
-        if (!current) return rm(index-1) //判断是否为空，为空的话说明已经遍历结束，开始删除文件
-        //遍历删除所有文件和目录
-        //读取文件，对文件和文件目录进行不同的操作
-        fs.stat(current, (err, stat) => {
-            if (stat.isDirectory()) {
-                //如果是文件目录就读取文件目录的内容
-                fs.readdir(current, (err, files) => {
-                    //映射出新的路径，然后添加到文件池
-                   var temp = files.map( file => path.join(current, file))
-                    arr = [...arr, ...temp]
-                    //遍历文件池下一个文件
-                    next(index+1)
-                })
-            } else {
-                //如果是文件，则直接遍历文件池下一个文件
-                next(index+1)
-            }
-        })
-
-        /**
-         * @desc 删除目录方法
-         * @param {Number} index 需要删除的文件的标，
-         * 
-         * 实现思路：
-         * 1.通过index拿到当前需要删除的文件[文件目录]，判断是否为空，为空就直接清空文件池，调用callback
-         * 2.如果不为空，则使用fs.stat读取文件，查看是文件还是文件目录，
-         * 3.调用不同的方法删除该文件,并且调用自身，index在-1以后传入
-         * 
-         */
-        function rm (index) {
-            current = arr[index]
-            //如果为空，说明文件删除完毕，调用callback
-            if (!current) {
-                arr = null;
-                return callback && callback()
-            }
-            //如果文件不为空，则读取文件类型，然后调用不同的方法删除文件[文件目录]
-            fs.stat(current, (err, stat) => {
-                if (stat.isDirectory()) {
-                    fs.rmdir(current, err => rm(index-1))
-                } else {
-                    fs.unlink(current, err => rm(index-1))
-                }
-            })
-        }
+function broadcast(id, msg) {
+  // 广播消息的用户昵称
+  let name = clients[id].nickName
+  nickNames.forEach(key => {
+    if (key !== id) {
+      clients[key].scoket.write(`${name}: ${msg} \r\n`)
     }
-    //第一次开始遍历文件目录
-    next(0)
+  })
 }
-rmdir('a', ()=>{console.log('文件删除完毕')})
+
+// 链接服务器以后输入： b:testMsg 
+// 其他用户就能收到消息
 ```
 
-### 简单的学习回顾
+### 实现展示用户列表
 
-> 之前就学习了node，始终感觉写的不扎实，运用起来不是很熟练，最近决心花一段时间好好的提高一下自己的node水平，以上内容仅仅是个人学习和观点，如果有更好的思路，请和我分享....
+```javascript
+/**
+ * 展示用户列表
+ * @param {string} id 用户位移表示
+ */
+function  showUsers(id, scoket) {
+  let str = '当前在线用户：\r\n'
+  let nameList = ''
+  // 遍历 拿到所有的
+  nickNames.forEach(key => {
+    if (key !== id) {
+      nameList += `${clients[key].nickName}\r\n`
+    }
+  })
+  // 返回用户列表
+  scoket.write(str + nameList)
+}
+// 链接服务器，输入： l 回车
+// 展示当前用户列表
+```
 
+### 实现私聊
+
+```javascript
+/**
+ * @description 私聊
+ * @param {string} nickname 私聊的目标用户
+ * @param {string} msg 发送的消息
+ */
+function private(nickname, msg, id) {
+  let users
+  // 从连接列表拿到当前用的昵称
+  let form = clients[id].nickName
+  // 找到当前用户要@的人，这里默认用户名不能重复
+  nickNames.forEach(name => {
+    if(clients[name].nickName === nickname) {
+      users = clients[name]
+    }
+  })
+  // 发送消息给用户
+  users.scoket.write(`${form}: ${msg}\r\n`)
+}
+// 测试
+// 链接当前服务，输入： p:xxx:我们走私吧
+```
+
+### 这里是完整的代码
+
+```javascript
+// 默认情况下用户应该是匿名状态
+// 通过关机命令改名：r: newName
+// 支持显示在线用户列表 l
+// 广播功能： b: xxx
+// 私聊的功能： p:nickName: msg
+
+const net = require('net')
+const clients = {} // 保存用户
+// 保存所有的用户名
+let nickNames = []
+// 当客户端连接服务室 辉触发回调函数，默认提示输入用户名，就可以通信了
+// 自己的说的话，不应该通知自己，应该通知别人呢
+/**
+ * @description 重命名
+ * @param {string} id
+ * @param {string} name
+ */
+function rename (id, name) {
+  // 如果存在这个用户，就赋值
+  let res
+  // 判断是否又当前用户名
+  nickNames.forEach(key => {
+    if (clients[key].nickName === name) res = true
+  })
+  // 如果当前用户名已经存在，提示用户重新填写用户名
+  // 如果目前没有存在该用户名，则让用户修改
+  if (res) return clients[id].scoket.write('当前用户名已经存在，请重新输入\r\n')
+  else clients[id].nickName = name
+  clients[id].scoket.write(`您修改昵称成功，当前昵称${name}\r\n`)
+}
+/**
+ * @description 私聊
+ * @param {string} nickname 私聊的目标用户
+ * @param {string} msg 发送的消息
+ */
+function private(nickname, msg, id) {
+  let users
+  // 从连接列表拿到当前用的昵称
+  let form = clients[id].nickName
+  // 找到当前用户要@的人，这里默认用户名不能重复
+  nickNames.forEach(name => {
+    if(clients[name].nickName === nickname) {
+      users = clients[name]
+    }
+  })
+  // 发送消息给用户
+  users.scoket.write(`${form}: ${msg}\r\n`)
+}
+
+/**
+ * 展示用户列表
+ * @param {string} id 用户位移表示
+ */
+function  showUsers(id, scoket) {
+  let str = '当前在线用户：\r\n'
+  let nameList = ''
+  // 遍历 拿到所有的
+  nickNames.forEach(key => {
+    if (key !== id) {
+      nameList += `${clients[key].nickName}\r\n`
+    }
+  })
+  // 返回用户列表
+  scoket.write(str + nameList)
+}
+
+/**
+ * @description 广播消息
+ * @param {*} id 用户唯一标识
+ * @param {*} msg 发送的消息
+ */
+function broadcast(id, msg) {
+  // 广播消息的用户昵称
+  let name = clients[id].nickName
+  nickNames.forEach(key => {
+    if (key !== id) {
+      clients[key].scoket.write(`${name}: ${msg} \r\n`)
+    }
+  })
+}
+
+const server = net.createServer(function (scoket) {
+  server.maxConnections = 20
+  // 创建用户ID
+  let key = scoket.remoteAddress + scoket.remotePort
+  clients[key] = {nickName: '匿名', scoket}
+  nickNames.push(key)
+
+  server.getConnections((err, count) => {
+    scoket.write(`欢迎来到聊天室 当前用户数量：${count}个， 请输入用户名\r\n`);
+  })
+
+  // 用户名
+  scoket.setEncoding('utf8')
+  scoket.on('data', chunk => {
+    // 处理换行回车的问题
+    chunk = chunk.replace(/(\r\n)|(\r)/, '')
+    let chars = chunk.split(':')
+
+    switch (chars[0]) {
+      case 'r':
+        //改名
+        rename(key, chars[1])
+        break;
+      case 'l':
+        //展示用户列表
+        showUsers(key, scoket)
+        break;
+      case 'b':
+        //广播
+        broadcast(key, chars[1])
+        break;
+      case 'p':
+        //私聊
+        private(chars[1], chars[2], key)
+        break;
+      default:
+        scoket.write('您输入的问题无法解毒，请重新输入\r\n')
+        break;
+    }
+  })
+})
+let port = 3000
+server.listen(port, 'localhost', () => {
+  console.log(`server start ${port}`)
+})
+
+// 当服务端发生错误时，会调用监听函数
+server.on('error', err => {
+  if (err.code == 'EADDRINUSE') server.listen(++port)
+  if (err) console.log(err)
+})
+
+// 当服务器错误时
+server.on('close', () => {
+  console.log('服务端关闭')
+})
+
+```
+
+### 结束
+
+> 通过上边几十行代码，实现了一个简单的tcp聊天室，聊天室支持私聊，修改昵称，群聊，查看在线用户，
+>
+> 通过上述的练习，对net的基本功能，流有了一定的认识
+>
+> tcp是没有状态的，所以需要我们自己定义规则，然后按照自己定义的规则做一定的处理，http作为应用层，就会有很多可以操作的地方，如cookie，缓存，分片等等

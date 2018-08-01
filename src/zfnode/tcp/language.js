@@ -88,6 +88,7 @@ let server = net.createServer(function (scoket) {
 	})
 })
 
+// 服务器监听到request事件以后出发函数
 server.on('request', function (req, res) {
   console.log(req.url)
   console.log(req.headers)
@@ -98,6 +99,7 @@ server.on('request', function (req, res) {
     console.log('ok', data.toString())
   })
 
+  //  因为响应头不能前边有空格，所以做一个简单的处理
   req.on('end', () => {
 	 res.end(`
 http/1.1 200 OK
