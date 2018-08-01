@@ -41,8 +41,9 @@ const server = http.createServer((req, res) => {
         }
         // console.log(arrs)
     }
+    // 设置请求头 返回需要的语言包
     res.setHeader('content-type', 'text/plain;charset=utf8;')
     res.end(pack[lan].content)
 }) 
-
+// 监听端口
 server.listen('5000')

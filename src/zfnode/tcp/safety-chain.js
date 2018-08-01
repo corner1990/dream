@@ -63,23 +63,28 @@ let fs = require('fs')
 let path = require('path')
 let url = require('url')
 
+/**
+ * @description 解析host
+ * @param {string} referStr 需要解析的refer字符串
+ */
 let getHostName = referStr => {
 	let { hostname } = url.parse(referStr)
 	return hostname
 }
 
+// 白名单
 let whiteList = ['www.demo.com']
 const server = require('http').createServer((req, res) => {
-	// 拿到refer
+	// 1拿到refer
 	let refer = req.headers['referer'] || req.headers['referrer']
 
 	// 判断是否又refer，有可能没有refer
-	// 读取文件，返回给浏览器
 	let { pathname } = url.parse(req.url)
 	// p代表我们要找的文件
 	let p = path.join(__dirname, 'public', '.' + pathname) // 这里是请求文件
 
 	// 判断请求的文件有没有，没有的话直接结束，有的话在读取文件
+	// 读取文件，返回给浏览器
 	fs.stat(p, err => {
 		if (!err) {
 			if (refer) {
