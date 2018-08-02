@@ -1,10 +1,3 @@
-let options = {
-    hostname: 'localhost',
-    port: 3000,
-    path: '/',
-    methods: 'GET'
-}
-
 const http = require('http')
 const fs = require('fs')
 const path = require('path')
@@ -13,14 +6,23 @@ let ws = fs.createWriteStream(path.join(__dirname, './download.txt'))
 let pause = false
 let start = 0
 let step = 10
+
+// 请求参数
+let options = {
+    hostname: 'localhost',
+    port: 3000,
+    path: '/',
+    methods: 'GET'
+}
 /**
  * @description 下载文件
  */
 function download () {
+    // 跟新请求头
     options.headers = {
         Range: `bytes=${start}-${start + step}`
     }
-    // 更新位置
+    // 更新下标
     start += step
 
     // 发送请求
@@ -49,7 +51,7 @@ function download () {
 
 download()
 
-// 下载 每次获取10个
+// 下载 每次获取10个 我们在控制台进行操作 输入p是暂停，其他任意键是继续
 process.stdin.on('data', chunk => {
     chunk = chunk.toString()
     if (chunk.includes('p')) {
