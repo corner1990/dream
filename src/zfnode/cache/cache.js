@@ -99,7 +99,7 @@
 
 // function sendFile (req, res, p, stat) {
 //     let date = new Date(Date.now()+10*1000)
-//     // 设置 响应头
+//     // 设置 响应头 为最后的修改时间
 //     res.setHeader('Last-Modified', stat.ctime.toUTCString())
 //     // 强制不走浏览器缓存
 //     res.setHeader('Cache-Control', 'no-cache')
