@@ -37,6 +37,7 @@
   "dependencies": {
     "babel": "^5.8.38",
     "babel-core": "^6.23.1",
+    "http-proxy": "^1.17.0",
     "jquery-placeholder": "^2.1.1",
     "process-nextick-args": "^1.0.3",
     "vue": "^2.3.3"
