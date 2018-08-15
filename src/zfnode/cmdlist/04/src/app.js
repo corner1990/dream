@@ -27,9 +27,9 @@ let zlib = require('zlib')
 
 // 创建服务
 class Server {
-    constructor (args) {
+    constructor () {
         // 设置配置参数， 列表模板
-        this.config = {...config, ...args}
+        this.config = config
         this.templ = templ
     }
     start () {
@@ -47,11 +47,6 @@ class Server {
         return async(req, res) => {
             // 解析路径
             let {pathname} = url.parse(req.url)
-            if (pathname == 'favicon.ico') {
-                res.end()
-                res.statusCode = 404
-                return;
-            }
             // 拼接完整路径
             let p = path.join(this.config.dir, '.' + pathname)
             // 检测文件是否存在
@@ -145,9 +140,9 @@ class Server {
         // 断点续传 Rang:bytes=1-100
         // Accept-Range: bytes
         // Content-Range: bytes 1-10/800
+        
         // 检测是或否需要分片下载，拿到文件流
         let rs = this.range(req, res, p, statObj)
-        
         res.setHeader('Content-Type', mime.getType(p) + ';charset=utf8')
         let stream = this.compress(req, res, p, statObj)
         if (stream) {
@@ -165,6 +160,5 @@ class Server {
     }
 }
 
-// let server = new Server()
-// server.start()
-module.exports = Server
+let server = new Server()
+server.start()

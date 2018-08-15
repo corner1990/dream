@@ -27,9 +27,9 @@ let zlib = require('zlib')
 
 // 创建服务
 class Server {
-    constructor (args) {
+    constructor () {
         // 设置配置参数， 列表模板
-        this.config = {...config, ...args}
+        this.config = config
         this.templ = templ
     }
     start () {
@@ -47,11 +47,6 @@ class Server {
         return async(req, res) => {
             // 解析路径
             let {pathname} = url.parse(req.url)
-            if (pathname == 'favicon.ico') {
-                res.end()
-                res.statusCode = 404
-                return;
-            }
             // 拼接完整路径
             let p = path.join(this.config.dir, '.' + pathname)
             // 检测文件是否存在
@@ -121,20 +116,6 @@ class Server {
         }
         return false
     }
-    // 分片传输
-    range (req, res, p, statObj) {
-        let range = req.headers['range']
-        let start = 0;
-        let end = statObj.size
-        if (range) {
-            let [, s, e] = range.match(/bytes=(\d*)-(\d*)/)
-            start =  s ? parseInt(s) : start
-            end = e ? parseInt(e) : e
-            res.setHeader('Accept-Ranges', 'bytes')
-            res.setHeader('Content-Range', `bytes ${start}-${end}/${statObj.size}`)
-        }
-        return fs.createReadStream(p, {start, end: end - 1})
-    }
     // 发送文件
     sendFile (req, res, p, statObj) {
         // 文件 直接返回
@@ -142,12 +123,8 @@ class Server {
         // Content-Encoding: gizp
         // 缓存 对比缓存 强制缓存
         if (this.chache(req, res, statObj)) return null
-        // 断点续传 Rang:bytes=1-100
-        // Accept-Range: bytes
-        // Content-Range: bytes 1-10/800
-        // 检测是或否需要分片下载，拿到文件流
-        let rs = this.range(req, res, p, statObj)
-        
+        // 断点续传
+        let rs = fs.createReadStream(p)
         res.setHeader('Content-Type', mime.getType(p) + ';charset=utf8')
         let stream = this.compress(req, res, p, statObj)
         if (stream) {
@@ -165,6 +142,5 @@ class Server {
     }
 }
 
-// let server = new Server()
-// server.start()
-module.exports = Server
+let server = new Server()
+server.start()
