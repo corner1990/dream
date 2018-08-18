@@ -101,9 +101,13 @@ class Server {
         return true
     }
     // 压缩 
+    // p 资源路径  statObj 当前资源状态
     compress (req, res, p, statObj) {
+        // 拿到请求头
         let header =req.headers['accept-encoding']
+        // 判断 如果没有就说明不支持压缩,直接返回false
         if (header) {
+            // 根据支持的不同的内容,创建不同的转化流,并设置对应的响应头
             if (header.match(/\bgzip\b/)) {
                 res.setHeader('Content-Encoding', 'gzip')
                 return zlib.createGzip()

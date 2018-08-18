@@ -1,3 +1,4 @@
+// 引入需要的模块
 let config = require('./config')
 let path = require('path')
 let fs = require('fs')
@@ -24,11 +25,16 @@ let debug = require('debug')('static:app')
 // 创建服务
 class Server {
     constructor () {
+        // 配置参数
         this.config = config
     }
+    // 服务启动
     start () {
+        // 拿到hots, port
         let {hostname, port} = this.config
+        // 新建服务将
         let server = http.createServer(this.handleRequest())
+        // 监听指定host,port
         let url = `http://${hostname}:${chalk.green(port)}`
         debug(url) // 打印日志
         server.listen(port, hostname)
@@ -65,6 +71,6 @@ class Server {
         }
     }
 }
-
+// 创建服务势力4, 并启动
 let server = new Server()
 server.start()
