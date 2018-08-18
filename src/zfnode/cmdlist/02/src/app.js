@@ -58,11 +58,12 @@ class Server {
                     // 常用的模板引擎： ejs
                     // let content = ejs.render(this.templ, {dirs: [{path: 'a', name: 'a'}, {path: 'b', name: 'b'}]})
                     let dirs = await readDir(p) // 读取目录的文件路径
-                    
+                    // 将拿到的目录映射成为一个数组，里边是一个对象{name: xxx, path: xxx}
                     dirs = dirs.map(dir => ({
                         name: dir,
                         path: path.join(pathname, dir)
                     }))
+                    // 如果是目录，使用ejs渲染并返回结果
                     let content = ejs.render(this.templ, {dirs})
                     res.end(content)
                 } else {
