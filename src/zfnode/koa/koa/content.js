@@ -1,5 +1,6 @@
 /**
  * @description proto koa封装的ctx对象
+ * 运行时：proto = ctx
  */
 
  // context 代理request和response属性

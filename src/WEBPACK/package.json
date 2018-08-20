@@ -1,0 +1,20 @@
+{
+  "name": "WEBPACK",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "clean-webpack-plugin": "^0.1.19"
+  },
+  "devDependencies": {
+    "html-webpack-plugin": "^3.2.0",
+    "npx": "^10.2.0",
+    "webpack": "^4.16.5",
+    "webpack-cli": "^3.1.0",
+    "webpack-dev-server": "^3.1.5"
+  },
+  "scripts": {
+    "build": "webpack",
+    "dev": "webpack-dev-server"
+  }
+}
