@@ -1,5 +1,5 @@
-// let Koa = require('koa')
-let Koa = require('./koa/application')
+let Koa = require('koa')
+// let Koa = require('./koa/application')
 // koa 是一个类，有两个方法，一个叫做use 一个叫做listen
 let app = new Koa()
 app.listen(3000)
@@ -10,28 +10,24 @@ app.listen(3000)
 // koa中如果不需要继续，可以直接return next
 app.use(async (ctx, next) => {
     console.log(1)
+    await log()
     next()
     console.log(2)
 })
 app.use((ctx, next) => {
     console.log(3)
     next()
-    // 这样代码测试error使用
-    // throw Error('test error')
     console.log(4)
-    ctx.body = 'hello'
+})
+app.use((ctx, next) => {
+    ctx.body = 'ok'
+    console.log(5)
+    next()
+    console.log(6)
 })
 
-app.on('error', e => {
-    console.log('error', e)
-})
-// 至此位置 打印结果如下,因为用的是浏览器,浏览器默认会请求favicon,导致打印两边
-// PS E:\dream\src\zfnode\koa> node koa
-// 1
-// 3
-// 4
-// 2
-// 1
-// 3
-// 4
-// 2
+function log () {
+    setTimeout(function (params) {
+        console.log('log')
+    }, 3000)
+}

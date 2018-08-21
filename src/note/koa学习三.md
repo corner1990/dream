@@ -1,8 +1,58 @@
+# koa学习三
+
+> 最后处理ctx和回调的问题，以及服务器error的报错处理
+
+### koa.js内容
+
+```javascript
+// let Koa = require('koa')
+let Koa = require('./koa/application')
+// koa 是一个类，有两个方法，一个叫做use 一个叫做listen
+let app = new Koa()
+app.listen(3000)
+
+// 第一个中间件中调用了next，走到了第二个中间件
+// 第二个中间件又等待效果，第二个处于等待状态，那就等着，是第一个会接着走
+// 只要调用next方法就加上await，防止下一个中间件又异步操作
+// koa中如果不需要继续，可以直接return next
+app.use(async (ctx, next) => {
+    console.log(1)
+    next()
+    console.log(2)
+})
+app.use((ctx, next) => {
+    console.log(3)
+    next()
+    // 这样代码测试error使用
+    // throw Error('test error')
+    console.log(4)
+    ctx.body = 'hello'
+})
+
+app.on('error', e => {
+    console.log('error', e)
+})
+// 至此位置 打印结果如下,因为用的是浏览器,浏览器默认会请求favicon,导致打印两边
+// PS E:\dream\src\zfnode\koa> node koa
+// 1
+// 3
+// 4
+// 2
+// 1
+// 3
+// 4
+// 2
+```
+
+### applaction.js
+
+```javascript
 let http = require('http')
 let context = require('./content')
 let request = require('./request')
 let response = require('./response')
 let Stream = require('stream')
+// 新增
 let EventEmitter = require('events')
 
 class Koa extends EventEmitter {
@@ -10,6 +60,7 @@ class Koa extends EventEmitter {
         // 默认回调函数
         // this.callbackFn = () => {}
         super()
+        // 新增
         this.middlewares = []
         // 通常将外部变量挂载到this对象上，后边使用this获取
         this.context = context
@@ -103,3 +154,8 @@ class Koa extends EventEmitter {
 }
 
 module.exports = Koa
+```
+
+### 总结 
+
+> 以上就是koa的简单实现，代码很少，由于个人工作原因 ，笔记做的有点粗糙，将就看，这里立一个flag，以后一定记好笔记
