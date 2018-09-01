@@ -14,5 +14,10 @@
 // import './code1/props.validate'
 
 // state
-import './code1/state'
+// import './code1/state'
 
+// 生命周期
+import './code1/lifeCycle'
+
+// context.api 跨组件消息传递
+import './code1/content.api'
