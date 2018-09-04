@@ -16,7 +16,7 @@ export default class Route extends Component{
                         let result = path.match(reg)
                         // if (pathname === path) {
                         // 使用reg处理路由
-                        if (result) {
+                        if (reg.test(pathname)) {
                             return <Component></Component>
                         } else {
                             return null
