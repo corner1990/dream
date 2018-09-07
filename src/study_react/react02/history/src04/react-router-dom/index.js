@@ -3,9 +3,6 @@ import Route from './Router'
 import Link from './Link'
 import BrowserRouter from './BrowserRouter'
 import Switch from './Switch'
-import Redirect from './Redirect' //
-import Protected from './'
-
 
 
 export {
@@ -13,7 +10,5 @@ export {
     Route,
     Link,
     BrowserRouter,
-    Switch,
-    Redirect,
-    Protected
+    Switch
 }

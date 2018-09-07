@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-// import {HashRouter as Router, Route, Link, Switch, Redirect} from 'react-router-dom'
+// import {HashRouter as Router, Route, Link, Switch} from 'react-router-dom'
 // 使用自定义hash路由 
-import {HashRouter as Router, Route, Link, Switch, Redirect, Protected} from './react-router-dom'
+import {HashRouter as Router, Route, Link, Switch} from './react-router-dom'
 // 使用自定义history路由
 // import {BrowserRouter as Router, Route, Link} from './react-router-dom'
 import 'bootstrap/dist/css/bootstrap.css'
@@ -35,8 +35,7 @@ ReactDOM.render(<Router>
         <Switch>
             <Route path="/" exact component={Home} />
             <Route path="/user" component={User}/>
-            <Protected path="/profile" component={Profile}/>
-            <Redirect to="/"></Redirect>
+            <Route path="/profile" component={Profile}/>
         </Switch>
     </React.Fragment>
 </Router>, document.getElementById('root'));
