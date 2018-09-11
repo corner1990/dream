@@ -30,13 +30,34 @@ export default class HashRouter extends Component{
     render () {
         // Provider 进行跨组件消息传递
         // 通过value属性传值
+        let _self = this
         let value = {
-            location: this.state.location,
+            location: _self.state.location,
             // Link组件动态修改hash
             history: {
                 push (to) {
-                    window.location.hash = to
+                    // console.log('to', to)
+                    if (typeof to === 'object') {
+                        let {pathname, state} = to
+                        _self.setState({
+                            ..._self.state,
+                            // 重新解构赋值
+                            location: {
+                                // 原始的location
+                                ..._self.state.location,
+                                // 使用新的路径覆盖
+                                pathname,
+                                state
+                            }
+                        })
+                        window.location.hash = pathname
+                    } else {
+                        window.location.hash = to
+                    }
                 }
+            },
+            goback () {
+                window.history.go(-1)
             }
         }
         // 返回this.props.children

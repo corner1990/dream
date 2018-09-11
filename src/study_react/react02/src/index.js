@@ -6,9 +6,12 @@ import {HashRouter as Router, Route, Link, Switch, Redirect, Protected} from './
 // 使用自定义history路由
 // import {BrowserRouter as Router, Route, Link} from './react-router-dom'
 import 'bootstrap/dist/css/bootstrap.css'
+import Header from './components/Header'
 import Home from './components/Home'
 import User from './components/User'
 import Profile from './components/Profile'
+import Login from './components/Login'
+import MenuLink from './components/MenuLink'
 
 /**
  * router 使用
@@ -19,9 +22,14 @@ import Profile from './components/Profile'
 ReactDOM.render(<Router>
     <React.Fragment>
         <div className="container bg-light">
-            <h3>管理系统</h3>
-            <ul className="nav">
-                <li className="nav-item">
+            <Header />
+            <ul className="navbar navbar-light">
+                {/* 自定义导航 */}
+                <MenuLink to="/" label='Home'></MenuLink>
+                <MenuLink to="/user" label='User'></MenuLink>
+                <MenuLink to="/profile" label='Profile'></MenuLink>
+                {/* 原始导航 */}
+                {/* <li className="nav-item">
                     <Link className="nav-link active" to="/">Home</Link>
                 </li>
                 <li className="nav-item">
@@ -29,12 +37,13 @@ ReactDOM.render(<Router>
                 </li>
                 <li className="nav-item">
                     <Link className="nav-link" to="/profile">Profile</Link>
-                </li>
+                </li> */}
             </ul>
         </div>
         <Switch>
             <Route path="/" exact component={Home} />
             <Route path="/user" component={User}/>
+            <Route path="/login" component={Login}/>
             <Protected path="/profile" component={Profile}/>
             <Redirect to="/"></Redirect>
         </Switch>
