@@ -1,117 +1,79 @@
 # React路由学习(四)
 
-> 之前实现了简单的路由跳转,这里实现Link组件.我们就可以点点点切换了,不用再像之前一样苦逼哈哈的在地址栏里修改
+### 实现带权限的路由组件(Redirect)
 
-### react-router-dom目录里文件内容
-
-- index.js
-
-> 这个文件主要是做入口文件用,我们把需要的模块在这里统一导出,然后我们在使用的时候就可以使用
+> 实现思路：
 >
-> `import {HashRouter as Router, Route} from './react-router-dom'` 拿到文件对象
-
-```javascript
-import HashRouter from './HashRouter'
-import Route from './Router'
-// 新增
-import BrowserRouter from './BrowserRouter'
-// 导出一个对象
-export {
-    HashRouter,
-    Route,
-    Link, // 新增
-}
-```
-
-- HashRouter.js内容
-
->这个组件时路由组建的父组件,很多逻辑需要在这里处理
+> 	1.我们拓展之前写好的Route组件，让其支持render方法
 >
->// 这里需要state中新增history对象
+> 	2.在重定向的时候保存之前的状态，并传递给下一个组件
+>
+> 	3.新建组件(Protected),因为该组件不需要自己的私有状态，这里function
+>
+> 	4.引入Route组件，并在Protected返回Route组件，具体渲染还是使用Route组件
+>
+> 	5.我们在组件（Route）内部拿到Protected组件穿过来的参数，然后在render方法做判断，如果条件满足，则渲染页面，不满足则重定向到指定页面，具体实现在代码在下边
+
+### Route组件更改
 
 ```javascript
-// 1.引入需要的模块,
-// 2.创建HashRouter对象
-// 3.定义state
-// 4.render方法,这里返回子组件,并在这里需要使用Provider传递数据,将我们state中的location对象传递下去,给子组件使用
-// 5.在子组件挂在完成以后监听hashchange事件,在这里我们重新setState,更新页面
-
 import React, {Component} from 'react';
-import {Provider} from './context'
-// 每当地址栏里的锚点发生改变的时候都需要重新匹配
-export default class HashRouter extends Component{
-    state = {
-        // 保存hash,方便我们在子组件使用匹配
-        location: {
-            pathname: window.location.hash ?  window.location.hash.slice(1) : '/'
-        },
-         // Link组件动态修改hash
-        history: { // 新增的对象,Link组件可以调用history的push方法跳转
-            push (to) {
-                // 我们这里重新修改hash以后会触发hashchange事件,便会在哪里更新模板,重新渲染页面
-                window.location.hash = to
-            }
-        }
-    }
-    /**
-     * 组件挂载完成
-     */
-    componentDidMount () {
-        /**
-         * 监听hashchange 事件，刷新页面
-         */
-        window.addEventListener('hashchange', () => {
-            this.setState({
-                location: {
-                    ...this.state.location,
-                    // 更新锚点
-                    pathname: window.location.hash ?  window.location.hash.slice(1) : '/'
-                }
-            })
-        })
-    }
-    /**
-     * 渲染
-     */
-    render () {
-        // Provider 进行跨组件消息传递
-        // 通过value属性传值
-        let value = {
-            location: this.state.location
-        }
-        // 返回this.props.children
-        // 具体路由判断的规则在children组件进行处理
-        return(
-            <Provider value={value}>
-               {this.props.children}
-            </Provider>
-        )
-    }
-}
-```
-
-- Link.js
-
-> 在react-router-dom目录创建Link.js, 内容如下
-
-```javascript
-// 引入模块
-import React, {Component} from 'react';
-// 引入context对象，这里需要拿到数据做处理
 import {Consumer} from './context'
-export default class Link extends Component{
+let PathToReg = require('path-to-regexp')
+
+export default class Route extends Component{
     render () {
         return (
             <Consumer>
                 {
-                    // 拿到父组见传递过来的value
                     value => {
-                        // 解构数据，
-                        // 拿到父组件的push方法，修改路由
-                        let {history: {push}} = value
-                        // 渲染并返回组件
-                        // 绑定事件，触发点击事件的时候将属性to作为值传递过去
-                        return <a onClick={() => push(this.props.to)}>{this.props.children}</a>
+                        let {location: {pathname}} = value // 拿到hash 进行比较
+                        // 拿到传入的path，组件，并手动大写(组件需要首字母大写)
+                        // 结构出来render方法，配合控制权限
+                        let {path = '/', component: Component, exact = false, render, children} = this.props
+                        let keys = []
+                        // 解析出来参数，然后传给子组件，子组件就可以继续匹配
+                        let reg = PathToReg(path, keys, {end: exact})
+                        let result = path.match(reg)
+                        let props = {
+                            location: value.location,
+                            history: value.history
+                        }
+                        // 判断是否有其他参数
+                        if (result) {
+                            let [, ...value] = result
+                            let params = keys.reduce((memo, name, index) => {
+                                memo[name] = value[index]
+                                return memo
+                            }, {})
+                            let match = {
+                                url: pathname,
+                                path,
+                                params
+                            }
+                            props.match = match
+                        }
+                        // 使用reg处理路由
+                        if (reg.test(pathname)) {
+                            // console.log('result', result)
+                            // 将解析的props传递下去
+                            if (Component) { // 判断是否有渲染函数，的话直接的执行函数，并将props传过去
+                                // console.log('props', props)
+                                return <Component {...props}></Component>
+                            } else if(render) {
+                                // 如果没有component组件，存在render方法，说明需要控制权限，
+                                // 直接返回render就可以了， 并且这里需要将参数props传递过去
+                                return render(props)
+                            } else if (children) {
+                                return children(props)
+                            }
+                            return null
+                        } else {
+                            if (children) {
+                                return children(props)
+                            }
+                            return null
+                        }
                     }
                 }
             </Consumer>
@@ -120,115 +82,79 @@ export default class Link extends Component{
 }
 ```
 
-### src/index.js内容修改
-
-> 这里添加linl组件
+### `Protected`组件代码
 
 ```javascript
-import React from 'react';
-import ReactDOM from 'react-dom';
-// import {HashRouter as Router, Route, Link} from 'react-router-dom'
-// 使用自定义hash路由 
-// import {HashRouter as Router, Route, Link} from './react-router-dom'
-// 使用自定义history路由
-import {BrowserRouter as Router, Route, Link} from './react-router-dom'
-import 'bootstrap/dist/css/bootstrap.css'
-import Home from './components/Home'
-import User from './components/User'
-import Profile from './components/Profile'
-
 /**
- * router 使用
- * 如果路径匹配，则会渲染模板，如果不匹配，则不会渲染
- * exact: 精确匹配
- * 
+ * 受保护的路由
  */
-ReactDOM.render(<Router>
-    <React.Fragment>
-        <div className="container bg-light">
-            <h3>管理系统</h3>
-            <ul className="nav">
-                <li className="nav-item">
-                    <Link className="nav-link active" to="/">Home</Link>
-                </li>
-                <li className="nav-item">
-                    <Link className="nav-link" to="/user">User</Link>
-                </li>
-                <li className="nav-item">
-                    <Link className="nav-link" to="/profile">Profile</Link>
-                </li>
-            </ul>
-        </div>
-        <Route path="/" exact component={Home} />
-        <Route path="/user" component={User}/>
-        <Route path="/profile" component={Profile}/>
-    </React.Fragment>
-</Router>, document.getElementById('root'));
+import React from 'react';
+import {Route, Redirect} from '../react-router-dom';
+// import {Route} from 'react-router-dom';
+// 用类的声明方式比较冗余，遂使用函数式组件
+// export default class Protected extends Component{
+//     render () {
+//         return 'hello'
+//     }
+// }
+// {component: Component, ...rest} 表示将component结构赋值给Component，其他的参数赋值给rest
+export default function ({component: Component, ...rest}) {
+    return (
+        <Route {...rest} render={(props) => {
+            // 这里我们使用简单的条件模拟判断
+            // 并且这里的render的函数是写死的，可以自己修改一下，传递进来
+            return (localStorage.getItem('logined') ?  <Component ></Component> 
+            : <Redirect to={{"pathname": '/login', "state":{from: props.location.pathname}}} ></Redirect>)
+        }}/>
+        // localStorage.getItem('logined') ?  <Component ></Component>
+    )
+}
 
 ```
 
-> 到此位置就是先了Link组件,我们可以按照官方提供的方式使用
+### `react-router-dom/index.js`
 
-### 这里顺便实现BrowserRouter
+> 在index文件中把Protected组件导出，方便我们引用
 
 ```javascript
-import React, {Component} from 'react';
-import {Provider} from './context'
+import HashRouter from './HashRouter'
+import Route from './Router'
+import Link from './Link'
+import BrowserRouter from './BrowserRouter'
+import Switch from './Switch'
+import Redirect from './Redirect' //
+import Protected from './Protected' // 受保护的路有权限
 
-// 每当地址栏里的锚点发生改变的时候都需要重新匹配
-export default class BrowerRouter extends Component{
-    state = {
-        location: {
-            pathname: window.location.hash ?  window.location.hash.slice(1) : '/'
-        }
-    }
-    /**
-     * 组件挂载完成
-     */
-    componentDidMount () {
-        /**
-         * 监听hashchange 事件，刷新页面
-         */
-         window.addEventListener("popstate", (event) => {
-            this.setState({
-                location: {
-                    ...this.state.location,
-                    // 更新锚点
-                    pathname: window.location.pathname ?  window.location.pathname : '/'
-                }
-            })
-        })
 
-    }
-
-    /**
-     * 渲染
-     */
-    render () {
-        // Provider 进行跨组件消息传递
-        // 通过value属性传值
-        let value = {
-            location: {
-                pathname: window.location.pathname || '/'
-            },
-            // Link组件动态修改hash
-            history: {
-                push (to) {
-                    window.history.pushState({},'title', to)
-                }
-            }
-        }
-        // 返回this.props.children
-        // 具体路由判断的规则在children组件进行处理
-        return(
-            <Provider value={value}>
-               {this.props.children}
-            </Provider>
-        )
-    }
+export {
+    HashRouter,
+    Route,
+    Link,
+    BrowserRouter,
+    Switch,
+    Redirect,
+    Protected
 }
+```
+
+### `index.js`
+
+> 使用Protected组件
+
+```javascript
+// 引用组件
+import {HashRouter as Router, Route, Link, Switch, Redirect, Protected} from './react-router-dom'
+
+// 使用组件
+<Protected path="/profile" component={Profile}/>
 ```
 
 ### 总结
 
-> 到此位置,目前简单的功能已经实现了,但是history监听popstate的时候有点问题,这里还没有解决,所以只能修改路由,无法切换模板
+> 代码其实很简单。执行的思路大致如下，没有特别高深的 ，就是需要简单的理解一下
+
+- 我们调用一个特别的组件(Protected),然后把路由和模板按照Route的方式传递过去
+- 我们在Protected组件内部引入两个必须的组件，Route(负责渲染模板)，Redirect(负责在不满足条件的时候重定向到指定页面)，
+- 在Rende拓展，结构参数render，如果存在，并且没有component参数，就需要记录参数，当前页面的状态，然后返回render，并将参数传递过去
+- 在Protected组件内部判断是需要渲染模板还是重定向到某一模板
+
