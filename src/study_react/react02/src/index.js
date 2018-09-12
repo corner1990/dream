@@ -1,51 +1,52 @@
-import React from 'react';
+import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
-// import {HashRouter as Router, Route, Link, Switch, Redirect} from 'react-router-dom'
-// 使用自定义hash路由 
-import {HashRouter as Router, Route, Link, Switch, Redirect, Protected} from './react-router-dom'
-// 使用自定义history路由
-// import {BrowserRouter as Router, Route, Link} from './react-router-dom'
-import 'bootstrap/dist/css/bootstrap.css'
-import Header from './components/Header'
-import Home from './components/Home'
-import User from './components/User'
-import Profile from './components/Profile'
-import Login from './components/Login'
-import MenuLink from './components/MenuLink'
 
-/**
- * router 使用
- * 如果路径匹配，则会渲染模板，如果不匹配，则不会渲染
- * exact: 精确匹配
- * 
- */
-ReactDOM.render(<Router>
-    <React.Fragment>
-        <div className="container bg-light">
-            <Header />
-            <ul className="navbar navbar-light">
-                {/* 自定义导航 */}
-                <MenuLink to="/" label='Home'></MenuLink>
-                <MenuLink to="/user" label='User'></MenuLink>
-                <MenuLink to="/profile" label='Profile'></MenuLink>
-                {/* 原始导航 */}
-                {/* <li className="nav-item">
-                    <Link className="nav-link active" to="/">Home</Link>
-                </li>
-                <li className="nav-item">
-                    <Link className="nav-link" to="/user">User</Link>
-                </li>
-                <li className="nav-item">
-                    <Link className="nav-link" to="/profile">Profile</Link>
-                </li> */}
-            </ul>
-        </div>
-        <Switch>
-            <Route path="/" exact component={Home} />
-            <Route path="/user" component={User}/>
-            <Route path="/login" component={Login}/>
-            <Protected path="/profile" component={Profile}/>
-            <Redirect to="/"></Redirect>
-        </Switch>
-    </React.Fragment>
-</Router>, document.getElementById('root'));
+class Provider extends Component{
+    /**
+     * 处理渲染子组件Consumer
+     * @param {object} obj 需要循环的子组件 
+     * @param {anything} value 定义的任何值
+     */
+    initChild (obj, value) {
+        if (Array.isArray(obj)) {
+            obj = obj.map(child => {
+                return this.initChild(child, value)
+            })
+        } else {
+            if (obj.type.name === 'Consumer') return React.cloneElement(obj, {value})
+        }
+        
+        return obj
+    }
+    render () {
+        // 拿到子元素
+        let {children, value} = this.props
+        children = this.initChild(children, value)
+       
+        // 先判断子组件是一个还是数组，假如是数组，则遍历处理
+        return (
+            <React.Fragment>
+                {children}
+            </React.Fragment>
+        )
+       
+    }
+}
+
+class Consumer extends Component{
+    render () {
+        return this.props.children(this.props.value)
+    }
+}
+
+ReactDOM.render(<Provider value="1">
+    <Consumer>
+        {
+            value => <div>{value}</div>
+        }
+    </Consumer>
+    <div>1-1</div>
+    <Consumer>
+        {value => `2-${value}`}
+    </Consumer>
+</Provider>, document.getElementById('root'));

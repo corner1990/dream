@@ -36,6 +36,14 @@ export default class HashRouter extends Component{
             // Link组件动态修改hash
             history: {
                 push (to) {
+                    // 这里添加判断，看是否需要阻挡跳转
+                    if (_self.block) {
+                        // 将to转换为一个对象
+                        to = typeof to === 'object' ? to : {pathname: to}
+                        let ok = window.confirm(_self.block(to))
+                        // 如果返回值为false，就直接返回
+                        if (!ok) return null;
+                    }
                     // console.log('to', to)
                     if (typeof to === 'object') {
                         let {pathname, state} = to
@@ -54,6 +62,16 @@ export default class HashRouter extends Component{
                     } else {
                         window.location.hash = to
                     }
+                },
+                /**
+                 * 
+                 * @param {string} msg 传递过来的提示语 
+                 */
+                block (msg) {
+                    _self.block = msg
+                },
+                unblock () {
+                    _self.block = null
                 }
             },
             goback () {

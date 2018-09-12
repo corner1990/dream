@@ -6,6 +6,7 @@ import Switch from './Switch'
 import Redirect from './Redirect' //
 import Protected from './Protected'
 import WithRouter from './WithRouter'
+import Prompt from './Prompt'
 
 export {
     HashRouter,
@@ -15,5 +16,6 @@ export {
     Switch,
     Redirect,
     Protected,
-    WithRouter
+    WithRouter,
+    Prompt
 }

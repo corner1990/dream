@@ -7,9 +7,9 @@ export default class User extends React.Component{
         return (
             <div className='row'>
                 <div className='col-md-2'>
-                    <ul className='nav nav-stacked'>
-                        <li><Link to="/user/add">新增用户</Link></li>
-                        <li><Link to="/user/list">用户列表</Link></li>
+                    <ul className='navbar-nav'>
+                        <li className="nav-item" key="1"><Link to="/user/add">新增用户</Link></li>
+                        <li className="nav-item" key="2"><Link to="/user/list">用户列表</Link></li>
                     </ul>
                 </div>
                 <div className='clo-md-10'>
