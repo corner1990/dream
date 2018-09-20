@@ -1,5 +1,5 @@
-import { ADD, MINUS } from "./actions-types";
-let initState = { number: 0 }
+import { ADD, MINUS } from "../actions-types";
+let initState ={number: 0}
 
 // 处理器
 export default function reducer(state = initState, action) {
@@ -12,12 +12,11 @@ export default function reducer(state = initState, action) {
     //   break;
     // 传参使用
     case ADD:
-      return { number: state.number + (action.playload || 1) }
+      return {number: state.number + (action.playload || 1)}
       break;
     case MINUS:
-      return { number: state.number - (action.playload || 1) }
+      return {number: state.number - (action.playload || 1)}
       break;
-
     default:
       return state
       break;
