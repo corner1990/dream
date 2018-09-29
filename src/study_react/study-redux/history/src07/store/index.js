@@ -1,6 +1,6 @@
 import reducer from './reducers';
 // import createStore from '../redux/createStore' 
-import { createStore, applyMiddleware} from '../redux' 
+import { createStore} from '../redux' 
 // let store = createStore(reducer)
 
 // 模拟中间件原理
@@ -57,8 +57,10 @@ function promise ({dispatch, getState}) {
                     // action.payload.then 属性也存在
                     // action.payload.then 属性是一个function
                     action.playload.then(playload => {
+                        console.log('1', {...action, playload})
                         dispatch({...action, playload})
                     }, playload => {
+                        console.log('2', {...action, playload})
                         dispatch({...action, playload})
                     })
                 } else {
@@ -89,10 +91,32 @@ function promise ({dispatch, getState}) {
 //     }
 // }
 
-
-
-// 自己写的库实现
-// let store = applyMiddleware(promise, thunk, logger)(createStore)(reducer)
-// 目前主流的写法
-let store = createStore(reducer, {}, applyMiddleware(promise, thunk, logger))
+/**
+ * 挂在中间件
+ * @param {function} middlerware 中间件函数
+ */
+function applyMiddleware (middlerware) {
+    return function (createStore) {
+        return function (reducer) {
+            // 这是原始仓库，dispatch 就是原始的dispatch
+            let store = createStore(reducer)
+            let dispatch; // 此dispatch指向新的dispatch方法
+            // 调用传入的中间件，拿到第一个返回的函数
+            let ware = middlerware({
+                getState: store.getState,
+                dispatch: store.dispatch
+            })
+            // 调用中间见返回的函数，并把store.dispatch传过去，返回一个新的方法
+            dispatch = ware(store.dispatch)
+            // 解析老的store, 覆盖dispatch方法
+            return {
+                ...store,
+                dispatch
+            }
+        }
+    }
+}
+// let store = applyMiddleware(logger)(createStore)(reducer)
+// let store = applyMiddleware(thunk)(createStore)(reducer)
+let store = applyMiddleware(promise)(createStore)(reducer)
 export default store

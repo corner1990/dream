@@ -1,13 +1,10 @@
 /**
  * 创建state
  */
-function createStore(reducer, initState, enchancer) {
-  // 兼容市面主流写法
-  if (enchancer) {
-    return enchancer(createStore)(reducer, initState)
-  }
+function createStore(reducer) {
   let state;
   let listeners = [] // 订阅数组
+
   // 监听函数
   function subscribe(listener) {
     listeners.push(listener)
