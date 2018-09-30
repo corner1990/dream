@@ -25,16 +25,15 @@ function logger (store) { // store， 最初始的仓库
 function thunk ({dispatch, getState}) {
     // 如果接收到的action是一个function的话执行这个函数，并把解构的dispat和getState作为参数传递过去，
     // 如果不是函数，则直接调用next()
-    // return function (next) { // next => store.dispatch
-    //     return function (action) {// 自定义dispatch方法
-    //         if (typeof action === 'function') {
-    //             console.log('haha')
-    //             action(dispatch, getState)
-    //         } else {
-    //             next(action)
-    //         }
-    //     }
-    // }
+    return function (next) { // next => store.dispatch
+        return function (action) {// 自定义dispatch方法
+            if (typeof action === 'function') {
+                action(dispatch, getState)
+            } else {
+                next(action)
+            }
+        }
+    }
     return next => action => {
                 if (typeof action === 'function') {
                     action(dispatch, getState)

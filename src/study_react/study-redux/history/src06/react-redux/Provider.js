@@ -1,5 +1,5 @@
 /**
- * 是一个组件吗，用来接收store，经在经过他的手，通过context api传递给所有的子组件
+ * 是一个组件，用来接收store，经在经过他的手，通过context api传递给所有的子组件
  */
 import React, {Component} from 'react'
 import {Provider as StoreProvider, Consumer} from './context'

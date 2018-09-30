@@ -8,7 +8,7 @@ function add3 (str) {
     return 3 + str
 }
 
-// 打印拿到结果
+// // 打印拿到结果
 // let ret = add1(add2(add3('hello world')))
 // console.log(ret) //123hello world
 /**
@@ -17,10 +17,10 @@ function add3 (str) {
  * 说明： 第一次执行拿到返回的函数， 也就是return返回的fns.reduceRight
  *       后边继续执行的时候会由右向左的计算
  */
-// function compose (...fns) {
-//     // console.log('fns', fns) // [ [Function: add1], [Function: add2], [Function: add3] ]
-//     return args => fns.reduceRight((val, fn) => fn(val), args)
-// }
+function compose (...fns) {
+    // console.log('fns', fns) // [ [Function: add1], [Function: add2], [Function: add3] ]
+    return args => fns.reduceRight((val, fn) => fn(val), args)
+}
 
 // let ret = compose(add1, add2, add3)('hello world')
 // console.log(ret) // 123hello world

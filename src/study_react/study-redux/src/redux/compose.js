@@ -49,7 +49,8 @@ function sum (a, b) {
  * 2.第二次执行： a = tmp, b = add3, let tmp = add3(tmp('''args))
  * 3.第三次执行: a = tmp, b = sum, let tmp = a(sum(...args))
  * 4.最后返回结果
- *
+ * 总结：
+ * 虽然执行顺寻时从左往右执行，但是每次都会把右边的函数(b)执行，然后把执行的返回值作为参数传递给函数a，一直循环到最后一层，也就是我们的dispacth，
  * 
  */
 function compose (...fns) {
@@ -59,6 +60,7 @@ function compose (...fns) {
         return a( b(...args) )
     } )
 }
+// 
 // function compose (...fns) {
 //     return fns.reduce((a, b) => (...args) => a( b(...args) ) )
 // }
