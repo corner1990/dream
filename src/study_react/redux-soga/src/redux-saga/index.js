@@ -35,6 +35,7 @@ function createMiddleware () {
                         run(effect)
                         next() // 不需要这个run执行结束，就可以调用next了
                     }
+                    
                     switch(effect.type) {
                         case 'take':
                             // take 等待一个动作发生
@@ -45,12 +46,12 @@ function createMiddleware () {
                         case 'put': 
                             // 派发动作
                             let { action } = effect
-                            console.log('put')
                             dispatch(action)
                             next(action)
                         break
                         case 'fork':
                             let {worker} = effect
+                            console.log('fork')
                             run(worker)
                             next()
                         break

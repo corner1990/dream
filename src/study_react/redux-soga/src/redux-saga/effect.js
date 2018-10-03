@@ -14,6 +14,7 @@ function put (action) {
     }
 }
 function fork (worker) {
+    console.log('fork', worker)
     return {
         type: 'fork',
         worker
@@ -26,8 +27,11 @@ function fork (worker) {
  * @param {function} worker 发生动作后的回调函数
  */
 function* takeEvery (actionType, worker) {
+    console.log('takeEvery', actionType, worker)
     yield fork(function* () {
         while (true) {
+            console.log('actionType', actionType)
+            console.log('worker', worker)
             let action = yield take(actionType)
             yield worker(action)
         }
