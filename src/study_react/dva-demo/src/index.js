@@ -4,7 +4,7 @@ import { Router, Route, Switch, Link } from 'dva/router';
 
 let todos = [
   {id: 1, text: '1', completed: false},
-  {id: 2, text: '2', completed: true},
+  {id: 2, text: '2', completed: false},
 ]
 let api = {
   load () {// 加载数据
@@ -204,7 +204,7 @@ let actions = {
 }
 
 let WrapTodos = connect(
-  state => ({...state.todos}),
+  state => state.todos,
   actions
 )(Todos)
 
