@@ -12,7 +12,7 @@ export class Element {
  * @param {string} key 
  * @param {*} val 
  */
-function setAttr(node, key, value) {
+export function setAttr(node, key, value) {
     switch(key) {
         case 'value':
         // node是一个input或者textarea的时候直接设置value
