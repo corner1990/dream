@@ -13,6 +13,12 @@ function patch (node, patchs) {
     
     walk(node)
 }
+
+/**
+ * 补丁包更新
+ * @param {object} node 虚拟dom元素
+ * @param {Array} patches 补丁包
+ */
 function doPatch (node, patches) {
     patches.forEach(patch => {
         switch (patch.type) {
@@ -43,14 +49,19 @@ function doPatch (node, patches) {
     })
 }
 
+/**
+ * 
+ * @param {object} node 需要对比的dom节点
+ */
 function walk (node) {
     // 拿到补丁
     let currentPatch = allPatchs[index++]
-    // 拿到子节点
+    // 拿到子节点，进行深度遍历
     let childNodes = node.childNodes
     childNodes.forEach(child => {
         walk(child)
     });
+    // 如果有可用的补丁包吗直接打补丁
     if (currentPatch && currentPatch.length > 0) {
         doPatch(node, currentPatch)
     }
