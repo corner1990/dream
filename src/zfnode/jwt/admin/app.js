@@ -1,7 +1,8 @@
 // 后端服务器
 let Express = require('express')
 let bodyParser = require('body-parser')
-let jwt = require('jwt-simple')
+// let jwt = require('jwt-simple')
+let jwt = require('./jwt-simple')
 let config = require('./config')
 let { secret } = config
 
