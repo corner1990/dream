@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+    <title>socket.io</title>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+           <div class="row-md-12">
+               <div class="panel panel-default">
+                    <header class="panel-heading text-center">
+                        <h4>welcome to talk room</h4>
+                    </header>
+                   <div class="panel-body">
+                        <ul class="list-group" id="msg-list" style="list-style: none;">
+                        </ul>
+                   </div>
+                    <div class="panel-footer">
+                        <div class="row-md-10">
+                            <input type="text" id="content" class="form-control">
+                            <button id="btn" class="btn btn-primary">发送消息</button>
+                        </div>
+                    </div>
+               </div>
+           </div>
+        </div>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        let socket = io() // 相当于new Websocket()
+
+        let ipt = document.querySelector('#content')
+        let btn = document.querySelector('#btn')
+        let msgList = document.querySelector('#msg-list')
+        let LI = document.createElement('li')
+
+
+        socket.on('connect', function () {
+            console.log('客户端链接成功')
+        })
+        socket.on('message', function (msg) {
+            let li = LI.cloneNode()
+            msg = JSON.parse(msg)
+            li.innerHTML = `<span style="color: orange" onClick="sendPrive('${msg.name}')">${msg.name}:&emsp;<span style="color: #06c;">${msg.msg}</span></span><span style="float: right;">${(new Date(msg.timer)).toLocaleString()}</span>`
+            msgList.appendChild(li)
+        })
+        /**
+         * 设置需要私密通话的对象
+         */
+        function sendPrive(name) {
+            let str = `@${name} `
+            ipt.value = str
+        }
+        btn.addEventListener('click',function (params) {
+            let msg = ipt.value
+            if (msg) {
+                socket.emit('message', msg)
+                ipt.value = ''
+            } else {
+                alert('发送的消息不能为空！')
+            }
+        }, false)
+    </script>
+</body>
+</html>

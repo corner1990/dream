@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>socket.io</title>
+</head>
+<body>
+    <h2>socket.io</h2>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        let socket = io('/2') // 相当于new Websocket()
+        socket.on('connect', function() {
+            console.log('客户端链接成功')
+            socket.send('hello')
+        })
+        socket.on('message', function (msg) {
+            console.log(msg)
+        })
+    </script>
+</body>
+</html>

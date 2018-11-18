@@ -21,6 +21,12 @@ io.on('connection', socket => {
         // 像客户端发送数据
         socket.send(`服务器说：${msg}`)
     })
+    socket.on('disconect', function () {
+        console.log('断开连接')
+    })
+    socket.on('error', () => {
+        console.log('连接错误')
+    })
 })
 
 server.listen(9999)
