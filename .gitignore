@@ -6,9 +6,11 @@
 /yarn-error.log
 /yarn.lock
 /package-lock.json
-
+dist/
+node_modules/
+/src/zfnode/socketIo/node_modules/
 # production
-/dist
+#/dist
 
 # misc
 .DS_Store
