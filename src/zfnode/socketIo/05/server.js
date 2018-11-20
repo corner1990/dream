@@ -13,32 +13,74 @@ let server = http.createServer(app)
 let socketIo = require('socket.io')
 let io = socketIo(server)
 // 在服务器监听客户端的链接
-let users = [] // 保存用户
 let SYS = '系统提示'
 let t = new Date()
-let rooms = []
+//命名是用来实现隔离的
+let sockets = {};
+
 io.on('connection', socket => {
     console.log('客户端连接到服务器')
+    let rooms = []
+    let username;
     // 监听接受客户端发过来的消息
     socket.on('message', msg => {
-        if (!socket.name) { // 第一次进入聊天
-            socket.name = msg
+        if (!username) { // 第一次进入聊天
+            username = msg
             let message = {
                 name: SYS,
                 timer: t.getTime(),
                 msg: `${msg} 进入聊天`
             }
-            users.push(socket)
+            sockets[username] = socket
             socket.broadcast.emit('message', JSON.stringify(message))
         } else {
             // 像客户端发送数据
-            if (!socket.room) { // 用户不在某个房间
+            if (rooms.length > 0) {
+                for (let i = 0; i < rooms.length; i++) {
+                    
+                    if (msg.match(/^@([^ ]+) (\S)+/)) {
+                        let [, name, m] = msg.match(/^@([^ ]+) (\S+)/)
+                        if (name && sockets[username]) {
+                            if (username === name) {
+                                let message = {
+                                    name: SYS,
+                                    timer: t.getTime(),
+                                    msg: '您不可以@自己！'
+                                }
+                                socket.emit('message', JSON.stringify(message))
+                            } else {
+                                let message = {
+                                    name: username,
+                                    timer: t.getTime(),
+                                    msg: m
+                                }
+                                sockets[name].emit('message', JSON.stringify(message))
+                            }
+
+                        } else { // 如果不存在，则提示用户不存在
+                            let message = {
+                                name: SYS,
+                                timer: t.getTime(),
+                                msg: '你@的用户不存在！'
+                            }
+                            socket.emit('message', JSON.stringify(message))
+                        }
+                    } else {
+                        let message = {
+                            name: username,
+                            timer: t.getTime(),
+                            msg: msg
+                        }
+                        
+                        io.in(rooms[i]).emit('message', JSON.stringify(message))
+                    }
+                }
+            } else {
                 // 解析数据，看是否又私密聊天
                 if (msg.match(/^@([^ ]+) (\S)+/)) {
-                    let [, name, m] = msg.match(/^@([^ ]+) (\S)+/)
-                    let so = users.filter(item => item.name === name)[0]
-                    if (so) {
-                        if (so.name === socket.name) {
+                    let [, name, m] = msg.match(/^@([^ ]+) (\S+)/)
+                    if (name && sockets[username]) {
+                        if (username === name) {
                             let message = {
                                 name: SYS,
                                 timer: t.getTime(),
@@ -47,11 +89,11 @@ io.on('connection', socket => {
                             socket.emit('message', JSON.stringify(message))
                         } else {
                             let message = {
-                                name: socket.name,
+                                name: username,
                                 timer: t.getTime(),
                                 msg: m
                             }
-                            so.emit('message', JSON.stringify(message))
+                            sockets[name].emit('message', JSON.stringify(message))
                         }
 
                     } else { // 如果不存在，则提示用户不存在
@@ -64,53 +106,13 @@ io.on('connection', socket => {
                     }
                 } else {
                     let message = {
-                        name: socket.name,
+                        name: username,
                         timer: t.getTime(),
                         msg: msg
                     }
                     io.emit('message', JSON.stringify(message))
                 }
-            } else {
-                if (msg.match(/^@([^ ]+) (\S)+/)) {
-                    let [, name, m] = msg.match(/^@([^ ]+) (\S)+/)
-                    let so = users.filter(item => item.name === name)[0]
-                    if (so) {
-                        if (so.name === socket.name) {
-                            let message = {
-                                name: SYS,
-                                timer: t.getTime(),
-                                msg: '您不可以@自己！'
-                            }
-                            socket.emit('message', JSON.stringify(message))
-                            // socket.broadcast.to('myroom').emit('message', msg);
-                        } else {
-                            let message = {
-                                name: socket.name,
-                                timer: t.getTime(),
-                                msg: m
-                            }
-                            so.to(socket.room).emit('message', JSON.stringify(message))
-                        }
-
-                    } else { // 如果不存在，则提示用户不存在
-                        let message = {
-                            name: SYS,
-                            timer: t.getTime(),
-                            msg: '你@的用户不存在！'
-                        }
-                        socket.emit('message', JSON.stringify(message))
-                    }
-                } else {
-                    let message = {
-                        name: socket.name,
-                        timer: t.getTime(),
-                        msg: msg
-                    }
-                    console.log('msg', msg, socket.name)
-                    io.in(socket.room).emit('message', JSON.stringify(message))
-                }
             }
-           
         }
         
     })
@@ -120,43 +122,63 @@ io.on('connection', socket => {
     socket.on('error', () => {
         console.log('连接错误')
     })
-    socket.on('join', room => {
-        let roomName = socket.room
+    socket.on('join', roomName => {
         
-        socket.room = room
-        let leaveRoom = roomName ? `, 自动从${roomName}房间退出` : ''
-        let message = {
-            name: SYS,
-            timer: t.getTime(),
-            msg: `您进入了 ${room} 房间${leaveRoom}`
+        let oldIndex = rooms.indexOf(roomName);
+        if (oldIndex == -1) {
+            socket.join(roomName);//相当于这个socket在服务器端进入了某个房间 
+            rooms.push(roomName);
+            let message = {
+                name: SYS,
+                timer: t.getTime(),
+                msg: `您成功进入${roomName}房间了`
+            }
+            socket.emit('message', JSON.stringify(message))
+        } else{ 
+            let message = {
+                name: SYS,
+                timer: t.getTime(),
+                msg: `您已经在${roomName}房间了`
+            }
+            socket.emit('message', JSON.stringify(message))
         }
-        let message2 = {
-            name: SYS,
-            timer: t.getTime(),
-            msg: `${socket.name}进入了 ${room} 房间`
-        }
+        
+       
+        socket.on('joined', () => {
+            let message = {
+                name: SYS,
+                timer: t.getTime(),
+                msg: `您进入了 ${roomName} 房间`
+            }
+            socket.emit('message', JSON.stringify(message))
+            // io.in(room).emit('message', JSON.stringify(message2));
+        })
         // 通知其他用户，有新人加入房间了
-        io.in(room).emit('message', JSON.stringify(message2));
+        // io.in(room).emit('message', JSON.stringify(message2));
         // io.in(room).emit('message', JSON.stringify(message2))
-        socket.emit('message', JSON.stringify(message))
+       
     })
-    socket.on('leave', room => {
+    socket.on('leave', roomName => {
         // 这里应该判断用户在不在该房间
-        socket.room = ''
-        socket.leave(room)
-        let message = {
-            name: SYS,
-            timer: t.getTime(),
-            msg: `您离开了 ${room} 房间`
+        let oldIndex = rooms.indexOf(roomName);
+        if (oldIndex !== -1) {
+            socket.leave(roomName);//相当于这个socket在服务器端进入了某个房间 
+            rooms.splice(oldIndex, 1);
+            let message = {
+                name: SYS,
+                timer: t.getTime(),
+                msg: `您离开${roomName}房间了`
+            }
+            socket.emit('message', JSON.stringify(message))
+        } else {
+            let message = {
+                name: SYS,
+                timer: t.getTime(),
+                msg: `您已经不在${roomName}房间了`
+            }
+            socket.emit('message', JSON.stringify(message))
         }
-        let message2 = {
-            name: SYS,
-            timer: t.getTime(),
-            msg: `${socket.name}离开了 ${room} 房间`
-        }
-        // 告诉房间其他用户有人离开了
-        io.in(room).emit('message', JSON.stringify(message2))
-        socket.emit('message', JSON.stringify(message))
+        
         
     })
 })
