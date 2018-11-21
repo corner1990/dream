@@ -13,25 +13,29 @@ let server = http.createServer(app)
 let socketIo = require('socket.io')
 let io = socketIo(server)
 // 在服务器监听客户端的链接
-let users = [] // 保存用户
+let sockets = {} // 保存用户
 let SYS = '系统提示'
-let t = new Date()
+let t = new Date() // 用来处理消息发送时间
 io.on('connection', socket => {
     console.log('客户端连接到服务器', socket.name)
+    let username;
     // 监听接受客户端发过来的消息
     socket.on('message', msg => {
-        if (!socket.name) {
-            socket.name = msg
+        if (username) {
+            username = msg
             let message = {
                 name: SYS,
                 timer: t.getTime(),
                 msg: `${msg} 进入聊天`
             }
+            // 将对象保存，方便后期使用
+            sockets[username] = socket
+            // 像除了自己别的用户广播消息
             socket.broadcast.emit('message', JSON.stringify(message))
         } else {
             // 像客户端发送数据
             let message = {
-                name: socket.name,
+                name: username,
                 timer: t.getTime(),
                 msg: msg
             }
