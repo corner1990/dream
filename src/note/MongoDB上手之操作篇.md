@@ -853,6 +853,16 @@ db.students.find().sort({age:1})
 
 - **执行脚本**
 
+  > 有时候我们写命令行不方便，可以把操作写成一个脚本，然后执行
+
+**语法**
+
+```powershell
+mongo insert.js
+```
+
+
+
 ```js
 var username = 'leo';
 var password = '123456';
@@ -880,6 +890,8 @@ print('cost ' + cost + ' ms');
 
 ### 索引
 
+> 建立索引是会消耗性能的，只有在在按照某个字段查询的时候才给该字段建一个索引，方便查找，有助于提升性能
+
 ```js
 db.users.getIndexes();
 db.users.ensureIndex({name:1});
@@ -894,7 +906,10 @@ db.articles.find({$text:{$search:"\"2 3\""}});
 
 ### 备份与导出
 
+> 想要导出真个数据库的时候，集合的字段不用设置
+
 ```js
+// 导出数据
 mongodump
     -- host 127.0.0.1
     -- port 27017
@@ -906,37 +921,41 @@ mongodump
 //mongodump --host 127.0.0.1 --port 27017 --out ./backup --collection users --db school
 //db.users.drop();
 
+// 恢复数据
 mongorestore
 --host
 --port
 --username
 --password
-
 mongorestore --host 127.0.0.1 --port 27017 D://backup/
 ```
 
 ### 权限
 
 ```js
+// 1.创建用户
 db.createUser({
     user:'root',
     pwd:'123456',
-    customData:{
+    customData:{ // 额外信息，可以不设置
         name:'root',
         email:'admin@admin.com',
         age:18
     },
-    roles:[
+    roles:[ // 用户角色权限 必须设置
         {
-          role:'readWrite',
-          db:'school'
+          role:'readWrite', // 读写权限
+          db:'school' // 可以操作的数据库
         },
         'read'
     ]
 });
-// db.system.users.remove({user:'zfpx'});
-// mongod --auth
-// mongo -u zfpx -p 123456 127.0.0.1:27017/admin
+// 2.
+db.system.users.remove({user:'root'});
+// 3. 带权限启动数据库
+mongod --auth
+// 4. 登录带权限的数据库
+mongo -u root -p 123456 127.0.0.1:27017
 ```
 
 ## 附录
