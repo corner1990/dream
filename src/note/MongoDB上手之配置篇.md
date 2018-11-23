@@ -226,7 +226,7 @@ switched to db admin
 1
 ```
 
-### 6.1.7 修改个人信息
+- **修改个人信息**
 
 ```js
 db.runCommand({updateUser:'root',pwd:'123', customData:{
@@ -281,6 +281,7 @@ db.runCommand({
                 ns:集合名称，
                 key:分组的键,
                 initial:初始值,
+            	query: 查询值,
                 $reduce:分解器
                 condition:条件,
                 finalize:完成时的处理器
@@ -296,7 +297,9 @@ db.runCommand({
                 ns:'students',
                 key:{home:true},
                 initial:{total:0},
-                $reduce:function(doc,result){
+                $reduce:function(doc, result){
+                     // doc 本次的文档
+                     // result 上次的处理结果
                       result.total += doc.age;   
                 },
                 condition:{age:{$gt:1}},
