@@ -384,6 +384,10 @@ detect-libc@^1.0.2:
   version "1.0.3"
   resolved "http://registry.npm.taobao.org/detect-libc/download/detect-libc-1.0.3.tgz#fa137c4bd698edf55cd5cd02ac559f91a4c4ba9b"
 
+dom-walk@^0.1.0:
+  version "0.1.1"
+  resolved "http://registry.npm.taobao.org/dom-walk/download/dom-walk-0.1.1.tgz#672226dc74c8f799ad35307df936aba11acd6018"
+
 dot-prop@^4.1.0:
   version "4.2.0"
   resolved "http://registry.npm.taobao.org/dot-prop/download/dot-prop-4.2.0.tgz#1f19e0c2e1aa0e32797c49799f2837ac6af69c57"
@@ -565,6 +569,13 @@ global-dirs@^0.1.0:
   resolved "http://registry.npm.taobao.org/global-dirs/download/global-dirs-0.1.1.tgz#b319c0dd4607f353f3be9cca4c72fc148c49f445"
   dependencies:
     ini "^1.3.4"
+
+global@^4.3.2:
+  version "4.3.2"
+  resolved "http://registry.npm.taobao.org/global/download/global-4.3.2.tgz#e76989268a6c74c38908b1305b10fc0e394e9d0f"
+  dependencies:
+    min-document "^2.19.0"
+    process "~0.5.1"
 
 got@^6.7.1:
   version "6.7.1"
@@ -942,6 +953,12 @@ mime@^2.3.1:
   version "2.3.1"
   resolved "http://r.cnpmjs.org/mime/download/mime-2.3.1.tgz#b1621c54d63b97c47d3cfe7f7215f7d64517c369"
 
+min-document@^2.19.0:
+  version "2.19.0"
+  resolved "http://registry.npm.taobao.org/min-document/download/min-document-2.19.0.tgz#7bd282e3f5842ed295bb748cdd9f1ffa2c824685"
+  dependencies:
+    dom-walk "^0.1.0"
+
 minimatch@^3.0.4:
   version "3.0.4"
   resolved "http://registry.npm.taobao.org/minimatch/download/minimatch-3.0.4.tgz#5166e286457f03306064be5497e8dbb0c3d32083"
@@ -1259,6 +1276,10 @@ prepend-http@^1.0.1:
 process-nextick-args@~2.0.0:
   version "2.0.0"
   resolved "http://registry.npm.taobao.org/process-nextick-args/download/process-nextick-args-2.0.0.tgz#a37d732f4271b4ab1ad070d35508e8290788ffaa"
+
+process@~0.5.1:
+  version "0.5.2"
+  resolved "http://registry.npm.taobao.org/process/download/process-0.5.2.tgz#1638d8a8e34c2f440a91db95ab9aeb677fc185cf"
 
 pseudomap@^1.0.2:
   version "1.0.2"
