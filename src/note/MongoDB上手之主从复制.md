@@ -86,7 +86,7 @@ db.sources.remove({host:'127.0.0.1:8000'});//删除已经挂载的主节点
 
 ### 配置副本集
 
-A服务器
+**A服务器**
 
 ```js
 dbpath=E:\repl\repl1
@@ -94,7 +94,7 @@ port=2001
 replSet=group
 ```
 
-B服务器
+**B服务器**
 
 ```js
 dbpath=E:\repl\repl2
@@ -102,7 +102,7 @@ port=2002
 replSet=group
 ```
 
-C服务器
+**C服务器**
 
 ```js
 dbpath=E:\repl\repl3
@@ -110,7 +110,9 @@ port=2003
 replSet=group
 ```
 
-初始化副本集
+**初始化副本集**
+
+> 随便进一台主机，然后切换只admin数据库
 
 - rs.initiate() 启动一个新的副本集
 - rs.conf() 查看副本集的配置
@@ -149,7 +151,7 @@ rs.status();
 
 ### Oplog
 
-它被存储在本地数据库local中，会记录每一个操作。 如果希望在故障恢复的时候尽可能更多，可以把这个size设置的大一点
+> 它被存储在本地数据库local中，会记录每一个操作。 如果希望在故障恢复的时候尽可能更多，可以把这个size设置的大一点
 
 ```js
 --oplogSize 1024
