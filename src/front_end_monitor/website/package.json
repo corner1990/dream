@@ -1,0 +1,19 @@
+{
+  "name": "website",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "babel": "^6.23.0",
+    "babel-core": "^6.26.3",
+    "create-react-app": "^2.1.1",
+    "global": "^4.3.2",
+    "koa": "^2.6.2",
+    "koa-static": "^5.0.0",
+    "rollup": "^0.67.3",
+    "source-map": "^0.7.3"
+  },
+  "scripts": {
+    "dev": "nodemon app.js"
+  }
+}
