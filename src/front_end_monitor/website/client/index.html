@@ -14,6 +14,8 @@
     <img src="./images/navigation-timing-overview.png" alt="pic" width="400">
     <section id="root" class="react-wrap">
     </section>
+
+    <img src="http://193.112.82.218/b.jpg">
     <ul class="list">
         <li class="item">
             <span>span1</span>
@@ -31,7 +33,7 @@
                 <span>span3</span>
                 <p><a href="hahh">test</a></p>
             </li>
-                
+
     </ul>
     <script src="./js/jquery.min.js"></script>
     <script src="./js/lodash.core.min.js"></script>
@@ -45,6 +47,19 @@
     <script>
         $(function () {
             console.log('页面加载完毕')
+            // 测试nginx跨域配置
+            $.ajax({
+                url: 'http://193.112.82.218/test.json',
+                success: function (data) {
+                    console.log('data', data);
+                },
+                error: function (err) {
+                    console.log('err', err);
+                },
+                complete: complete => {
+                    console.log('complete', complete);
+                }
+            })
         })
     </script>
 </body>
