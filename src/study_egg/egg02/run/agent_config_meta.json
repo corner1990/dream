@@ -1,0 +1,266 @@
+{
+  "keys": "E:\\dream\\src\\study_egg\\egg02\\config\\config.default.js",
+  "view": {
+    "defaultViewEngine": "E:\\dream\\src\\study_egg\\egg02\\config\\config.default.js",
+    "defaultExtension": "E:\\dream\\src\\study_egg\\egg02\\config\\config.default.js",
+    "mapping": {
+      ".tpl": "E:\\dream\\src\\study_egg\\egg02\\config\\config.default.js"
+    },
+    "root": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg-view\\config\\config.default.js",
+    "cache": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg-view\\config\\config.local.js"
+  },
+  "news": {
+    "pageSize": "E:\\dream\\src\\study_egg\\egg02\\config\\config.default.js",
+    "serverUrl": "E:\\dream\\src\\study_egg\\egg02\\config\\config.default.js"
+  },
+  "middleware": "E:\\dream\\src\\study_egg\\egg02\\config\\config.default.js",
+  "robot": {
+    "ua": "E:\\dream\\src\\study_egg\\egg02\\config\\config.default.js"
+  },
+  "security": {
+    "csrf": "E:\\dream\\src\\study_egg\\egg02\\config\\config.default.js",
+    "domainWhiteList": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg-security\\config\\config.default.js",
+    "protocolWhiteList": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg-security\\config\\config.default.js",
+    "defaultMiddleware": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg-security\\config\\config.default.js",
+    "xframe": {
+      "enable": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg-security\\config\\config.default.js",
+      "value": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg-security\\config\\config.default.js"
+    },
+    "hsts": {
+      "enable": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg-security\\config\\config.local.js",
+      "maxAge": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg-security\\config\\config.default.js",
+      "includeSubdomains": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg-security\\config\\config.default.js"
+    },
+    "dta": {
+      "enable": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg-security\\config\\config.default.js"
+    },
+    "methodnoallow": {
+      "enable": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg-security\\config\\config.default.js"
+    },
+    "noopen": {
+      "enable": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg-security\\config\\config.default.js"
+    },
+    "nosniff": {
+      "enable": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg-security\\config\\config.default.js"
+    },
+    "referrerPolicy": {
+      "enable": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg-security\\config\\config.default.js",
+      "value": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg-security\\config\\config.default.js"
+    },
+    "xssProtection": {
+      "enable": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg-security\\config\\config.default.js",
+      "value": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg-security\\config\\config.default.js"
+    },
+    "csp": {
+      "enable": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg-security\\config\\config.default.js",
+      "policy": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg-security\\config\\config.default.js"
+    },
+    "ssrf": {
+      "ipBlackList": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg-security\\config\\config.default.js",
+      "checkAddress": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg-security\\config\\config.default.js"
+    }
+  },
+  "session": {
+    "maxAge": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg-session\\config\\config.default.js",
+    "key": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg-session\\config\\config.default.js",
+    "httpOnly": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg-session\\config\\config.default.js",
+    "encrypt": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg-session\\config\\config.default.js"
+  },
+  "helper": {
+    "shtml": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg-security\\config\\config.default.js"
+  },
+  "jsonp": {
+    "limit": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg-jsonp\\config\\config.default.js",
+    "callback": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg-jsonp\\config\\config.default.js",
+    "csrf": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg-jsonp\\config\\config.default.js"
+  },
+  "onerror": {
+    "errorPageUrl": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg-onerror\\config\\config.default.js",
+    "appErrorFilter": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg-onerror\\config\\config.default.js",
+    "templatePath": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg-onerror\\config\\config.default.js"
+  },
+  "i18n": {
+    "defaultLocale": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg-i18n\\config\\config.default.js",
+    "dirs": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg-i18n\\config\\config.default.js",
+    "queryField": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg-i18n\\config\\config.default.js",
+    "cookieField": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg-i18n\\config\\config.default.js",
+    "cookieMaxAge": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg-i18n\\config\\config.default.js"
+  },
+  "watcher": {
+    "type": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg-watcher\\config\\config.local.js",
+    "eventSources": {
+      "default": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg-watcher\\config\\config.default.js",
+      "development": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg-watcher\\config\\config.default.js"
+    }
+  },
+  "customLogger": {
+    "scheduleLogger": {
+      "consoleLevel": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg-schedule\\config\\config.default.js",
+      "file": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg-schedule\\config\\config.default.js"
+    }
+  },
+  "multipart": {
+    "mode": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg-multipart\\config\\config.default.js",
+    "autoFields": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg-multipart\\config\\config.default.js",
+    "defaultCharset": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg-multipart\\config\\config.default.js",
+    "fieldNameSize": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg-multipart\\config\\config.default.js",
+    "fieldSize": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg-multipart\\config\\config.default.js",
+    "fields": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg-multipart\\config\\config.default.js",
+    "fileSize": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg-multipart\\config\\config.default.js",
+    "files": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg-multipart\\config\\config.default.js",
+    "fileExtensions": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg-multipart\\config\\config.default.js",
+    "whitelist": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg-multipart\\config\\config.default.js",
+    "tmpdir": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg-multipart\\config\\config.default.js",
+    "cleanSchedule": {
+      "cron": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg-multipart\\config\\config.default.js"
+    }
+  },
+  "development": {
+    "watchDirs": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg-development\\config\\config.default.js",
+    "ignoreDirs": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg-development\\config\\config.default.js",
+    "fastReady": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg-development\\config\\config.default.js",
+    "reloadOnDebug": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg-development\\config\\config.default.js",
+    "overrideDefault": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg-development\\config\\config.default.js"
+  },
+  "logrotator": {
+    "filesRotateByHour": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg-logrotator\\config\\config.default.js",
+    "hourDelimiter": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg-logrotator\\config\\config.default.js",
+    "filesRotateBySize": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg-logrotator\\config\\config.default.js",
+    "maxFileSize": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg-logrotator\\config\\config.default.js",
+    "maxFiles": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg-logrotator\\config\\config.default.js",
+    "rotateDuration": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg-logrotator\\config\\config.default.js",
+    "maxDays": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg-logrotator\\config\\config.default.js"
+  },
+  "static": {
+    "prefix": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg-static\\config\\config.default.js",
+    "dir": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg-static\\config\\config.default.js",
+    "dynamic": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg-static\\config\\config.default.js",
+    "preload": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg-static\\config\\config.default.js",
+    "buffer": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg-static\\config\\config.default.js",
+    "maxFiles": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg-static\\config\\config.default.js"
+  },
+  "nunjucks": {
+    "autoescape": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg-view-nunjucks\\config\\config.default.js",
+    "throwOnUndefined": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg-view-nunjucks\\config\\config.default.js",
+    "trimBlocks": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg-view-nunjucks\\config\\config.default.js",
+    "lstripBlocks": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg-view-nunjucks\\config\\config.default.js",
+    "cache": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg-view-nunjucks\\config\\config.local.js"
+  },
+  "env": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg\\config\\config.default.js",
+  "name": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg\\config\\config.default.js",
+  "proxy": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg\\config\\config.default.js",
+  "protocolHeaders": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg\\config\\config.default.js",
+  "ipHeaders": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg\\config\\config.default.js",
+  "hostHeaders": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg\\config\\config.default.js",
+  "pkg": {
+    "name": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg\\config\\config.default.js",
+    "version": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg\\config\\config.default.js",
+    "description": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg\\config\\config.default.js",
+    "main": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg\\config\\config.default.js",
+    "scripts": {
+      "dev": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg\\config\\config.default.js",
+      "start": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg\\config\\config.default.js",
+      "test": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg\\config\\config.default.js"
+    },
+    "keywords": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg\\config\\config.default.js",
+    "author": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg\\config\\config.default.js",
+    "license": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg\\config\\config.default.js",
+    "dependencies": {
+      "egg-mock": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg\\config\\config.default.js",
+      "egg-view-nunjucks": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg\\config\\config.default.js",
+      "moment": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg\\config\\config.default.js"
+    },
+    "devDependencies": {
+      "egg": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg\\config\\config.default.js",
+      "egg-bin": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg\\config\\config.default.js"
+    }
+  },
+  "baseDir": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg\\config\\config.default.js",
+  "HOME": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg\\config\\config.default.js",
+  "rundir": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg\\config\\config.default.js",
+  "dump": {
+    "ignore": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg\\config\\config.default.js"
+  },
+  "confusedConfigurations": {
+    "bodyparser": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg\\config\\config.default.js",
+    "notFound": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg\\config\\config.default.js",
+    "sitefile": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg\\config\\config.default.js",
+    "middlewares": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg\\config\\config.default.js",
+    "httpClient": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg\\config\\config.default.js"
+  },
+  "notfound": {
+    "pageUrl": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg\\config\\config.default.js"
+  },
+  "siteFile": {
+    "/favicon.ico": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg\\config\\config.default.js"
+  },
+  "bodyParser": {
+    "enable": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg\\config\\config.default.js",
+    "encoding": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg\\config\\config.default.js",
+    "formLimit": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg\\config\\config.default.js",
+    "jsonLimit": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg\\config\\config.default.js",
+    "strict": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg\\config\\config.default.js",
+    "queryString": {
+      "arrayLimit": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg\\config\\config.default.js",
+      "depth": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg\\config\\config.default.js",
+      "parameterLimit": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg\\config\\config.default.js"
+    }
+  },
+  "logger": {
+    "dir": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg\\config\\config.default.js",
+    "encoding": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg\\config\\config.default.js",
+    "env": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg\\config\\config.default.js",
+    "level": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg\\config\\config.default.js",
+    "consoleLevel": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg\\config\\config.default.js",
+    "disableConsoleAfterReady": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg\\config\\config.default.js",
+    "outputJSON": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg\\config\\config.default.js",
+    "buffer": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg\\config\\config.default.js",
+    "appLogName": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg\\config\\config.default.js",
+    "coreLogName": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg\\config\\config.default.js",
+    "agentLogName": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg\\config\\config.default.js",
+    "errorLogName": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg\\config\\config.default.js",
+    "coreLogger": {
+      "consoleLevel": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg\\config\\config.local.js"
+    },
+    "allowDebugAtProd": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg\\config\\config.default.js"
+  },
+  "httpclient": {
+    "enableDNSCache": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg\\config\\config.default.js",
+    "dnsCacheLookupInterval": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg\\config\\config.default.js",
+    "dnsCacheMaxLength": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg\\config\\config.default.js",
+    "request": {
+      "timeout": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg\\config\\config.default.js"
+    },
+    "httpAgent": {
+      "keepAlive": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg\\config\\config.default.js",
+      "freeSocketTimeout": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg\\config\\config.default.js",
+      "maxSockets": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg\\config\\config.default.js",
+      "maxFreeSockets": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg\\config\\config.default.js"
+    },
+    "httpsAgent": {
+      "keepAlive": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg\\config\\config.default.js",
+      "freeSocketTimeout": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg\\config\\config.default.js",
+      "maxSockets": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg\\config\\config.default.js",
+      "maxFreeSockets": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg\\config\\config.default.js"
+    }
+  },
+  "meta": {
+    "enable": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg\\config\\config.default.js",
+    "logging": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg\\config\\config.default.js"
+  },
+  "coreMiddleware": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg\\config\\config.default.js",
+  "workerStartTimeout": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg\\config\\config.default.js",
+  "serverTimeout": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg\\config\\config.default.js",
+  "cluster": {
+    "listen": {
+      "path": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg\\config\\config.default.js",
+      "port": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg\\config\\config.default.js",
+      "hostname": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg\\config\\config.default.js"
+    }
+  },
+  "clusterClient": {
+    "maxWaitTime": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg\\config\\config.default.js",
+    "responseTimeout": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg\\config\\config.default.js"
+  },
+  "onClientError": "E:\\dream\\src\\study_egg\\egg02\\node_modules\\egg\\config\\config.default.js"
+}
