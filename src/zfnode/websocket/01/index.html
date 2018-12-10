@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div>hello webscoket</div>
+    <script>
+        // 创建一个socket对象，相当于买了一部手机
+        // socket 插座
+        let socket = new WebSocket('ws://localhost:7777')
+        // 如果服务器链接成功，会触发此事件
+        socket.onopen = function () {
+            console.log('链接已经建立好了')
+            socket.send(('你好'))
+        }
+        // 如果客户端接收到消息，会触发这个事件
+        socket.onmessage = (e)  => {
+            console.log(e.data)
+        }
+    </script>
+</body>
+</html>

@@ -11,8 +11,16 @@
   "dependencies": {
     "chalk": "^2.4.1",
     "debug": "^3.1.0",
+<<<<<<< HEAD
     "mime": "^2.3.1",
     "nodemon": "^1.18.7",
     "redis": "^2.8.0"
+=======
+    "global": "^4.3.2",
+    "mime": "^2.3.1",
+    "mongoose": "^5.3.13",
+    "nodemon": "^1.18.6",
+    "socket.io": "^2.1.1"
+>>>>>>> 69c34d01bfe4047de0651a11ea3a7b54cded4c6f
   }
 }

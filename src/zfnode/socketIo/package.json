@@ -1,0 +1,18 @@
+{
+  "name": "01",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.4",
+    "globale": "^1.0.0",
+    "nodeman": "^1.1.2",
+    "socket.io": "^2.1.1"
+  }
+}

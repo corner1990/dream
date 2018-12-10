@@ -1,0 +1,23 @@
+{
+  "name": "egg02",
+  "version": "1.0.0",
+  "description": "- 提供基于 Egg 定制上层框架的能力\r - 高度可扩展的插件机制\r - 内置多进程管理\r - 基于 Koa 开发，性能优异\r - 框架稳定，测试覆盖率高\r - 渐进式开发",
+  "main": "index.js",
+  "scripts": {
+    "dev": "egg-bin dev",
+    "start": "cross-env EGG_SERVER_ENV=prod egg-bin dev",
+    "test": "egg-bin test"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "egg-mock": "^3.20.1",
+    "egg-view-nunjucks": "^2.2.0",
+    "moment": "^2.22.2"
+  },
+  "devDependencies": {
+    "egg": "^2.14.1",
+    "egg-bin": "^4.9.0"
+  }
+}

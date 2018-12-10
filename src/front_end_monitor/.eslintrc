@@ -1,0 +1,43 @@
+{
+  "extends": "eslint-config-umi",
+  "rules": {
+    "no-var": "error",
+    "no-alert": 0,
+    "no-div-regex": 1,
+    "no-dupe-keys": 2,
+    "no-dupe-args": 2,
+    "no-eq-null": 2,
+    "no-eval": 1,
+    "no-extra-bind": 2,
+    "no-extra-boolean-cast": 2,
+    "no-multiple-empty-lines": [1, {"max": 2}],
+    "no-new-func": 1,
+    "no-new-object": 2,
+    "no-unused-vars": [2, {"vars": "all", "args": "after-used"}],
+    "no-use-before-define": 2,
+    "comma-dangle": [2, "never"],
+    "constructor-super": 0,
+    "default-case": 2,
+    "eqeqeq": 2,
+    "indent": ["error", "tab"],
+    "key-spacing": [0, { "beforeColon": false, "afterColon": true }],
+    "new-parens": 2,
+    "padded-blocks": 0,
+    "prefer-const": 0,
+    "prefer-spread": 0,
+    "no-mixed-spaces-and-tabs": [2, false],
+    "space-unary-ops": [0, { "words": true, "nonwords": false }],
+    "wrap-iife": [2, "inside"],
+    "wrap-regex": 0,
+    "no-trailing-spaces": ["error", { "skipBlankLines": true, "ignoreComments": true }],
+    "require-jsdoc": ["error", {
+      "require": {
+          "FunctionDeclaration": true,
+          "MethodDefinition": false,
+          "ClassDeclaration": false,
+          "ArrowFunctionExpression": false,
+          "FunctionExpression": false
+      }
+    }]
+  }
+}

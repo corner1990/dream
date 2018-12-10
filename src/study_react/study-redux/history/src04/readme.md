@@ -1,0 +1,1 @@
+完成bindActionCreators编写，以及传参调用

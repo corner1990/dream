@@ -1,0 +1,1 @@
+完成combineReducers编写，我们可以写多个reducer，然后使用该方法合并为一个reducers，然后使用
