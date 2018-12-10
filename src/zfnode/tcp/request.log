@@ -1,4 +1,0 @@
-method=GET
-url=/?name=leo
-headers={"host":"localhost:3000","user-agent":"curl/7.54.0","accept":"*/*"}
-httpVersion=1.1
