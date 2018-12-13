@@ -496,6 +496,75 @@ npm install --save @babel/runtime
 ```
 > webpack打包的时候，会自动优化重复引入公共方法的问题
 
+### ESLint校验代码格式规范
+
+- [eslint](https://eslint.org/docs/developer-guide/nodejs-api#cliengine)
+
+- [eslint-loader](https://www.npmjs.com/package/eslint-loader)
+
+- [configuring](https://eslint.org/docs/user-guide/configuring)
+
+- [babel-eslint](https://www.npmjs.com/package/babel-eslint)
+
+- [Rules](https://cloud.tencent.com/developer/chapter/12618)
+
+- ESlint 语法检测配置说明
+
+  ```js
+  npm install eslint eslint-loader babel-eslint --D
+  ```
+
+.eslintrc.js
+
+```js
+module.exports = {
+    root: true,
+    //指定解析器选项
+    parserOptions: {
+        sourceType: 'module'
+    },
+    //指定脚本的运行环境
+    env: {
+        browser: true,
+    },
+    // 启用的规则及其各自的错误级别
+    rules: {
+        "indent": ["error", 4],//缩进风格
+        "quotes": ["error", "double"],//引号类型 
+        "semi": ["error", "always"],//关闭语句强制分号结尾
+        "no-console": "error",//禁止使用console
+        "arrow-parens": 0 //箭头函数用小括号括起来
+    }
+}
+module: {
+        //配置加载规则
+    rules: [
+        {
+            test: /\.js$/,
+            loader: 'eslint-loader',
+            enforce: "pre",
+            include: [path.resolve(__dirname, 'src')], // 指定检查的目录
+            options: { fix: true } // 这里的配置项参数将会被传递到 eslint 的 CLIEngine   
+        }
+     ]
+ }
+```
+
+### 如何调试打包后的代码
+
+webpack通过配置可以自动给我们`source maps`文件，`map`文件是一种对应编译文件和源文件的方法
+
+- source-map 把映射文件生成到单独的文件，最完整最慢
+- cheap-module-source-map 在一个单独的文件中产生一个不带列映射的Map
+- eval-source-map 使用eval打包源文件模块,在同一个文件中生成完整sourcemap
+- cheap-module-eval-source-map sourcemap和打包后的JS同行显示，没有映射列
+
+```js
+devtool:'eval-source-map'
+```
+
+
+
 
 ### watch
 > 当代码发生修改后可以自动重新编译， 直接在webpack.config.js添加参数
@@ -523,7 +592,7 @@ new webpack.BannerPlugin('test')
 npm i copy-webpack-plugin -D
 ```
 - 使用插件
-```
+```js
 new CopyWebpackPlugin([{
   from: path.resolve(__dirname,'src/assets'),//静态资源目录源地址
   to:path.resolve(__dirname,'dist/assets') //目标地址，相对于output的path目录
@@ -609,25 +678,31 @@ resolve: {
 ```
 - alias
 > 配置别名可以加快webpack查找模块的速度
-	+ 配置使用
-	```
-	const bootstrap = path.resolve(__dirname,'node_modules/_bootstrap@3.3.7@bootstrap/dist/css/bootstrap.css');
-		resolve: {
-		+    alias:{
-		+        "bootstrap":bootstrap
-		+    }
-		}
-	```
+
+
+ + 配置使用
+ ```
+ const bootstrap = path.resolve(__dirname,'node_modules/_bootstrap@3.3.7@bootstrap/dist/css/bootstrap.css');
+ 	resolve: {
+ 	+    alias:{
+ 	+        "bootstrap":bootstrap
+ 	+    }
+ 	}
+ ```
 - modules
-	+ 对于直接声明依赖名的模块（如 react ），webpack 会类似 Node.js 一样进行路径搜索，搜索node_modules目录
-	+ 这个目录就是使用resolve.modules字段进行配置的 默认配置
-```
+  + 对于直接声明依赖名的模块（如 react ），webpack 会类似 Node.js 一样进行路径搜索，搜索node_modules目录
+  + 这个目录就是使用resolve.modules字段进行配置的 默认配置
+  + 我们在需要加载node_modules目录之外的库时也在这里配置
+```js
 resolve: {
-	modules: ['node_modules'],
+	modules: ['node_modules', './lib', './public'],
 }
 ```
-	+ 如果可以确定项目内所有的第三方依赖模块都是在项目根目录下的 node_modules 中的话
-```
+
+
+
+```js
+// 如果可以确定项目内所有的第三方依赖模块都是在项目根目录下的 node_modules 中的话
 resolve: {
 	modules: [path.resolve(__dirname, 'node_modules')],
 }
@@ -635,7 +710,7 @@ resolve: {
 - mainFields
 > 默认情况下package.json 文件则按照文件中 main 字段的文件名来查找文件
 
-```
+```js
 resolve: {
   // 配置 target === "web" 或者 target === "webworker" 时 mainFields 默认值是：
   mainFields: ['browser', 'module', 'main'],
@@ -835,12 +910,42 @@ module.exports=(env,argv) => ({
 - 安装依赖
 
 ```bash
-npm i babel-loader @babel/core @babel/preset-env  @babel/preset-react  -D
+npm install -D babel-loader@7 babel-core babel-preset-env
 npm i @babel/plugin-proposal-decorators @babel/plugin-proposal-class-properties -D
 ```
-- env 解析es6
-- stgage-0 解析es7
-- react 解析react
+- 配置参数
+
+  - env 解析es6
+  - tgage-0 解析es7
+  - react 解析react
+
+  ```javascript
+  module: {
+          rules: [
+              {
+                  test: /\.jsx?$/,
+                  use: {
+                      loader: 'babel-loader'
+                  },
+                  include: resolve(__dirname,'src'),
+                  exclude:/node_modules/
+              }
+          ]
+      },
+  ```
+
+  - 根目录添加.bablerc文件,里边配置参数
+
+  ```js
+  {
+      "presets": [
+          "env",
+          "stage-0",
+          "react"
+      ]
+  }
+  ```
+
 
 
 

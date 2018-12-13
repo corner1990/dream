@@ -1,0 +1,1 @@
+export default 'test es6 is update'
