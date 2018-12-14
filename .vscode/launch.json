@@ -4,21 +4,11 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-        
         {
             "type": "node",
             "request": "launch",
-            "name": "Electron Main",
-            "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/electron",
-            "program": "${workspaceFolder}/main.js",
-            "protocol": "legacy"
-        },
-        {
-            "type": "node",
-            "request": "attach",
-            "name": "附加到进程",
-            "address": "localhost",
-            "port": 5858
+            "name": "Launch Program",
+            "program": "${file}"
         }
     ]
 }
