@@ -724,7 +724,7 @@ export default props => <div>About</div>
 ```js
 (function (modules) { // webpack的入口文件
   // install a JSONP callback for chunk loading
-  //安装一个JSONP的回调为了加载chunk代码块
+  //安装一个JSONP的回调为了懒加载chunk代码块
   function webpackJsonpCallback(data) {//data=[[0],additionalModules]
     var chunkIds = data[0];//第一个元素是chunkId的数组
     var moreModules = data[1];//这个chunk里包含的额外更多的模块
@@ -737,6 +737,7 @@ export default props => <div>About</div>
     for (; i < chunkIds.length; i++) {
       chunkId = chunkIds[i];//先取出一个chunkId
       if (installedChunks[chunkId]) {//如果说有值的话
+        // installedChunks[chunkId] = [resolve, reject, promise]
         //把这个installedChunks[chunkId]的0元素，promise resovle方法添加resolves数组中去
         resolves.push(installedChunks[chunkId][0]);
       }
@@ -839,6 +840,8 @@ export default props => <div>About</div>
         // }
         //拼出一个URL路径度且赋给script.src
         script.src = jsonpScriptSrc(chunkId);
+        //  上边的代码等于下边这行代码
+        // script.src = __webpack_require__.p + "" + chunkId + ".bundle.js"
         //定义加载后的回调函数
         onScriptComplete = function (event) {
           // avoid mem leaks in IE. 防止IE下面的内存泄露
