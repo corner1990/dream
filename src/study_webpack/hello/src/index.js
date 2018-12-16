@@ -1,3 +1,5 @@
 document.getElementById('btn').addEventListener('click', function () {
-    alert('click btn')
+    import('./lazy.js').then(obj => {
+        console.log(obj.name)
+    })
 }, false)
