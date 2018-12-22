@@ -1,0 +1,23 @@
+{
+  "name": "loader",
+  "version": "1.0.0",
+  "description": "",
+  "main": "webpack.config.js",
+  "scripts": {
+    "build": "webpack --mode development"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^8.0.4",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-stage-0": "^6.24.1",
+    "less": "^3.9.0",
+    "loader-utils": "^1.1.0",
+    "schema-utils": "^1.0.0",
+    "webpack": "^4.28.1",
+    "webpack-cli": "^3.1.2"
+  }
+}
