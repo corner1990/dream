@@ -1,12 +1,12 @@
-## 1.loader运行的总体流程
+## loader运行的总体流程
 
 ![loader](http://img.zhufengpeixun.cn/loader.jpg)
 
-## 2. loader配置
+## loader配置
 
 `loader`是导出为一个函数的`node`模块。该函数在`loader`转换资源的时候调用。给定的函数将调用`loader API`，并通过`this`上下文访问。
 
-### 2.1 匹配(test)单个 loader
+### 匹配(test)单个 loader
 
 匹配(test)单个 loader，你可以简单通过在 rule 对象设置 path.resolve 指向这个本地文件
 
@@ -22,9 +22,9 @@
 }
 ```
 
-### 2.2 匹配(test)多个 loaders
+### 匹配(test)多个 loaders
 
-，你可以使用 resolveLoader.modules 配置，webpack 将会从这些目录中搜索这些 loaders。
+你可以使用 resolveLoader.modules 配置，webpack 将会从这些目录中搜索这些 loaders。
 
 ```js
 resolveLoader: {
@@ -32,7 +32,7 @@ resolveLoader: {
 },
 ```
 
-### 2.1 3 npm link
+### npm link
 
 - 确保正在开发的本地 Npm 模块（也就是正在开发的 Loader）的 package.json 已经正确配置好； 在本地 Npm 模块根目录下执行 npm link，把本地模块注册到全局；
 
@@ -42,7 +42,7 @@ resolveLoader: {
   npm link
   ```
 
-### 2.1 4 alias
+### alias
 
 ```js
 resolveLoader: {
@@ -56,9 +56,9 @@ resolveLoader: {
     },
 ```
 
-## 3. loader用法
+## loader用法
 
-### 3.1 单个loader用法
+### 单个loader用法
 
 - 当一个 loader 在资源中使用，这个 loader 只能传入一个参数 - 这个参数是一个包含包含资源文件内容的字符串
 - 同步 loader 可以简单的返回一个代表模块转化后的值。
@@ -68,7 +68,7 @@ resolveLoader: {
 - loader 也可以通过使用 this.callback(err, values...) 函数，返回任意数量的值
 - loader 会返回一个或者两个值。第一个值的类型是 JavaScript 代码的字符串或者 buffer。第二个参数值是 SourceMap，它是个 JavaScript 对象
 
-### 3.2 多个loader
+### 多个loader
 
 当链式调用多个 loader 的时候，请记住它们会以相反的顺序执行。取决于数组写法格式，从右向左或者从下向上执行。
 
@@ -76,40 +76,40 @@ resolveLoader: {
 - 第一个 loader 最后调用，期望值是传出 JavaScript 和 source map（可选）。
 - 中间的 loader 执行时，会传入前一个 loader 传出的结果。
 
-### 3.3 单个loader用法
+### 单个loader用法
 
 - 最后的 loader 最早调用，将会传入原始资源内容。
 - 第一个 loader 最后调用，期望值是传出 JavaScript 和 source map（可选）。
 - 中间的 loader 执行时，会传入前一个 loader 传出的结果。
 
-## 4 用法准则
+## 用法准则
 
-### 4.1 简单
+- 简单
 
-- loaders 应该只做单一任务。这不仅使每个 loader 易维护，也可以在更多场景链式调用。
+> loaders 应该只做单一任务。这不仅使每个 loader 易维护，也可以在更多场景链式调用。
 
-### 4.2 链式(Chaining)
+- 链式(Chaining)
 
-- 利用 loader 可以链式调用的优势。写五个简单的 loader 实现五项任务，而不是一个 loader 实现五项任务
+> 利用 loader 可以链式调用的优势。写五个简单的 loader 实现五项任务，而不是一个 loader 实现五项任务
 
-### 4.3 模块化(Modular)
+- 模块化(Modular)
 
-保证输出模块化。loader 生成的模块与普通模块遵循相同的设计原则。
+>  保证输出模块化。loader 生成的模块与普通模块遵循相同的设计原则。
 
-### 4.4 无状态(Stateless)
+- 无状态(Stateless)
 
-确保 loader 在不同模块转换之间不保存状态。每次运行都应该独立于其他编译模块以及相同模块之前的编译结果。
+> 确保 loader 在不同模块转换之间不保存状态。每次运行都应该独立于其他编译模块以及相同模块之前的编译结果。
 
-### 4.5 loader 工具库(Loader Utilities)
+### loader 工具库(Loader Utilities)
 
 - [loader-utils](https://github.com/webpack/loader-utils) 包。它提供了许多有用的工具，但最常用的一种工具是获取传递给 loader 的选项
 - [schema-utils](https://github.com/webpack-contrib/schema-utils) 包配合 loader-utils，用于保证 loader 选项，进行与 JSON Schema 结构一致的校验
 
-### 4.6 loader 依赖(Loader Dependencies)
+- loader 依赖(Loader Dependencies)
 
-如果一个 loader 使用外部资源（例如，从文件系统读取），必须声明它。这些信息用于使缓存 loaders 无效，以及在观察模式(watch mode)下重编译。
+> 如果一个 loader 使用外部资源（例如，从文件系统读取），必须声明它。这些信息用于使缓存 loaders 无效，以及在观察模式(watch mode)下重编译。
 
-### 4.7 模块依赖(Module Dependencies)
+- 模块依赖(Module Dependencies)
 
 根据模块类型，可能会有不同的模式指定依赖关系。例如在 CSS 中，使用 @import 和 url(...) 语句来声明依赖。这些依赖关系应该由模块系统解析。
 
@@ -122,9 +122,11 @@ resolveLoader: {
 - 如果你的 loader 简单包裹另外一个包，你应该把这个包作为一个 peerDependency 引入。
 - 这种方式允许应用程序开发者在必要情况下，在 package.json 中指定所需的确定版本。
 
-## 5. API
 
-### 5.1 缓存结果
+
+## API
+
+### 缓存结果
 
 webpack充分地利用缓存来提高编译效率
 
@@ -132,7 +134,7 @@ webpack充分地利用缓存来提高编译效率
  this.cacheable();
 ```
 
-### 5..2 异步
+### 异步
 
 当一个 Loader 无依赖，可异步的时候我想都应该让它不再阻塞地去异步
 
@@ -148,7 +150,7 @@ module.exports = function(source) {
 };
 ```
 
-### 5.3 raw loader
+### raw loader
 
 默认的情况源文件是以 `UTF-8` 字符串的形式传入给 Loader,设置`module.exports.raw = true`可使用 buffer 的形式进行处理
 
@@ -156,7 +158,7 @@ module.exports = function(source) {
 module.exports.raw = true;
 ```
 
-### 5.4 获得 Loader 的 options
+### 获得 Loader 的 options
 
 ```js
 const loaderUtils = require('loader-utils');
@@ -167,7 +169,7 @@ module.exports = function(source) {
 };
 ```
 
-### 5.5 返回其它结果
+### 返回其它结果
 
 Loader有些场景下还需要返回除了内容之外的东西。
 
@@ -197,7 +199,7 @@ this.callback(
 );
 ```
 
-### 5.6 同步与异步
+### 同步与异步
 
 Loader 有同步和异步之分，上面介绍的 Loader 都是同步的 Loader，因为它们的转换流程都是同步的，转换完成后再返回结果。 但在有些场景下转换的步骤只能是异步完成的，例如你需要通过网络请求才能得出结果，如果采用同步的方式网络请求就会阻塞整个构建，导致构建非常缓慢。
 
@@ -212,7 +214,7 @@ module.exports = function(source) {
 };
 ```
 
-#### 1.4.7 处理二进制数据
+#### 处理二进制数据
 
 在默认的情况下，Webpack 传给 Loader 的原内容都是 UTF-8 格式编码的字符串。 但有些场景下 Loader 不是处理文本文件，而是处理二进制文件，例如 file-loader，就需要 Webpack 给 Loader 传入二进制格式的数据。 为此，你需要这样编写 Loader：
 
@@ -228,7 +230,7 @@ module.exports = function(source) {
 module.exports.raw = true;
 ```
 
-### 5.8 缓存
+### 缓存
 
 在有些情况下，有些转换操作需要大量计算非常耗时，如果每次构建都重新执行重复的转换操作，构建将会变得非常缓慢。 为此，Webpack 会默认缓存所有 Loader 的处理结果，也就是说在需要被处理的文件或者其依赖的文件没有发生变化时， 是不会重新调用对应的 Loader 去执行转换操作的。
 
@@ -240,7 +242,7 @@ module.exports = function(source) {
 };
 ```
 
-### 5.9 其它 Loader API
+### 其它 Loader API
 
 - [完整API](https://webpack.js.org/api/loaders/)
 
@@ -260,7 +262,7 @@ module.exports = function(source) {
 | `loader-utils.stringifyRequest` | Turns a request into a string that can be used inside require() or import while avoiding absolute paths. Use it instead of JSON.stringify(...) if you're generating code inside a loader 把一个请求字符串转成一个字符串，以便能在require或者import中使用以避免绝对路径。如果你在一个loder中生成代码的话请使用这个而不要用JSON.stringify() |
 | `loader-utils.interpolateName`  | Interpolates a filename template using multiple placeholders and/or a regular expression. The template and regular expression are set as query params called name and regExp on the current loader's context. 使用多个占位符或一个正则表达式转换一个文件名的模块。这个模板和正则表达式被设置为查询参数，在当前loader的上下文中被称为name或者regExp |
 
-## 6.loader实战
+## loader实战
 
 - loader-utils
 - schema-utils
@@ -270,7 +272,7 @@ module.exports = function(source) {
 - validateOptions
 - addDependency
 
-### 6.1 babel-loader
+### babel-loader
 
 - [babel-core](https://babeljs.io/docs/en/babel-core/)
 - [babel-loader](https://github.com/babel/babel-loader/blob/master/src/index.js)
@@ -300,7 +302,7 @@ resolveLoader: {
 },
 ```
 
-### 6.2 BannerLoader
+### BannerLoader
 
 ```js
 const loaderUtils = require('loader-utils');
@@ -349,7 +351,7 @@ options:{
 }
 ```
 
-### 6.3 pitch
+###  pitch
 
 > The loaders are called from right to left. But in some cases loaders do not care about the results of the previous loader or the resource. They only care for metadata. The pitch method on the loaders is called from left to right before the loaders are called. If a loader delivers a result in the pitch method the process turns around and skips the remaining loaders, continuing with the calls to the more left loaders. data can be passed between pitch and normal call.
 
@@ -374,7 +376,7 @@ pitch与loader本身方法的执行顺序图
 |- a-loader normal execution
 ```
 
-#### 6.3.1 log-loader1.js
+####  log-loader1.js
 
 ```js
 //source就是接收到的源文件的内容
@@ -389,7 +391,7 @@ loader.pitch = function (remainingRequest,previousRequest,data) {
 }
 ```
 
-#### 6.3.2 log-loader2.js
+#### log-loader2.js
 
 ```js
 //source就是接收到的源文件的内容
@@ -406,7 +408,7 @@ loader.pitch = function (remainingRequest,previousRequest,data) {
 }
 ```
 
-#### 6.3.3 log-loader3.js
+####  log-loader3.js
 
 ```js
 //source就是接收到的源文件的内容
@@ -426,7 +428,7 @@ loader.pitch = function () {
 }
 ```
 
-### 6.4 css
+### css
 
 - [css-loader](https://github.com/webpack-contrib/css-loader/blob/master/lib/loader.js) 的作用是处理css中的 @import 和 url 这样的外部资源
 - [style-loader](https://github.com/webpack-contrib/style-loader/blob/master/index.js) 的作用是把样式插入到 DOM中，方法是在head中插入一个style标签，并把样式写入到这个标签的 innerHTML里
@@ -439,7 +441,7 @@ loader.pitch = function () {
 - `!!` noPrePostAutoLoaders 不要前后置loader
 - `-!` noPreAutoLoaders 不要前置loader
 
-#### 6.4.1 less-loader.js
+####  less-loader.js
 
 ```js
 let less = require('less');
@@ -463,7 +465,7 @@ module.exports=function (source) {
 }
 ```
 
-#### 6.4.2 style-loader
+####  style-loader
 
 ```js
 let loaderUtils=require("loader-utils");
@@ -488,7 +490,7 @@ loader.pitch = function (request) {
 module.exports = loader;
 ```
 
-#### 6.4.3 css-loader.js
+#### css-loader.js
 
 ```js
 function loader(source) {
@@ -510,7 +512,7 @@ function loader(source) {
 module.exports = loader;
 ```
 
-#### 6.4.4 bundle.js
+#### bundle.js
 
 ```js
 {
@@ -536,7 +538,7 @@ eval("\n    var style = document.createElement(\"style\");\n    style.innerHTML 
  }
 ```
 
-#### 6.4.5 exact-loader.js
+#### exact-loader.js
 
 ```js
 //把CSS文件单独放置到一个文件中去，然后在页面中通过link标签去引入
@@ -554,11 +556,11 @@ let loader = function (source) {
 module.exports = loader;
 ```
 
-### 6.5 file
+###  file
 
 `file-loader` 并不会对文件内容进行任何转换，只是复制一份文件内容，并根据配置为他生成一个唯一的文件名。
 
-#### 6.5.1 file-loader
+#### file-loader
 
 - [file-loader](https://github.com/webpack-contrib/file-loader/blob/master/src/index.js)
 - [public-path](https://webpack.js.org/guides/public-path/#on-the-fly)
@@ -581,7 +583,7 @@ module.exports = loader;
 - 通过 `this.emitFile(url, content)` 告诉 webpack 我需要创建一个文件，webpack会根据参数创建对应的文件，放在 `public path` 目录下
 - 返回 `module.exports = ${JSON.stringify(url)}`,这样就会把原来的文件路径替换为编译后的路径
 
-#### 6.5.2 url-loader
+#### url-loader
 
 ```js
 let { getOptions } = require('loader-utils');
@@ -605,9 +607,9 @@ loader.raw = true;
 module.exports = loader;
 ```
 
-### 6.6 html-layout-loader
+### html-layout-loader
 
-### 6.6.1 webpack.config.js
+### webpack.config.js
 
 ```js
 {
@@ -633,7 +635,7 @@ plugins: [
 ]
 ```
 
-### 6.6.2 html-layout-loader
+### html-layout-loader
 
 ```js
 const path = require('path');
@@ -683,16 +685,16 @@ function render(layout, placeholder, source, callback) {
 }
 ```
 
-## 7.loader测试
+## loader测试
 
-### 7.1 安装依赖
+###  安装依赖
 
 ```js
 cnpm install --save-dev jest babel-jest babel-preset-env
 cnpm install --save-dev webpack memory-fs
 ```
 
-### 7.2 src/loader.js
+### src/loader.js
 
 ```js
 let {getOptions} = require('loader-utils');
@@ -704,13 +706,13 @@ function loader(source){
 module.exports=loader;
 ```
 
-### 7.3 test/example.txt
+### test/example.txt
 
 ```js
 hello [name]
 ```
 
-### 7.4 test/compile.js
+### test/compile.js
 
 ```js
 const path=require('path');
@@ -747,7 +749,7 @@ module.exports = function(fixture,options={}) {
 }
 ```
 
-### 7.5 test/loader.test.js
+### test/loader.test.js
 
 ```js
 let compile=require('./compile');
@@ -759,7 +761,7 @@ test('replace name',async () => {
 });
 ```
 
-### 7.6 package.json
+###  package.json
 
 ```json
 "scripts": {
@@ -767,14 +769,14 @@ test('replace name',async () => {
 }
 ```
 
-## 1. loader源码
+##  loader源码
 
 loader是用来加载处理各种形式的资源,本质上是一个函数, 接受文件作为参数,返回转化后的结构。
 
 - loader 用于对模块的源代码进行转换
 - loader 可以使你在 import 或"加载"模块时预处理文件
 
-### 1.1 NormalModuleFactory
+### NormalModuleFactory
 
 - `!` noAutoLoaders 所有的loader都不要执行
 - `!!` noPrePostAutoLoaders 不要前后置loader
@@ -814,7 +816,7 @@ this.hooks.resolver.tap("NormalModuleFactory", () => (data, callback) => {
             elements = elements.map(identToLoaderRequest);//剩下的全转成loader对象
 ```
 
-### 1.2 webpack/lib/NormalModule.js:263
+### webpack/lib/NormalModule.js:263
 
 ```js
 runLoaders({
@@ -838,7 +840,7 @@ this._ast = typeof extraInfo === "object" &&
 } 
 ```
 
-### 1.3 LoaderRunner.js
+### LoaderRunner.js
 
 loader-runner/lib/LoaderRunner.js
 
@@ -854,7 +856,7 @@ callback(null, {
 }
 ```
 
-### 1.4 LoaderRunner.js:155
+###  LoaderRunner.js:155
 
 ```js
 if(loaderContext.loaderIndex >= loaderContext.loaders.length)
@@ -947,7 +949,7 @@ runSyncOrAsync(say2, context, function () {
 });
 ```
 
-### 1.5 loadLoader.js:13
+### loadLoader.js:13
 
 loader-runner/lib/loadLoader.js:13
 
@@ -958,7 +960,7 @@ loader.pitch = module.pitch;
 loader.raw = module.raw;
 ```
 
-### 1.6 LoaderRunner.js
+### LoaderRunner.js
 
 loader-runner/lib/LoaderRunner.js
 
