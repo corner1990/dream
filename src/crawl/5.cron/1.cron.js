@@ -32,7 +32,7 @@ console.log("\033[45;37m 紫底白字 \033[0m")
 console.log("\033[46;37m 天蓝底白字 \033[0m")
 console.log("\033[47;30m 白底黑字 \033[0m")
 
-let obj = {
+let customizeFn = {
     error (str) {
         console.log("\033[31m " + str + " \033[0m")
     },
@@ -46,7 +46,8 @@ let obj = {
         console.log("\033[32m " + str + " \033[0m")
     }
 }
-console = Object.assign(console, obj)
+console = Object.assign(console, customizeFn)
+
 console.error('error')
 console.info('info')
 console.wran('info')
