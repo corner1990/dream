@@ -134,5 +134,99 @@ SELECT city, COUNT(1) AS count
 FROM student
 GROUP BY city
 HAVING count > 1
+
+
+
+
+
+-- 子查询
+-- 自查询就是只出现在其他SQL语句中的select语句
+-- outer QUERY/Inner QUERY
+-- 子查询指嵌套在查询内部，且必须出现在圆括号中
+-- 子查询可以包含多个关键字或条件
+-- 子查询的外层查询可以是：SELECT，INSERT，UPDATE SET
+-- 子查询可以返回常量，一行数据，一列数据或者其他子查询
+
+-- 查询年龄大于平均年龄的同学
+SELECT AVG(age) FROM student
+
+SELECT * FROM student WHERE age > (SELECT AVG(age) FROM student)
+
+-- ANY SOME ALL
+-- ALL 大于所有值
+-- 查询哪位同学的年龄
+SELECT * FROM student WHERE age > ALL(SELECT age FROM student WHERE city='bj')
+
+SELECT * FROM student WHERE age > ANY(SELECT age FROM student WHERE city='bj')
+
+SELECT * FROM student WHERE age > SOME(SELECT age FROM student WHERE city='bj')
+
+
+
+-- 查询有考试成绩的学生信息
+SELECT * FROM score
+SELECT * FROM student
+SELECT * FROM student WHERE id IN (SELECT student_id FROM score)
+
+-- 查询没有成绩的同学
+SELECT * FROM student WHERE id NOT IN (SELECT student_id FROM score)
+
+-- EXISTS not EXISTS
+-- EXISTS 存在一条就不在查询了
+SELECT * FROM student WHERE EXISTS(SELECT student_id FROM score WHERE student_id = student.id)
+
+SELECT * FROM student WHERE NOT EXISTS(SELECT student_id FROM score WHERE student_id = student.id)
+
+-- 表连接
+-- JOIN = INNER JOIN = CROSS JOIN内连接
+-- LEFT [OUTER] JOIN 左外链接
+-- RIGHT [OUTER] JOIN 右外链接
+-- ON 连接条件
+
+-- 多表查询
+-- 内联查询取交集
+SELECT * FROM score INNER JOIN student ON score.student_id = student.id
+-- 模拟内联查询
+SELECT * FROM score,student WHERE score.student_id = student.id
+
+-- 指定列查询
+SELECT student.name, score.grade FROM score INNER JOIN student ON score.student_id = student.id
+
+-- 连接多表查询
+SELECT student.name, score.grade, course.name FROM score INNER JOIN student ON score.student_id = student.id
+INNER JOIN course ON score.course_id = course.id
+
+-- 左连接 读取左边表的全部和右边表和左边表的交集展示
+SELECT * FROM student LEFT JOIN score ON student.id = score.student_id
+
+-- 右连接
+SELECT * FROM student RIGHT JOIN score ON student.id = score.student_id
+
+
+-- 新建表
+CREATE TABLE class(
+ id INT(20) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+ name VARCHAR(50),
+ parent_id int(20)
+)
+
+ALTER TABLE class MODIFY COLUMN id INT NOT NULL;
+DESC class;
+
+INSERT INTO class(id, name, parent_id) 
+VALUES (1, '数码产品', 0), (2, '服装', 0), (3, '食品', 0), (4, '文体办公', 0), (5, 'ipad', 1), (6, '美特邦威', 2), (7, '蛋糕', 3)
+
+SELECT * FROM class
+
+-- 自连接
+SELECT c1.id, c1.name, c2.name '父类'
+FROM class c1 INNER JOIN class c2 ON c1.parent_id = c2.id
+
+SELECT c1.id, c1.name,
+IF(c2.name != '', c2.name, '顶级分类') '父类'
+FROM class c1
+LEFT JOIN class c2 
+ON c1.parent_id = c2.id
+
 ```
 
