@@ -228,5 +228,63 @@ FROM class c1
 LEFT JOIN class c2 
 ON c1.parent_id = c2.id
 
+
+-- 查询重复记录
+
+-- 多表查询
+-- 准备数据
+
+INSERT INTO class(id, name, parent_id) VALUES(8, 'ipad', 1), (9, '美特邦威', 2), (10, '蛋糕', 3)
+-- 开始查询 `SELECT * FROM class c1` 这么写可以开辟独立空间，想互链接
+
+-- 查询到所有的重复的链接
+SELECT * FROM class c1
+WHERE c1.name IN
+(SELECT name FROM class c2 GROUP BY name HAVING COUNT(name) > 1)
+
+-- 拿到重复的分组
+SELECT * FROM class c1
+WHERE c1.name IN
+(SELECT name FROM class c2 GROUP BY name HAVING COUNT(name) > 1)
+AND c1.id IN
+(SELECT MIN(id) FROM class GROUP BY name HAVING COUNT(name) > 1)
+
+-- 拿到所有重复的id最大的数据
+SELECT * FROM class c1
+WHERE c1.name IN
+(SELECT name FROM class c2 GROUP BY name HAVING COUNT(name) > 1)
+AND c1.id NOT IN
+(SELECT MIN(id) FROM class GROUP BY name HAVING COUNT(name) > 1)
+
+-- SELECT * FROM class c2 GROUP BY name HAVING COUNT(name) > 1 拿到重复的字段
+
+
+-- 创建一个表
+CREATE TABLE province(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	name VARCHAR(64)
+)
+
+
+SELECT * FROM province
+-- 查询student省份字段，并插入province表
+INSERT INTO province(name) SELECT DISTINCT province FROM student
+
+DELETE  FROM province 
+
+
+-- 多表联合更新
+UPDATE student INNER JOIN province ON student.province = province.name
+SET student.province = province.id
+WHERE student.province = province.name
+
+select * FROM student
+
+
+-- 多变联合更新 设置类型
+ALTER TABLE student
+CHANGE province province_id SMALLINT UNSIGNED NOT NULL
+
+
 ```
 
