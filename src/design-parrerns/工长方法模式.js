@@ -23,7 +23,7 @@ class Orange extends Plant {
 
 // 工厂一般是接口， 规定子类必须实现的方法
 // 依赖抽象，而不依赖实现， 如果一个类要实现该接口，必须实现该接口中的所有方法
-//
+
 class Factory {
 	create(name, flavout) {}
 }
