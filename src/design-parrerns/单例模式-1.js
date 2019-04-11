@@ -1,21 +1,21 @@
 // 单例模式
 // 单独的实例
 
-/*class Window {
-	constructor (name) {
-		this.name = name;
-	}
-	static getInstance () {
-		if (!this.instance) {
-			this.instance = new Window()
-		}
-		return this.instance
-	}
-}
+// class Window {
+// 	constructor (name) {
+// 		this.name = name;
+// 	}
+// 	static getInstance () {
+// 		if (!this.instance) {
+// 			this.instance = new Window()
+// 		}
+// 		return this.instance
+// 	}
+// }
 
-let w1 = Window.getInstance()
-let w2 = Window.getInstance()
-console.log(w1 === w2)*/
+// let w1 = Window.getInstance()
+// let w2 = Window.getInstance()
+// console.log(w1 === w2)
 
 // es5
 /*function Window (name) {

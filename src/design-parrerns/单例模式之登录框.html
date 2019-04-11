@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>登录框</title>
+	<style type="text/css">
+		.login{
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			width: 320px;
+			height: 200px;
+			background: #eee;
+			border: 1px solid #e4e4e4;
+			border-radius: 5px;
+			display: none;
+			text-align: center;
+		}
+		.show{
+			display: block;
+		}
+	</style>
+</head>
+<body>
+	<p><button class="show">显示登录框</button><button class="hide">隐藏登陆框</button></p>
+
+</body>
+<script type="text/javascript">
+	let show = document.querySelector('.show')
+	let hide = document.querySelector('.hide')
+	class Login {
+		constructor () {
+			this.el = document.createElement('div')
+			this.el.classList.add('login')
+			this.el.innerHTML = (`
+				<p><input type="input" name="name" placeholder="账户" /></p>
+				<p><input type="password" name="password" placeholder="密码"></p>
+				<p><button>登录</button></p>
+			`)
+			document.body.appendChild(this.el)
+		}
+		show () {
+			this.el.classList.add('show')
+		}
+		hide () {
+			this.el.classList.remove('show')
+		}
+		static getInstance () {
+			if (!this.instance) {
+				this.instance = new Login()
+			}
+			return this.instance
+		}
+	}
+	show.addEventListener('click', function () {
+		Login.getInstance().show()
+	})
+	hide.addEventListener('click', function () {
+		Login.getInstance().hide()
+	})
+</script>
+</html>
