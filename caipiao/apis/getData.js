@@ -1,5 +1,6 @@
 const axios = require('axios')
 const cheerio=require('cheerio');
+let $ = null;
 /**
  * @desc 获取html字符串
  * @param  {string} 请求地址
@@ -20,20 +21,32 @@ let checkSatus = ({status, data, config}) => {
  * @param  {string} 获取到的HTML字符串
  * @return {dom} 返回加载后的dom
  */
-let parseHtml = (html) => (cheerio.load(html));
+let parseHtml = (html) => {
+	$ = cheerio.load(html)
+	return $
+}
 /**
  * @desc 获取文件
  * @param  {string} dom选择器
  * @return {object} 获取到的dom文档
  */
-let getWrap = (...args) => $ => $(...args);
-module.exports = function () {
-	getHtml('https://juejin.im/')
-		.then(getWrap('#juejin'))
-		.then(res => {
-			console.log('res', res.text())
-		})
+let getWrap = (...args) => $ => {
+	console.log($(...args).html())
+}
+let parseInfo = (el) => {
 
+	console.log('el', el.text())
+
+}
+
+let getData = async function (url) {
+	return axios.get(url)
+}
+module.exports = function () {
+	getData('https://www.1395p.com/pk10/kaijiang')
+	.then(res => {
+		console.log('res', res)
+	})
 	return async (ctx, next) => {
 		next()
 	}
