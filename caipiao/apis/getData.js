@@ -1,5 +1,5 @@
 const axios = require('axios')
-const cheerio=require('cheerio');
+// const cheerio=require('cheerio');
 let $ = null;
 /**
  * @desc 获取html字符串
@@ -43,10 +43,10 @@ let getData = async function (url) {
 	return axios.get(url)
 }
 module.exports = function () {
-	getData('https://www.1395p.com/pk10/kaijiang')
-	.then(res => {
-		console.log('res', res)
-	})
+	// getData('https://www.1395p.com/pk10/kaijiang')
+	// .then(res => {
+	// 	console.log('res', res)
+	// })
 	return async (ctx, next) => {
 		next()
 	}
