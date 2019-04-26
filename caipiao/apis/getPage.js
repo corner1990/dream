@@ -7,20 +7,45 @@ let getPage = async (url) => {
   });
   const page = await browser.newPage();
   // 设置宽度
-  // page.setViewport({
-  //     width: 1366,
-  //     height: 768,
-  // });
+  page.setViewport({
+      width: 1366,
+      height: 768,
+  });
   await page.goto(url);
-  let res = await page.screenshot({path: 'example.png'});
-  console.log('load', res)
+  page.screenshot({path: 'example.png'});
   page.on('error', (err) => console.log('err!', err));
-  await page.reload()
-  page.on('load', () => console.log('Page loaded!'));
+
+  return page;
   // await browser.close();
 }
+/**
+ * @desc 关闭首页弹窗
+ * @param  {[type]}
+ * @return {[type]}
+ */
+let closeDialog =  page => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      page.click('.ui-popup .ui-dialog-close');
+      resolve(page)
+    }, 3000)
+  })
+  // page.click('.lp_tb_more');
+}
+// 输入账号
+let inputAccount = async page => {
+  // page.$('select_date')
+  let account = await page.$('#LOGIN-FORM .login-area .login-mane .input_tip')
+  account.focus()
+  // btn.click();
+  console.log('btn')
+  return page
+}
 module.exports = function () {
-	getPage('https://www.1395p.com/pk10/kaijiang')
+  getPage('https://www.hyl88.net/')
+    .then(closeDialog)
+    .then(inputAccount)
+	// getPage('https://www.1395p.com/pk10/kaijiang')
 	// getPage('http://www.baidu.com')
 	return async (ctx, next) => {
 		next()

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>适配器模式示例</title>
+</head>
+<body>
+	<div id="root">
+		<p>{{title}}</p>
+		<p>{{great}}</p>
+	</div>
+	<!-- 生产环境版本，优化了尺寸和速度 -->
+	<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+	<script type="text/javascript">
+		let app = new Vue({
+			el: '#root',
+			data: {
+				title: 'Hello World'
+			},
+			computed: {
+				// 计算属性就是一种适配器模式的应用
+				great () {
+					return '今天是一个好日子'
+				}
+			}
+		})
+	</script>
+</body>
+</html>
