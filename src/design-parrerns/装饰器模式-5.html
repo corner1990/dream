@@ -1,0 +1,51 @@
+<!-- 使用场景之埋点 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>表单效验</title>
+</head>
+<body>
+  用户名 <input type="text" id="username">
+  密码 <input type="password" id="password">
+  <button id="submit">提交</button>
+  <script>
+    /**
+   * @desc 定义before方法
+   * @param {function} beforeFn
+   */
+    Function.prototype.before = function (beforeFn) {
+      let self = this;
+      return function () {
+        // 这里要拿到上一次效验完毕的验证结果
+        if (beforeFn.apply(this, arguments)) {
+          self.apply(this, arguments)
+        }
+      }
+    }
+    function submit(params) {
+      console.log('提交表单')
+    }
+    submit = submit.before(function () {
+      
+      let username = document.getElementById('username').value
+      if (!username) {
+        alert('用户名不能为空')
+        return false
+      }
+      return true
+    })
+    submit = submit.before(function () {
+        let username = document.getElementById('username').value
+        if (username.length < 4) {
+          alert('用户名长度最少为4')
+          return false
+        }
+        return true
+      })
+    document.getElementById('submit').addEventListener('click', submit)
+  </script>
+</body>
+</html>

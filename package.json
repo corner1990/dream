@@ -21,9 +21,16 @@
     "umi-plugin-react": "^1.1.1"
   },
   "lint-staged": {
-    "*.{js,jsx}": ["eslint --fix", "git add"]
+    "*.{js,jsx}": [
+      "eslint --fix",
+      "git add"
+    ]
   },
   "engines": {
     "node": ">=8.0.0"
+  },
+  "dependencies": {
+    "koa": "^2.7.0",
+    "koa-route": "^3.2.0"
   }
 }

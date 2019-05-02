@@ -1,0 +1,41 @@
+<!-- 使用场景之埋点 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <button data-name="watermelon" id="watermelon">西瓜</button>
+  <button data-name="apple" id="apple">苹果</button>
+  <script>
+    let watermelon = document.querySelector('#watermelon')
+    let apple = document.querySelector('#apple')
+    /**
+     * @desc 定义after方法
+     * @param {function} afterFn
+     */
+    Function.prototype.after = function (afterFn) {
+      let self = this;
+      return function () {
+        self.apply(this, arguments)
+        afterFn.apply(this, arguments)
+      }
+    }
+
+    
+    function click() {
+      console.log('你点击了'+ this.dataset.name)
+    }
+    click = click.after(function () {
+      let img = new Image()
+      img.src = `http://localhost:3000/report?name=${this.dataset.name}`
+    })
+    Array.from(document.querySelectorAll('button')).forEach(btn => {
+      btn.addEventListener('click', click)
+    })
+  </script>
+</body>
+</html>
