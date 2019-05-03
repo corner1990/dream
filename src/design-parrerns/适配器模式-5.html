@@ -14,12 +14,13 @@
 		let app = new Vue({
 			el: '#root',
 			data: {
-				title: 'Hello World'
+				title: 'Hello World',
+				name: 'leo'
 			},
 			computed: {
 				// 计算属性就是一种适配器模式的应用
 				great () {
-					return '今天是一个好日子'
+					return this.title.split(' ')[0] + ' ' + this.name
 				}
 			}
 		})
