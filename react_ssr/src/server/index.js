@@ -1,31 +1,13 @@
-let Koa = require('koa')
-let path = require('path')
-import React from 'react'
+const Koa = require('koa')
 const _ = require('koa-route');
-import Counter from '../containers/Counter/index'
-import {renderToString} from 'react-dom/server'
+import render from './render'
+
 let app = new Koa()
-
+// 设置服务端静态目录
 app.use(require('koa-static')('public'))
+// 这里路径改为*， 不管哪个路径，都组走这里
+app.use(_.get('*', render))
 
-app.use(_.get('/', async function (ctx, next) {
-    // 转义组件为字符串
-    let counter = renderToString(<Counter />)
-    ctx.body = `
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Document</title>
-    </head>
-    <body>
-        <div id="root">${counter}</div>
-        <script src="/client.js"></script>
-    </body>
-    </html>
-    `
-}))
-
-app.listen(3000)
+app.listen(3000, () => {
+    console.log('server start at 3000')
+})
