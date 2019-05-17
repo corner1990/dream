@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "npm-run-all --parallel dev:**",
     "dev:start": "nodemon build/server.js",
-    "dev:api": "nodemon api/server.js",
+    "dev:api:server": "nodemon api/server.js",
     "dev:build:client": "webpack --config webpack.client.js --watch",
     "dev:build:server": "webpack --config webpack.server.js --watch"
   },
@@ -32,6 +32,7 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-redux": "^7.0.3",
+    "react-router-config": "^5.0.0",
     "react-router-dom": "^5.0.0",
     "redux": "^4.0.1",
     "redux-logger": "^3.0.6",
