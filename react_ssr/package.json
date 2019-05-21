@@ -21,8 +21,10 @@
     "@babel/preset-react": "^7.0.0",
     "axios": "^0.18.0",
     "babel-loader": "^8.0.5",
+    "body-parse": "^0.1.0",
     "cors": "^2.8.5",
     "express": "^4.16.4",
+    "express-session": "^1.16.1",
     "http-proxy-middleware": "^0.19.1",
     "koa-proxy": "^1.0.0-alpha.0",
     "koa-proxy-middleware": "^1.1.4",
@@ -42,6 +44,7 @@
     "redux-promise": "^0.6.0",
     "redux-saga": "^1.0.2",
     "redux-thunk": "^2.3.0",
+    "save": "^2.4.0",
     "webpack": "^4.30.0",
     "webpack-cli": "^3.3.2",
     "webpack-node-externals": "^1.7.2"
