@@ -36,7 +36,7 @@ export default  function (ctx, next) {
                 </StaticRouter>
             </Provider>
         )
-        
+        console.log(store.getState())
         ctx.body = `
         <!DOCTYPE html>
         <html lang="en">

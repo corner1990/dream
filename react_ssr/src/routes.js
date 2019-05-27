@@ -39,6 +39,7 @@ export default [
     {
         path: '/',
         component: App,
+        loadData: App.loadData,
         components: [
             {
                 path: '/',

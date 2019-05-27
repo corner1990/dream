@@ -3,7 +3,7 @@ import { Route } from 'react-router-dom'
 import Header from '../components/Header'
 import routes from '../routes'
 import { renderRoutes, matchRoutes } from 'react-router-config'
-
+import actions from '../store/actions/session'
 class App extends Component{
   render () {
     // 拿到子路由
@@ -18,5 +18,7 @@ class App extends Component{
     )
   }
 }
-
+App.loadData = function (store) {
+  return store.dispatch(actions.getUser())
+}
 export default App
