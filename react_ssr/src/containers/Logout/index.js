@@ -15,7 +15,7 @@ class Logout extends Component{
   }
 }
 Logout = connect(
-  state => state.section,
+  state => state.session,
   actions
 )(Logout)
 export default Logout

@@ -27,7 +27,6 @@ res.json(users)
 })
 app.post('/api/login', function (req, res) {
   let user = req.body
-  console.log('usr', user, req.body)
   req.session.user = user
   res.json({
     code: 0,

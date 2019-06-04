@@ -22,5 +22,16 @@ export default {
             }) 
         })
         }
+    },
+    getUser () {
+        return function (dispatch, getState, request) {
+            return request.get('/api/logout').then(res=>{
+                let {data} = res
+                dispatch({
+                    type: types.SET_SESSION,
+                    payload: data.data
+                }) 
+            })
+        }
     }
 }
