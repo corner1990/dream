@@ -12,20 +12,21 @@ import { renderRoutes, matchRoutes } from 'react-router-config'
 
 export default  function (ctx, next) {
     let context = {}
-    let store = getServerStore()
+    let store = getServerStore(ctx)
     
     // 获取要渲染的组件
     // matchPath 是路由提供的工具方法， 可以用来判断路径和路由是否匹配
+    // console.log('ctx.cookie', ctx.req.headers.cookie)
     let matchRoute = matchRoutes(routes, ctx.req.url)
     let promises = []
-    matchRoute.map(route => {
+    matchRoute.map(item => {
         // 判断是否需要加载异步数据
-        if (route.loadData) {
-            console.log('reoute', route)
-            promises.push(route.loadData(store))
+        // console.log('item.route.loadData------------', item.route.loadData)
+        if (item.route.loadData) {
+            promises.push(item.route.loadData(store))
         }
     })
-    
+    // console.log('promises', promises.length, ctx.req.url)
     return Promise.all(promises).then(() => {
         // 创建仓库的时候， 仓库里已经有默认值
         // console.log(store.getState())
@@ -36,7 +37,7 @@ export default  function (ctx, next) {
                 </StaticRouter>
             </Provider>
         )
-        console.log(store.getState())
+        // console.log(store.getState())
         ctx.body = `
         <!DOCTYPE html>
         <html lang="en">

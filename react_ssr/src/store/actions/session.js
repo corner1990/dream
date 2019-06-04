@@ -1,9 +1,11 @@
 import * as types from '../action-types'
 import axios from 'axios'
 export default {
-    login () {
+    login ({user}) {
         return function (dispatch, getState, request) {
-            return request.post('/api/login').then(res=>{
+            return request.post('/api/login', {
+                data: user
+            }).then(res=>{
             let {data} = res
             dispatch({
                 type: types.SET_SESSION,
@@ -25,7 +27,7 @@ export default {
     },
     getUser () {
         return function (dispatch, getState, request) {
-            return request.get('/api/logout').then(res=>{
+            return request.get('/api/user').then(res=>{
                 let {data} = res
                 dispatch({
                     type: types.SET_SESSION,
