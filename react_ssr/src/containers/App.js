@@ -12,7 +12,7 @@ class App extends Component{
       <Fragment>
           <Header />
           <div className="container" style={{marginTop: 70}}>
-              {renderRoutes(route.components)}
+              {renderRoutes(route.routes)}
           </div>
       </Fragment>
     )

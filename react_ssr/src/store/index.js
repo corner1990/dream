@@ -4,12 +4,13 @@ import logger from 'redux-logger'
 import thunk from 'redux-thunk'
 import reducers from './reducers'
 import clientRequest from '../client/request'
-import serverRequest from '../server/request'
+import createServerRequest from '../server/request'
 
-export function getServerStore () {
+// 添加req参数
+export function getServerStore (ctx) {
     return createStore(
         reducers,
-        applyMiddleware(thunk.withExtraArgument(serverRequest), logger)
+        applyMiddleware(thunk.withExtraArgument(createServerRequest(ctx)), logger)
     )
 }
 

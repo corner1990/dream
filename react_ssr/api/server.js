@@ -26,8 +26,7 @@ app.get('/api/users', function (req, res) {
 res.json(users)
 })
 app.post('/api/login', function (req, res) {
-  let user = req.body
-  console.log('usr', user, req.body)
+  let user = req.body.data
   req.session.user = user
   res.json({
     code: 0,
@@ -43,7 +42,6 @@ app.get('/api/logout', function (req, res) {
   res.json({
     code: 0,
     data: {
-      user,
       msg: '退出成功'
     }
   })

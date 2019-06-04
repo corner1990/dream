@@ -40,7 +40,8 @@ export default [
         path: '/',
         component: App,
         loadData: App.loadData,
-        components: [
+        // 子路由
+        routes: [
             {
                 path: '/',
                 component: Home,
