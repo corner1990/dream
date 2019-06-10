@@ -23,7 +23,7 @@ app.use(session({
 }))
 
 app.get('/api/users', function (req, res) {
-res.json(users)
+  res.json(users)
 })
 app.post('/api/login', function (req, res) {
   let user = req.body.data
