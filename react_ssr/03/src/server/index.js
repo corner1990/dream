@@ -15,7 +15,7 @@ app.use(_.get('*', async function (ctx, next) {
             {routes}
         </StaticRouter>
     )
-    console.log(html, ctx.req.url)
+    // console.log(html, ctx.req.url)
     ctx.body = `
     <!DOCTYPE html>
     <html lang="en">

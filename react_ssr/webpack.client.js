@@ -8,5 +8,21 @@ module.exports = merge(base, {
     output: {
         filename: 'client.js',
         path: path.join(__dirname,'public')
+    },
+    module: {
+        rules: [
+            {  
+                test: /\.(css)$/,
+                use: [
+                    'style-loader',
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            modules: true
+                        }
+                    }
+                ]
+            }
+        ]
     }
 })
