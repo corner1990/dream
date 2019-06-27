@@ -219,4 +219,3 @@ export default WrapCounter
 6. counter中使用store
 
 [完整代码](https://github.com/corner1990/dream/tree/master/react_ssr/04)
-
