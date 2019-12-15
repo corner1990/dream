@@ -10,3 +10,21 @@
 [1212/162818.593:ERROR:exception_snapshot_win.cc(98)] thread ID 11632 not found in process
 [1212/163600.515:ERROR:process_reader_win.cc(123)] NtOpenThread: {无法访问} 过程已请求访问一对象，但未给访问权限。 (0xc0000022)
 [1212/163600.516:ERROR:exception_snapshot_win.cc(98)] thread ID 11000 not found in process
+[1215/192209.355:ERROR:process_reader_win.cc(123)] NtOpenThread: {无法访问} 过程已请求访问一对象，但未给访问权限。 (0xc0000022)
+[1215/192209.356:ERROR:exception_snapshot_win.cc(98)] thread ID 2208 not found in process
+[1215/192753.251:ERROR:process_reader_win.cc(123)] NtOpenThread: {无法访问} 过程已请求访问一对象，但未给访问权限。 (0xc0000022)
+[1215/192753.252:ERROR:exception_snapshot_win.cc(98)] thread ID 3676 not found in process
+[1215/193507.259:ERROR:process_reader_win.cc(123)] NtOpenThread: {无法访问} 过程已请求访问一对象，但未给访问权限。 (0xc0000022)
+[1215/193507.262:ERROR:exception_snapshot_win.cc(98)] thread ID 7736 not found in process
+[1215/193852.407:ERROR:process_reader_win.cc(123)] NtOpenThread: {无法访问} 过程已请求访问一对象，但未给访问权限。 (0xc0000022)
+[1215/193852.407:ERROR:exception_snapshot_win.cc(98)] thread ID 6380 not found in process
+[1215/194517.420:ERROR:process_reader_win.cc(123)] NtOpenThread: {无法访问} 过程已请求访问一对象，但未给访问权限。 (0xc0000022)
+[1215/194517.421:ERROR:exception_snapshot_win.cc(98)] thread ID 10808 not found in process
+[1215/194717.056:ERROR:process_reader_win.cc(123)] NtOpenThread: {无法访问} 过程已请求访问一对象，但未给访问权限。 (0xc0000022)
+[1215/194717.056:ERROR:exception_snapshot_win.cc(98)] thread ID 7852 not found in process
+[1215/195043.243:ERROR:process_reader_win.cc(123)] NtOpenThread: {无法访问} 过程已请求访问一对象，但未给访问权限。 (0xc0000022)
+[1215/195043.248:ERROR:exception_snapshot_win.cc(98)] thread ID 17072 not found in process
+[1215/195214.683:ERROR:process_reader_win.cc(123)] NtOpenThread: {无法访问} 过程已请求访问一对象，但未给访问权限。 (0xc0000022)
+[1215/195214.684:ERROR:exception_snapshot_win.cc(98)] thread ID 16524 not found in process
+[1215/201332.775:ERROR:process_reader_win.cc(123)] NtOpenThread: {无法访问} 过程已请求访问一对象，但未给访问权限。 (0xc0000022)
+[1215/201332.776:ERROR:exception_snapshot_win.cc(98)] thread ID 15796 not found in process

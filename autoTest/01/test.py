@@ -1,19 +1,19 @@
-# from selenium import webdriver
-# from selenium.webdriver.common.keys import Keys
-# from selenium.webdriver.support.ui import WebDriverWait
-# from selenium.webdriver.support import expected_conditions as EC;
-# from threading import Timer;
-# import sched;
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC;
+from threading import Timer;
+import sched;
 
 
-# driver = webdriver.Chrome()
-# driver.implicitly_wait(20)
-# # 隐式等待
-# driver.get("https://www.baidu.com/")
-# assert "百度一下，你就知道" in driver.title
-# elem = driver.find_element_by_id('kw')
-# elem.clear()
-# elem.send_keys("chrome")
+driver = webdriver.Chrome()
+driver.implicitly_wait(20)
+# 隐式等待
+driver.get("https://www.baidu.com/")
+assert "百度一下，你就知道" in driver.title
+elem = driver.find_element_by_id('kw')
+elem.clear()
+elem.send_keys("chrome")
 
 # elem.send_keys(Keys.RETURN)
 # reqBtn = driver.find_element_by_id('su')
@@ -53,7 +53,7 @@
 #     t = Timer(inc, prinTime,(inc,))
 #     t.start()
 
-# prinTime(2)
+# prinTime(0.001)
 
 
 # import sched
@@ -75,13 +75,13 @@
 # # 5秒输出一次
 # main(5)
 
-from APScheduler.schedulers.blocking import BlockingScheduler
-from datetime import datetime
+# from APScheduler.schedulers.blocking import BlockingScheduler
+# from datetime import datetime
 
-# 输出时间
-def job():
-    print(datetime.now().strtime("%Y-%m-%d %H:%M:%S"))
+# # 输出时间
+# def job():
+#     print(datetime.now().strtime("%Y-%m-%d %H:%M:%S"))
 # BlockingScheduler
-scheduler = BlockingScheduler()
-scheduler.add_job(job, "cron", day_of_week="1-5", hour=6, minute=30)
-schduler.start()
+# scheduler = BlockingScheduler()
+# scheduler.add_job(job, "cron", day_of_week="1-5", hour=6, minute=30)
+# schduler.start()
