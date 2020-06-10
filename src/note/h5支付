@@ -1,0 +1,434 @@
+
+
+### h5支付宝支付
+
+> 大概调起支付的过程如下：
+>
+> 1. 创建订单信息
+>
+> 2. 拿到返回表单
+> 3. 渲染表单
+> 4. 表单进行提交
+
+```html
+<!-- 1. 正常使用ajax提交商品信息，后台返回内容如下 -->
+<form id='alipaysubmit' name='alipaysubmit' action='https://openapi.alipay.com/gateway.do?charset=UTF-8' method='POST'><input type='hidden' name='biz_content' value='{****}'/><input type='hidden' name='app_id' value='*******'/><input type='hidden' name='version' value='1.0'/><input type='hidden' name='format' value='json'/><input type='hidden' name='sign_type' value='RSA2'/><input type='hidden' name='method' value='alipay.trade.wap.pay'/><input type='hidden' name='timestamp' value='2020-06-10 08:56:10'/><input type='hidden' name='alipay_sdk' value='alipay-sdk-php-20161101'/><input type='hidden' name='notify_url' value='******'/><input type='hidden' name='return_url' value='http://starmall.ipxmall.com/order/order-result'/><input type='hidden' name='charset' value='UTF-8'/><input type='hidden' name='sign' value='*****/******+******+****/****+****=='/><input type='submit' value='ok' style='display:none;''></form><script>document.forms['alipaysubmit'].submit();</script>
+
+```
+2. 客户端调用, 项目使用vue，直接贴上组件，将上边的内容当作参数传入组件就ok
+> 需要注意的是，因为是表单，所以需要使用v-html进行数据绑定，然后正常调起支付就ok了
+```vue
+<template>
+  <div v-html="info">
+  </div>
+</template>
+
+<script>
+export default {
+  props: {
+    info: String
+  },
+  data() {
+    return {}
+  },
+  watch: {
+    info() {
+      this.$nextTick(() => {
+        document.querySelector('#alipaysubmit').submit()
+      })
+    }
+  }
+}
+</script>
+
+<style>
+
+</style>
+
+```
+
+### 微信支付之网页支付
+> 大概步骤和上述相同，需要提一下的是，微信h5支付只能在手机浏览器才能测试
+1. 调用后台接口，创建订单（微信支付需要初始化jsapi）
+2. 发起支付
+```javascript
+// 需要注意的是：判断是否在微信内置浏览器（微信内置浏览器使用jsapi调起支付，手机浏览器使用url跳转）
+if (!this.isWeiXin) {
+let { errorCode, data } = await payInfo(params)
+if (errorCode === 0) {
+  window.location.href = data
+}
+return false
+}
+// 到此为止，浏览器微信支付搞定
+```
+### 微信内置浏览器支付调起
+1. 初始化微信支付jsapi
+```javascript
+initWxPay() {
+  let wxSrc = 'https://res.wx.qq.com/open/js/jweixin-1.2.0.js'
+  let script = document.createElement('script')
+  script.src = wxSrc
+  document.body.append(script)
+}
+```
+~~2. 返回内容.... 等等，居然报错了 ， ~~
+发现统一下单需要openid， openId 只能客户端首先进行getCode，然后服务器通过code拿到openid，然后统一下单。再然后返回客户端需要的信息
+2. getCode
+```JavaScript
+// 需要缓存商品信息，或者将订单信息的ID通过state携带过去，回调处理会简单很多
+window.location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appid}&redirect_uri=${redirectUri}&response_type=code&scope=snsapi_base&state=${state}#wechat_redirect`
+```
+3. 重定向会到我们的页面，回调的url里就会有code
+```JavaScript
+// 1. 拿到code， 然后创建订单信息
+const { code } = this.$route.query
+// 2. 统一下单，然后，判断是否在微信内置浏览器（微信内置浏览器使用jsapi调起支付，手机浏览器使用url跳转）
+// 3. 然后创建订单信息
+```
+4. 发起支付
+```javascript
+
+let { errorCode, data } = await payInfo({ 订单信息, code })
+if (errorCode === 0) { // 判断后台返回值正确以后调起支付
+    if (typeof WeixinJSBridge == "undefined"){
+      if( document.addEventListener ){
+          document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+      }else if (document.attachEvent){
+          document.attachEvent('WeixinJSBridgeReady', onBridgeReady); 
+          document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+      }
+    }else{
+      onBridgeReady();
+    }
+  }
+ // 为了方便查看，将方法放到后边，data是后台统一下单后给的返回信息
+function onBridgeReady(){
+    WeixinJSBridge.invoke(
+        'getBrandWCPayRequest', {
+          "appId": data.appId,     //公众号名称，由商户传入     
+          "timeStamp": `${data.timeStamp}`,         //时间戳，自1970年以来的秒数     
+          "nonceStr": data.nonceStr, //随机串     
+          "package": data.package,     
+          "signType":"MD5",         //微信签名方式：     
+          "paySign": data.paySign //微信签名 
+        },
+        function(res){
+          if(res.err_msg == "get_brand_wcpay_request:ok" ){
+            // 使用以上方式判断前端返回,微信团队郑重提示：
+            self.$router.replace('/order/order-result')
+          }
+    }); 
+  }
+
+// 正常输入密码，完成支付
+```
+### 微信小程序内嵌网页调起小程序支付
+> .小程序新建一个支付页面，接受参数，完成后续的步骤
+> 支付流程如下：
+> 1. 从内嵌网页使用小程序暴露的api跳转到小程序支付页面，（讲sku信息传递过去）
+> 2. 小程序在onload的时候读取到信息，然后使用wx.login拿到code， 
+> 3. 将sku信息和code通过结果发送给后台，后台统一下单
+> 4. 拿到后台统一下下单后的返回信息，调起小程序支付
+> 5. 输入密码，完成支付， 代码如下
+```javascript
+// h5网页内代码
+if (window.__wxjs_environment === 'miniprogram') {
+// 将需要用到的信息都传递过去，方便在小程序调用的时候使用
+// token id， sku信息 
+wx.miniProgram.reLaunch({
+  url: `/pages/h5-pay/main?data=${JSON.stringify({params, token})}`
+})
+return false
+}
+```
+```javascript
+export default {
+  name: 'index',
+  data() {
+    return {
+      // path: 'https://ipxh5.jfshare.com'
+    }
+  },
+  methods: {
+  // 完成订单后跳转
+    reLaunch(status) {
+      wx.redirectTo({
+        url: `/pages/h5-result/main?status=${status}`
+      })
+    },
+    // 登录获取code
+    login(options) {
+      options = JSON.parse(options)
+      let { token, params } = options
+
+      wx.setStorage({
+        key:"token",
+        data: JSON.stringify(token)
+      })
+
+      let self = this
+      wx.login({
+        success (res) {
+          if (res.code) {
+            //发起网络请求
+           self.initPayInfo({code: res.code, ...params})
+          } else {
+            console.log('登录失败！' + res.errMsg)
+          }
+        }
+      })
+    },
+    // 发起支付
+    async initPayInfo(params) {
+      let self = this
+      let { errorCode, data } = await request.post('/order/order/createOrderPayInfo', params)
+      if (errorCode === 0 ) {
+         wx.requestPayment({
+          ...data,
+          signType: 'MD5',
+          success (res) {
+            self.reLaunch(1)
+          },
+          fail (res) {
+            self.reLaunch(0)
+          }
+        })
+      }
+    }
+  },
+// 这里拿到传递过来的参数
+  onLoad(options) { 
+    if (options.data) {
+      this.login(options.data)
+    }
+    
+  }
+}
+```
+
+### 结束语
+1. 在安卓部分机型会在网页关闭后清空当前页面用到的所有缓存(cookie, sessionstorage, localstorage)， 这里需要做处理
+2. 关于支付的顺序 的处理，减少判断的嵌套层级
+3. 假如出现以上类似公众号支付和小程序支付的appid不一样的情况下的处理（需要后端配合）
+4. 调试，记得一定要用vsconsole, 记得一定要让后台在调试过程中一直打开日志
+5. 小程序调试使用开发者工具即可
+# h5支付
+
+> 时间过得飞快，转眼间从业前端已经有些年头了，见了太多的场景，意想不到的的错误，以为自己足够成熟和冷静的时候，支付再一次教了我一回，怎么做一个人。。。
+>
+> 事情的经过大致是这样子的，公司有一个h5新项目，然后再开发的时候需要对接支付。经过调研，后来只打算上微信支付和支付宝支付，在这里首先对支付宝支付api的开发者表示致敬，真心好用。然后再说会微信。。。。有h5支付，公众号支付，还有小程序支付。。。。在这里奉劝大家，如果是真的设计多方登录，支付的时候，还是使用微信开放平台把，毕竟找个属于少生优生，幸福一生的选择，不然也有可能会有我接下来的经历。。。
+
+### h5支付宝支付
+
+> 大概调起支付的过程如下：
+>
+> 1. 创建订单信息
+>
+> 2. 拿到返回表单
+> 3. 渲染表单
+> 4. 表单进行提交
+
+```html
+<!-- 1. 正常使用ajax提交商品信息，后台返回内容如下 -->
+<form id='alipaysubmit' name='alipaysubmit' action='https://openapi.alipay.com/gateway.do?charset=UTF-8' method='POST'><input type='hidden' name='biz_content' value='{****}'/><input type='hidden' name='app_id' value='*******'/><input type='hidden' name='version' value='1.0'/><input type='hidden' name='format' value='json'/><input type='hidden' name='sign_type' value='RSA2'/><input type='hidden' name='method' value='alipay.trade.wap.pay'/><input type='hidden' name='timestamp' value='2020-06-10 08:56:10'/><input type='hidden' name='alipay_sdk' value='alipay-sdk-php-20161101'/><input type='hidden' name='notify_url' value='******'/><input type='hidden' name='return_url' value='http://starmall.ipxmall.com/order/order-result'/><input type='hidden' name='charset' value='UTF-8'/><input type='hidden' name='sign' value='*****/******+******+****/****+****=='/><input type='submit' value='ok' style='display:none;''></form><script>document.forms['alipaysubmit'].submit();</script>
+
+```
+2. 客户端调用, 项目使用vue，直接贴上组件，将上边的内容当作参数传入组件就ok
+> 需要注意的是，因为是表单，所以需要使用v-html进行数据绑定，然后正常调起支付就ok了
+```vue
+<template>
+  <div v-html="info">
+  </div>
+</template>
+
+<script>
+export default {
+  props: {
+    info: String
+  },
+  data() {
+    return {}
+  },
+  watch: {
+    info() {
+      this.$nextTick(() => {
+        document.querySelector('#alipaysubmit').submit()
+      })
+    }
+  }
+}
+</script>
+
+<style>
+
+</style>
+
+```
+
+### 微信支付之网页支付
+> 大概步骤和上述相同，需要提一下的是，微信h5支付只能在手机浏览器才能测试
+1. 调用后台接口，创建订单（微信支付需要初始化jsapi）
+2. 发起支付
+```javascript
+// 需要注意的是：判断是否在微信内置浏览器（微信内置浏览器使用jsapi调起支付，手机浏览器使用url跳转）
+if (!this.isWeiXin) {
+let { errorCode, data } = await payInfo(params)
+if (errorCode === 0) {
+  window.location.href = data
+}
+return false
+}
+// 到此为止，浏览器微信支付搞定
+```
+### 微信内置浏览器支付调起
+1. 初始化微信支付jsapi
+```javascript
+initWxPay() {
+  let wxSrc = 'https://res.wx.qq.com/open/js/jweixin-1.2.0.js'
+  let script = document.createElement('script')
+  script.src = wxSrc
+  document.body.append(script)
+}
+```
+~~2. 返回内容.... 等等，居然报错了 ， ~~
+发现统一下单需要openid， openId 只能客户端首先进行getCode，然后服务器通过code拿到openid，然后统一下单。再然后返回客户端需要的信息
+2. getCode
+```JavaScript
+// 需要缓存商品信息，或者将订单信息的ID通过state携带过去，回调处理会简单很多
+window.location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appid}&redirect_uri=${redirectUri}&response_type=code&scope=snsapi_base&state=${state}#wechat_redirect`
+```
+3. 重定向会到我们的页面，回调的url里就会有code
+```JavaScript
+// 1. 拿到code， 然后创建订单信息
+const { code } = this.$route.query
+// 2. 统一下单，然后，判断是否在微信内置浏览器（微信内置浏览器使用jsapi调起支付，手机浏览器使用url跳转）
+// 3. 然后创建订单信息
+```
+4. 发起支付
+```javascript
+
+let { errorCode, data } = await payInfo({ 订单信息, code })
+if (errorCode === 0) { // 判断后台返回值正确以后调起支付
+    if (typeof WeixinJSBridge == "undefined"){
+      if( document.addEventListener ){
+          document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+      }else if (document.attachEvent){
+          document.attachEvent('WeixinJSBridgeReady', onBridgeReady); 
+          document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+      }
+    }else{
+      onBridgeReady();
+    }
+  }
+ // 为了方便查看，将方法放到后边，data是后台统一下单后给的返回信息
+function onBridgeReady(){
+    WeixinJSBridge.invoke(
+        'getBrandWCPayRequest', {
+          "appId": data.appId,     //公众号名称，由商户传入     
+          "timeStamp": `${data.timeStamp}`,         //时间戳，自1970年以来的秒数     
+          "nonceStr": data.nonceStr, //随机串     
+          "package": data.package,     
+          "signType":"MD5",         //微信签名方式：     
+          "paySign": data.paySign //微信签名 
+        },
+        function(res){
+          if(res.err_msg == "get_brand_wcpay_request:ok" ){
+            // 使用以上方式判断前端返回,微信团队郑重提示：
+            self.$router.replace('/order/order-result')
+          }
+    }); 
+  }
+
+// 正常输入密码，完成支付
+```
+### 微信小程序内嵌网页调起小程序支付
+> .小程序新建一个支付页面，接受参数，完成后续的步骤
+> 支付流程如下：
+> 1. 从内嵌网页使用小程序暴露的api跳转到小程序支付页面，（讲sku信息传递过去）
+> 2. 小程序在onload的时候读取到信息，然后使用wx.login拿到code， 
+> 3. 将sku信息和code通过结果发送给后台，后台统一下单
+> 4. 拿到后台统一下下单后的返回信息，调起小程序支付
+> 5. 输入密码，完成支付， 代码如下
+```javascript
+// h5网页内代码
+if (window.__wxjs_environment === 'miniprogram') {
+// 将需要用到的信息都传递过去，方便在小程序调用的时候使用
+// token id， sku信息 
+wx.miniProgram.reLaunch({
+  url: `/pages/h5-pay/main?data=${JSON.stringify({params, token})}`
+})
+return false
+}
+```
+```javascript
+export default {
+  name: 'index',
+  data() {
+    return {
+      // path: 'https://ipxh5.jfshare.com'
+    }
+  },
+  methods: {
+  // 完成订单后跳转
+    reLaunch(status) {
+      wx.redirectTo({
+        url: `/pages/h5-result/main?status=${status}`
+      })
+    },
+    // 登录获取code
+    login(options) {
+      options = JSON.parse(options)
+      let { token, params } = options
+
+      wx.setStorage({
+        key:"token",
+        data: JSON.stringify(token)
+      })
+
+      let self = this
+      wx.login({
+        success (res) {
+          if (res.code) {
+            //发起网络请求
+           self.initPayInfo({code: res.code, ...params})
+          } else {
+            console.log('登录失败！' + res.errMsg)
+          }
+        }
+      })
+    },
+    // 发起支付
+    async initPayInfo(params) {
+      let self = this
+      let { errorCode, data } = await request.post('/order/order/createOrderPayInfo', params)
+      if (errorCode === 0 ) {
+         wx.requestPayment({
+          ...data,
+          signType: 'MD5',
+          success (res) {
+            self.reLaunch(1)
+          },
+          fail (res) {
+            self.reLaunch(0)
+          }
+        })
+      }
+    }
+  },
+// 这里拿到传递过来的参数
+  onLoad(options) { 
+    if (options.data) {
+      this.login(options.data)
+    }
+    
+  }
+}
+```
+
+### 结束语
+1. 在安卓部分机型会在网页关闭后清空当前页面用到的所有缓存(cookie, sessionstorage, localstorage)， 这里需要做处理
+2. 关于支付的顺序 的处理，减少判断的嵌套层级
+3. 假如出现以上类似公众号支付和小程序支付的appid不一样的情况下的处理（需要后端配合）
+4. 调试，记得一定要用vsconsole, 记得一定要让后台在调试过程中一直打开日志
+5. 小程序调试使用开发者工具即可
