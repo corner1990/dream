@@ -29,21 +29,37 @@
 	let img = document.querySelector('img')
 	let btns = Array.from(document.querySelectorAll('.btn'))
 
-	let setSrc = src => {
-		img.src = src
+	
+	let imgObj = {
+		setSrc: src => {
+			img.src = src
+		}
 	}
-
 	// btns.map((btn, key) => {
 	// 	let src = imgs[key]
 	// 	btn.addEventListener('click', () => {
-	// 		setSrc(src)
+	// 		imgObj.setSrc(src)
 	// 	})
 	// })
 	//  代理模式
+	let proxyImgObj = {
+		setSrc: src => {
+			// 加载
+			let img = new Image()
+			img.addEventListener('load',  () => {
+				imgObj.setSrc(src)
+			})
+			img.src = src
+
+			let loading = 'https://ipxcdn.jfshare.com/system/default_header.png'
+			return imgObj.setSrc(loading)
+		}
+	}
+
 	btns.map((btn, key) => {
 		let src = imgs[key]
 		btn.addEventListener('click', () => {
-			setSrc(src)
+			proxyImgObj.setSrc(src)
 		})
 	})
 </script>
