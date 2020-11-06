@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>代理模式</title>
+	<style type="text/css">
+		.img{
+			width: 200px;
+			height: 200px;
+			object-fit: cover;
+		}
+	</style>
+</head>
+<body>
+	<div>
+		<img alt="img" class="img" class="img" />
+	</div>
+	<p>
+		<button class="btn">图片一</button>
+		<button class="btn">图片二</button>
+	</p>
+
+</body>
+<script type="text/javascript">
+	// 正常调用
+	let imgs = [
+		'https://ipxcdn.jfshare.com/system/admin/3ed76bcc0e3f65f7124042fc88844104.jpg',
+		'http://ipxmall.oss-cn-zhangjiakou.aliyuncs.com/system/admin/4d5df0f3d251f3af46bc8f6cbeb13f4f.jpg'
+	]
+	let img = document.querySelector('img')
+	let btns = Array.from(document.querySelectorAll('.btn'))
+
+	let setSrc = src => {
+		img.src = src
+	}
+
+	// btns.map((btn, key) => {
+	// 	let src = imgs[key]
+	// 	btn.addEventListener('click', () => {
+	// 		setSrc(src)
+	// 	})
+	// })
+	//  代理模式
+	btns.map((btn, key) => {
+		let src = imgs[key]
+		btn.addEventListener('click', () => {
+			setSrc(src)
+		})
+	})
+</script>
+</html>
