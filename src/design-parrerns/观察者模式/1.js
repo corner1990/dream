@@ -47,4 +47,4 @@ leader.sayFeture()
 leader.sayBye()
 
 // 常见场景
-// redux vuex 
+// redux vuex promise

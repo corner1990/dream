@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>状态模式之收藏取消收藏</title>
+</head>
+<body>
+  <div id="root"></div>
+</body>
+<script>
+  // 定义状态类
+  class Like{
+    constructor(btn) {
+      this.el = btn
+    }
+    render() {
+      this.el.liked = false
+      this.el.el.innerText = '喜欢'
+    }
+  }
+  class Liked{
+    constructor(btn) {
+      this.el = btn
+      this.status = new Like(this)
+      this.status.render()
+    }
+    render() {
+      this.el.liked = true
+      this.el.el.innerText = '取消'
+    }
+  }
+  class Button{
+    constructor() {
+      this.liked  = false
+      this.el = document.createElement('button')
+
+      this.status = new Like(this)
+      this.status.render()
+    }
+    render() {
+      document.querySelector('#root').appendChild(this.el)
+
+      // 定义事件 切换状态
+      this.el.addEventListener('click', () => {
+        let isLiked = this.liked
+        if (isLiked) {
+          this.status = new Like(this)
+        } else {
+          this.status = new Liked(this)
+        }
+        this.status.render()
+      })
+    }
+  }
+  let btn = new Button()
+  btn.render()
+</script>
+</html>
