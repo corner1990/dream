@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>防抖代理</title>
+	<style type="text/css">
+    .todos{
+      list-style: none;
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+	<div id="app">
+    <h2>{{ message }}</h2>
+    <ul class="todos">
+      <li
+        class="todo"
+        v-for="(todo, key) in todoList"
+        :key="key"
+        @click="toggleTodo(todo.id)"
+      >
+        <input type="checkbox" name="colors" :checked="selected.includes(todo.id)">
+        {{todo.name}}
+      </li>
+    </ul>
+	</div>
+
+</body>
+<script type="text/javascript">
+ 
+  window.addEventListener('load', () => {
+    const app = new Vue({
+      el: '#app',
+      data: {
+        message: '防抖代理',
+        selected: [],
+        todoList: []
+      },
+      methods: {
+        /**
+         * @desc 加载数据
+         */
+        loadInfo() {
+          let request = new Request('/getListInfo')
+          fetch(request)
+            .then(res => {
+              if (res.status === 200) {
+                return res.json()
+              }
+              throw new Error('Something went wrong on api server!');
+            })
+            .then(res => {
+              let {
+                selected,
+                todoList
+              } = res
+              this.selected = selected
+              this.todoList = todoList
+            })
+        },
+        /**
+         * @desc 切换选中状态
+         */
+        toggleTodo(id) {
+          fetch(`/toggleTodo?id=${id}`, {
+            cache: 'no-cache',
+              headers: {
+                'user-agent': 'Mozilla/4.0 MDN Example',
+                'content-type': 'application/json'
+              },
+              method: 'GET', // *GET, POST, PUT, DELETE, etc.
+              mode: 'cors', // no-cors, cors, *same-origin
+              redirect: 'follow', // manual, *follow, error
+              referrer: 'no-referrer', // *client, no-referrer
+            })
+            .then(res => {
+              if (res.status === 200) {
+                return res.json()
+              }
+              throw new Error('Something went wrong on api server!');
+            })
+            .then(res => {
+              if (res.code === 0) {
+                this.selected = res.data.selected
+                console.log('this.selected', this.selected)
+              }
+            })
+        }
+      },
+      mounted() {
+        this.loadInfo()
+      }
+    })
+  })
+</script>
+</html>
