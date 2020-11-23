@@ -37,7 +37,7 @@
       document.querySelector('.number').innerHTML = num
     }
     // 统一抽离计算函数入口
-    const calc = opation => {
+    const calc = option => {
       // 更具参数，调用不同的处理函数
       if (option === 'increase') {
         increase()
@@ -72,6 +72,7 @@
     const shouNotify = msg => {
       alert(msg)
     }
+
     let btns = document.querySelectorAll('button')
     btns.forEach(btn => {
       btn.addEventListener('click', (e) => {

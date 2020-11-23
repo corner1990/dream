@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>计数器</title>
+  <style>
+    .number{
+      padding: 30px;
+      font-size: 16px;
+      color: #333;
+      font-weight: 700;
+    }
+    .btn-wrap{
+      margin-top: 10px;
+    }
+    button{
+      padding: 10px;
+      color: #ffffff;
+      background-color: #109c91;
+      border: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="number"></div>
+  <div class="btn-wrap">
+    <button data-key="increase">increase</button>
+    <button data-key="decrease">decrease</button>
+  </div>
+  <script>
+    let number = 0;
+    let numEl = document.querySelector('.number')
+    let btns = document.querySelectorAll('.btn-wrap button')
+    let woker = {
+    
+    }
+    const render = num => {
+      numEl.innerHTML = num
+    }
+
+    class Counter {
+      constructor(woker) {
+        this.woker = woker
+      }
+      // 增加
+      increase = () => {
+        ++number
+        render(number)
+      }
+      // 减少
+      decrease = () => {
+        --number
+        render(number)
+      }
+      // 统一抽离计算函数入口
+      calc = option => {
+        // 根据参数，调用不同的处理函数
+        this['increase']()
+      }
+      /**
+       * @desc 扩展方法
+       */ 
+      add = (key, fn) => {
+        this[key] = fn
+      }
+    }
+    // 首次渲染
+    render(number)
+    const couner = new Counter(woker)
+    // 绑定事件
+    btns.forEach(node => {
+      node.addEventListener('click', e => {
+        // console.log('e', e.target.dataset['key'])
+        let key = e.target.dataset['key']
+        couner.calc(key)
+      })
+    })
+  </script>
+</body>
+</html>

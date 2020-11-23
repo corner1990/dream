@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>虚拟DOM</title>
+</head>
+<body>
+  <div id="app"></div>
+  <script>
+    // 虚拟node
+    class ELem {
+      constructor(type, props) {
+        this.type = type
+        this.props = props
+      }
+    }
+
+  const React = {
+    // 创建虚拟node
+      createElem(type, props, ...childs) {
+        return new ELem(type, {...props, children:childs})
+      },
+      /**
+       * @desc 渲染函数
+       */ 
+      render(el, container) {
+        // 拿到属性值 进行处理
+        let { props } = el
+        let keys = Object.keys(props)
+        // 创建dom节点
+        let node = document.createElement(el.type)
+        // 遍历 处理属性
+        keys.forEach(key => {
+          // 处理子节点
+          if (key === 'children') {
+            props[key].forEach(child => {
+              if (typeof child === 'string') {
+                // 文本节点直接创建
+                node.appendChild(document.createTextNode(child))
+              } else {
+                // 遍历渲染node
+                React.render(child, node)
+              }
+            })
+          } else if (key == 'className') {
+            node.setAttribute('class', props[key]);
+          } else {
+            node.setAttribute(key , props[key]);
+          }
+        })
+        container.appendChild(node)
+      }
+    }
+  // ReactDOM.render(<div>hello<span>world</span></div>);
+  let app = document.querySelector('#app')
+  let els = React.createElem(
+    "div",
+    null,
+    "hello,",
+    React.createElem("span",null,"world!" )
+  )
+  React.render(els, app)
+  </script>
+</body>
+</html>

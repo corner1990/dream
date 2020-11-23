@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>计数器-新增上一步，撤销</title>
+  <style>
+    .number{
+      padding: 30px;
+      font-size: 16px;
+      color: #333;
+      font-weight: 700;
+    }
+    .btn-wrap{
+      margin-top: 10px;
+    }
+    button{
+      padding: 10px;
+      color: #ffffff;
+      background-color: #109c91;
+      border: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="number"></div>
+  <div class="btn-wrap">
+    <button data-key="increase">increase</button>
+    <button data-key="decrease">decrease</button>
+    <button data-key="prev">上一步</button>
+    <button data-key="rest">重置</button>
+  </div>
+  <script>
+    let number = 0;
+    let numEl = document.querySelector('.number')
+    let btns = document.querySelectorAll('.btn-wrap button')
+    // 保存对象
+    let woker = {
+      history: [],
+      index: -1
+    }
+    
+
+    class Counter {
+      constructor(woker) {
+        this.woker = woker
+      }
+      // 增加
+      increase = () => {
+        ++number
+        render(number)
+        this.woker.history.push(number)
+        this.woker.index = this.woker.index + 1
+      }
+      // 减少
+      decrease = () => {
+        --number
+        render(number)
+        this.woker.history.push(number)
+        this.woker.index = this.woker.index + 1
+      }
+      // 统一抽离计算函数入口
+      calc = option => {
+        // 根据参数，调用不同的处理函数
+    
+        this[option]()
+      }
+      /**
+       * @desc 扩展方法
+       */ 
+      add = (key, fn) => {
+        this[key] = fn
+      }
+    }
+    // 渲染
+    const render = num => {
+      numEl.innerHTML = num
+    }
+    const counter = new Counter(woker)
+
+    // 添加上一步
+    counter.add('prev', function () {
+      let idx = this.woker.index
+      if ( idx >= 0 ) {
+        number = this.woker.history[idx]
+        this.woker.index = idx - 1
+        render(number)
+      }
+    })
+    // 撤销
+    // 添加上一步
+    counter.add('rest', function () {
+      let num = this.woker.history[0]
+
+      if (num !== undefined) {
+        this.woker.history = [num]
+        this.woker.index = 0
+        render(num)
+      }
+    })
+    // 绑定事件
+    btns.forEach(node => {
+      node.addEventListener('click', e => {
+        // console.log('e', e.target.dataset['key'])
+        let key = e.target.dataset['key']
+        counter.calc(key)
+      })
+    })
+
+    // 首次渲染
+    render(number)
+    woker.history.push(number)
+    woker.index = 0
+  </script>
+</body>
+</html>
