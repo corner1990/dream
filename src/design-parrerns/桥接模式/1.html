@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>桥接模式-场景展示</title>
+  <style>
+    .number{
+      padding: 30px;
+      font-size: 16px;
+      color: #333;
+      font-weight: 700;
+    }
+    .btn-wrap{
+      margin-top: 10px;
+    }
+    button{
+      padding: 10px;
+      color: #ffffff;
+      background-color: #109c91;
+      border: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="number"></div>
+  <div class="btn-wrap">
+    <button>increase</button>
+    <button>decrease</button>
+  </div>
+  <script>
+    let num = 0
+    document.querySelector('.number').innerHTML = num
+    let btns = document.querySelectorAll('button')
+    btns.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        if (e.target.innerHTML === 'increase') {
+          ++num
+          if (num > 10) {
+            num = 10
+            alert('大哥，见好就收啊')
+          }
+          document.querySelector('.number').innerHTML = num
+        } else if(e.target.innerHTML === 'decrease') {
+          --num
+          if (num < 0) {
+            num = 0
+            alert('大哥，要有底线啊')
+          }
+          document.querySelector('.number').innerHTML = num
+        }
+      }, false)
+    })
+  </script>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>桥接模式-场景展示</title>
+  <style>
+    .number{
+      padding: 30px;
+      font-size: 16px;
+      color: #333;
+      font-weight: 700;
+    }
+    .btn-wrap{
+      margin-top: 10px;
+    }
+    button{
+      padding: 10px;
+      color: #ffffff;
+      background-color: #109c91;
+      border: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="number"></div>
+  <div class="btn-wrap">
+    <button>increase</button>
+    <button>decrease</button>
+  </div>
+  <script>
+    let num = 0
+    let max = 10
+    let min = 0
+    /* 抽离渲染 */
+    const render = num => {
+      document.querySelector('.number').innerHTML = num
+    }
+    // 统一抽离计算函数入口
+    const calc = opation => {
+      // 更具参数，调用不同的处理函数
+      if (option === 'increase') {
+        increase()
+      }
+      if (option === 'decrease') {
+        decrease()
+      }
+    }
+    // 增加
+    const increase = () => {
+      ++num
+      if (num > max) {
+        num = max
+        shouNotify('大哥，见好就收啊')
+        return false
+      }
+      render(num)
+    }
+    // 减少
+    const decrease = () => {
+      --num
+      if (num < min) {
+        num = min
+        shouNotify('大哥，要有底线啊')
+        return false
+      }
+      render(num)
+    }
+    /**
+     * @desc 提示用户
+     */ 
+    const shouNotify = msg => {
+      alert(msg)
+    }
+    let btns = document.querySelectorAll('button')
+    btns.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        calc(e.target.innerHTML)
+      }, false)
+    })
+  </script>
+</body>
+</html>
