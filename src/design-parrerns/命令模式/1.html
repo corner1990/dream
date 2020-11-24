@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>计数器</title>
+    <style>
+      #number{
+        padding: 30px;
+        font-size: 16px;
+        color: #333;
+        font-weight: 700;
+      }
+      .btn-wrap{
+        margin-top: 10px;
+      }
+      button{
+        padding: 10px;
+        color: #ffffff;
+        background-color: #109c91;
+        border: 0;
+      }
+    </style>
+</head>
+<body>
+    <p id="number">0</p>
+    <div class="btn-wrap">
+      <button id="increase">increase</button>
+    </div>
+<script>
+let num = 0
+ let addBtn = document.querySelector('#increase');
+ let number = document.querySelector('#number');
+
+ let worker = {
+  add(){
+   ++num
+   this.render(num)
+  },
+  render(num) {
+    number.innerHTML = num
+  }
+ }
+
+ class AddCommand{
+     constructor(receiver){
+        this.receiver = receiver;
+     }
+     execute(){
+        this.receiver.add();
+     }
+ }
+ worker.render(num)
+let addCommand = new AddCommand(worker);
+addBtn.onclick = ()=>addCommand.execute();
+</script>    
+</body>
+</html>
