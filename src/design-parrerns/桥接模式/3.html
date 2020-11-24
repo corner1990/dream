@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>享元模式-分页</title>
+</head>
+<style>
+  *{
+    margin: 0;
+    padding: 0
+  }
+  #list{
+    list-style-type: none;
+    padding: 20px;
+    width: 200px;
+  }
+  .list-item{
+    border-bottom: 1px solid #eee;
+    line-height: 32px;
+    color: #666;
+    padding: 0 10px;
+  }
+  .btn-wrap{
+    margin-top: 10px;
+    padding-left: 20px;
+  }
+  button{
+    padding: 10px;
+    color: #ffffff;
+    background-color: #109c91;
+    border: 0;
+  }
+</style>
+<body>
+  <ul id="list">
+  </ul>
+  <div class="btn-wrap">
+    <button id="prev">prev</button>
+    <button id="next">next</button>
+  </div>
+  <script>
+    let list = []
+    let index = 0
+    let size = 5
+    let container = document.querySelector('#list')
+    let prev = document.querySelector('#prev')
+    let next = document.querySelector('#next')
+    // 创建li
+    function createLi(index) {
+      let node = document.createElement('li')
+      node.classList.add('list-item')
+      node.innerHTML = `第${index}条内容`
+      return node
+    }
+    // 创建list
+    function getList(index) {
+      let start = index * size
+      if (list.length == 0) {
+        // 首次加载
+        let doc = document.createDocumentFragment()
+        for(let i = 0; list.length < size; i++) {
+          let idx = start + i + 1
+          let node = createLi(idx)
+          list.push(node)
+          doc.appendChild(node)
+        }
+        container.appendChild(doc)
+      } else {
+        // 分页内容
+        for(let i = 0; i < size; i++) {
+          let idx = start + i + 1
+          let node = list[i]
+          node.innerHTML = `第${idx}条内容`
+        }
+      }
+    }
+    getList(0)
+    // 下一页
+    const nextFn = () => {
+      ++index
+      getList(index)
+    }
+    next.addEventListener('click', nextFn)
+
+    const prevFn = () => {
+      --index
+      if (index < 0) {
+        index = 0
+        return false
+      }
+      getList(index)
+    }
+    prev.addEventListener('click', prevFn)
+  </script>
+</body>
+</html>

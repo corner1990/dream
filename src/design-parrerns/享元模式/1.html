@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>享元模式-对象</title>
+</head>
+<style>
+  #box{
+    width: 100px;
+    height: 100px;
+    margin: 30px;
+  }
+  .btn-wrap{
+    margin-top: 10px;
+  }
+  button{
+    padding: 10px;
+    color: #ffffff;
+    background-color: #109c91;
+    /* background-color: #970a50; */
+    /* background-color: #81bd21; */
+    border: 0;
+  }
+</style>
+<body>
+
+<div id="box">
+
+</div>
+<div class="btn-wrap">
+  <button data-color='#109c91'>109c91</button>
+  <button data-color='#970a50'>970a50</button>
+  <button data-color='#81bd21'>81bd21</button>
+</div>
+<script>
+// let box = document.querySelector('#box');
+let btns = document.querySelectorAll('button')
+class myBox{
+  constructor() {
+    this.box = document.querySelector('#box');
+  }
+  // 设置颜色
+  setBg(color) {
+    this.box.style.backgroundColor = color
+  }
+}
+let box = new myBox()
+const setBg = e => {
+  let { color } = e.target.dataset
+  box.setBg(color)
+}
+btns.forEach(btn => {
+  btn.addEventListener('click', setBg)
+})
+</script>
+</body>
+</html>
