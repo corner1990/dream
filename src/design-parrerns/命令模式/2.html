@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>弹出菜单</title>
+    <style>
+      #number{
+        padding: 30px;
+        font-size: 16px;
+        color: #333;
+        font-weight: 700;
+      }
+      .btn-wrap{
+        margin-top: 10px;
+      }
+      button{
+        padding: 10px;
+        color: #ffffff;
+        background-color: #109c91;
+        border: 0;
+      }
+    </style>
+</head>
+<body>
+    <p id="number">0</p>
+    <div class="btn-wrap">
+      <button id="increase">increase</button>
+      <button id="back">back</button>
+      <button id="reset">reset</button>
+    </div>
+<script>
+let num = 0
+ let increase = document.getElementById('increase');
+ let backBtn = document.getElementById('back');
+ let resetBtn = document.getElementById('reset');
+ let number = document.getElementById('number');
+
+ let worker = {
+  history:[],
+  index:-1,
+  increase(){
+   let oldVal = parseInt(number.innerHTML);     
+   let newVal = oldVal + 1;
+   worker.history.push(newVal);
+   worker.index = worker.history.length-1;
+   this.render(newVal)
+   console.log('increase', worker);
+  },
+  back(){
+      if(worker.index-1>=0){
+        worker.index--;
+        this.render(worker.history[worker.index])
+        console.log('back', worker);
+      }
+  },
+  reset(){
+      if(worker.index+1<worker.history.length){
+        worker.index++;  
+        this.render(worker.history[worker.index])
+        console.log('reset', worker);
+      }
+  },
+  render(num) {
+    number.innerHTML = num
+  }
+ }
+
+ class IncreaseCommand{
+     constructor(receiver){
+         this.receiver = receiver;
+     }
+     execute(){
+         this.receiver.increase();
+     }
+ }
+
+ let increaseCommand = new IncreaseCommand(worker);
+ class BackCommand{
+     constructor(receiver){
+         this.receiver = receiver;
+     }
+     execute(){
+         this.receiver.back();
+     }
+ }
+
+ let backCommand = new BackCommand(worker);
+ class ResetCommand{
+     constructor(receiver){
+         this.receiver = receiver;
+     }
+     execute(){
+         this.receiver.reset();
+     }
+ }
+
+  let resetCommand = new ResetCommand(worker);
+  increase.onclick = ()=> increaseCommand.execute();
+  backBtn.onclick = ()=> backCommand.execute();
+  resetBtn.onclick = ()=> resetCommand.execute();
+</script>    
+</body>
+</html>
