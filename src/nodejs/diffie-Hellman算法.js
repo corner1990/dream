@@ -4,7 +4,7 @@
 
 let N = 23
 let p = 5
-let secret1 = 6
+let secret1 = 9
 
 let A = Math.pow(p, secret1) % N
 

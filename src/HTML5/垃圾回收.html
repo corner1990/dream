@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>垃圾回收</title>
+</head>
+<body>
+  <h1>垃圾回收</h1>
+  <script>
+    class Person{
+      constructor(name) {
+        this.name = name
+      }
+      sayHi()  {
+        console.log(`hi, i'm ${this.name}`)
+      }
+    }
+    let leo = new Person('leo')
+    setTimeout(() => {
+      leo.sayHi()
+      leo = null
+    }, 3000)
+  </script>
+</body>
+</html>
