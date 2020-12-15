@@ -429,3 +429,5 @@ export function mount(props) {
    ### 结束语
 
    > 到这里， 微前端架构的数据共享，应用通信已经完成，关于动态注册应用，样式隔离, 抽离公共依赖库等优化可以自行查看文档，个人公司没有使用该架构，这里只用来学习，相对demo会比较粗糙
+   >
+   > [最后附上完成代码]( https://github.com/corner1990/dream/tree/master/src/mic-front)
