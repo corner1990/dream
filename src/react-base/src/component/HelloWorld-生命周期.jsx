@@ -13,8 +13,10 @@ class HelloWrold extends Component {
   state = {
     count: 0
   }
-  
+  // 
   static getDerivedStateFormProps(props, state) {
+    // getDerivedStateFromProps， render 方法之前调用，并且在初始挂载及后续更新时都会被调用。
+    // 它应返回一个对象来更新 state，如果返回 `null` 则不更新任何内容
     console.log('getDerivedStateFromProps', props, state)
 
   }
