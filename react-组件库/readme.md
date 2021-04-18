@@ -18,4 +18,6 @@ enzyme-adapter-react-16 @types/enzyme-adapter-react-16 -D
 npm i axios express qs @types/qs -D
 
 ```
+### 单元测试
+- jest
 

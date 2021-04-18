@@ -5,6 +5,11 @@
   "main": "index.js",
   "author": "corner",
   "license": "MIT",
+  "scripts": {
+    "build": "webpack",
+    "dev": "webpack-dev-server ",
+    "test": "jest"
+  },
   "dependencies": {
     "@types/enzyme": "^3.10.8",
     "@types/jest": "^26.0.22",

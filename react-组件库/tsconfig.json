@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "ES5",
+    "module": "commonjs",
+    "jsx": "react",
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "noImplicitAny": true, // 不允许false
+    "esModuleInterop": true,
+  },
+  "include": [
+    "./src/**/*",
+    "./typings/**/*"
+  ]
+}
