@@ -11,4 +11,3 @@ module.exports = {
   // 表示要进入单元测试的正则匹配
   testRegex: '(/__tests__/.*|(test|spec)\\.(jsx|tsx))$',
 }
-
