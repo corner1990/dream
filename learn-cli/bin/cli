@@ -1,0 +1,60 @@
+#! /usr/bin/env node
+
+const chalk = require('chalk');
+
+const program = require('commander')
+// 核心功能 1.创建项目 2.更改配置文件 3.ui界面
+
+
+program
+  .command('create <app-name>') // name 会在 action第一个参数拿到
+  .description('create a new project')
+  .option('-f, --force', 'overwrite target directory if it exists') // 强制创建项目
+  .action((name, cmd) => {
+    // 命令行执行 cli create xxx -f  or cli create xxx --force
+    // 打印内容: xxx { force: true }
+    // console.log(name, cmd)
+    // 调用create 模块
+    require('../lib/create')(name, cmd)
+  })
+
+// 配置命令实现
+program
+  .command('config [value]')
+  .description('inspect and modify the config')
+  .option('-g, --get <path>', 'get value from the option')
+  .option('-s, --set <path> <value>', 'set value to the config')
+  .option('-d, --delete <path>', 'delete option from the config')
+  .action((value, cmd) => {
+    console.log(value, cmd)
+    // 获取： cli config -g a
+    // 打印： undefined { get: 'a' }
+
+    // 设置：  cli config -s a a
+    // 打印: a { set: 'a' }
+    
+  })
+// 打开ui
+program
+  .command('ui')
+  .description('start and open crumb-cli ui')
+  .option('-p, --port <port>', 'port of the ui server')
+  .action(cmd => {
+    console.log('ui cmd', cmd)
+  })
+
+// 配置命令
+program
+  .version(`crumb-cli@${require('../package.json').version}`)
+  .usage('<command> [options]')
+// console.log('hhlooo')
+// 用户打印帮助文档的时候处理
+program.on('--help', function () {
+  console.log()
+  console.log(`Run ${chalk.cyan('crumb-cli <command> --help')} show details`)
+  console.log()
+})
+// 解析用户命令行输入的参数 必须放到最后边
+program.parse(process.argv)
+
+
