@@ -1,0 +1,1 @@
+declare module "*.png" // 设置模块

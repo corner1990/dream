@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="jest tests" tests="2" failures="0" errors="0" time="3.329">
+  <testsuite name="sum" errors="0" failures="0" skipped="0" timestamp="2021-08-16T13:24:40" time="3.174" tests="2">
+    <testcase classname="sum 1+1" name="sum 1+1" time="0.002">
+    </testcase>
+    <testcase classname="sum 2+2" name="sum 2+2" time="0.001">
+    </testcase>
+  </testsuite>
+</testsuites>

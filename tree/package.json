@@ -1,9 +1,0 @@
-{
-  "name": "tree-component",
-  "version": "1.0.0",
-  "description": "learn tree ui compoent",
-  "main": "index.js",
-  "author": "corner",
-  "license": "MIT",
-  "private": true
-}
