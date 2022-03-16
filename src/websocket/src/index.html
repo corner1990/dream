@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>websocket</title>
+</head>
+<body>
+    <input type="text" id="msg">
+    <button id="btn">发送消息</button>
+
+    <script>
+        let text = document.querySelector('#msg')
+        let btn = document.querySelector('#btn');
+
+        // 创建websocket链接
+        const socket = new WebSocket('ws://localhost:8888')
+
+        // 链接打开后会触发回调
+        socket.onopen = () => {
+            console.log('链接打开')
+        }
+
+        // 服务端发送消息的时候会触发
+        socket.onmessage = (ev) => {
+            console.log('ev', ev.data)
+        }
+
+        // btn 按钮
+        const sendMsg =  () => {
+            const val = text.value;
+            socket.send(val)
+        }
+        // 发送消息
+        btn.addEventListener('click', sendMsg)
+    </script>
+</body>
+</html>

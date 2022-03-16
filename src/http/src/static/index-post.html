@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>learn http</title>
+</head>
+<body>
+    <div class="app">
+        post demo
+        <div class="list-wrap">
+
+        </div>
+    </div>
+
+    <script>
+        const xhr = new XMLHttpRequest();
+        
+        // 建立链接
+        xhr.open('post', '/getList', false)
+        xhr.setRequestHeader('client', 'web')
+        // 监听参数变化
+        xhr.onreadystatechange = () => {
+            if (xhr.readyState == 4) {
+                if (xhr.status === 200) {
+                    console.log('xhr', xhr.responseText)
+                }
+            }
+        }
+        // 发送请求
+        xhr.send(JSON.stringify({ name: 'leo', age: 12 }));
+    </script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+{
+  "name": "websocket",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "serve": "http-server",
+    "dev": "npx nodemon ./src/server.js"
+  },
+  "devDependencies": {
+    "ws": "^8.5.0"
+  },
+  "dependencies": {
+    "http-server": "^14.1.0"
+  }
+}
