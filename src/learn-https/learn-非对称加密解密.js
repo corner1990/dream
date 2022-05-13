@@ -37,3 +37,6 @@ verifyObj.update(file);
 const isValid = verifyObj.verify(rsa.publicKey, signInfo, 'hex')
 
 console.log('isValid', isValid)
+
+// 内部验证流程
+// 首先拿到文件file， 然后用publicKey计算签名sign， 如果跟对方的sign匹配，则验证通过

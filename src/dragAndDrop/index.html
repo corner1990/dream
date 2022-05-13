@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>drag and drop</title>
+    <style>
+        .drag-wrap{
+            display: flex;
+            justify-content: space-around;
+            padding: 10px;
+        }
+        .drag-wrap div{
+            min-height: 500px;
+        }
+        .left-box{
+            flex: 1;
+            margin-right: 20px;
+            border: 1px solid cyan;
+        }
+        .right-box{
+            flex: 1;
+            border: 1px solid burlywood;
+        }
+
+        button {
+            cursor: pointer;
+        }
+        .drag-btn-copy{
+            position: absolute;
+            left: 0;
+            top: 0;
+            border: 1px solid red;
+        }
+    </style>
+</head>
+<body>
+    <div class="drag-wrap">
+        <div class="left-box">
+            <button class="drag-btn">拖拽按钮</button>
+        </div>
+        <div class="right-box"></div>
+    </div>
+    <script src="./main.js"></script>
+</body>
+</html>

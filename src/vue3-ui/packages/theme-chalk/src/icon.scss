@@ -1,0 +1,116 @@
+@use './mixins/mixins.scss' as *;
+
+@font-face {
+    font-family: "iconfont"; /* Project id 3394082 */
+    src: url('./fonts/iconfont.woff') format('woff2'),
+         url('./fonts/iconfont.woff') format('woff'),
+         url('./fonts/iconfont.ttf') format('truetype'),
+         url('./fonts/iconfont.svg') format('svg');
+  }
+  
+  [class^='#{$namespace}-icon'],
+  [class*='#{$namespace}-icon'] {
+    font-family: "iconfont" !important;
+    font-size: 16px;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  .#{$namespace}-jubao:before {
+    content: "\100c4";
+  }
+  
+  .#{$namespace}-QQ:before {
+    content: "\100c5";
+  }
+  
+  .#{$namespace}-shuaxin:before {
+    content: "\100c6";
+  }
+  
+  .#{$namespace}-shanchu:before {
+    content: "\100c7";
+  }
+  
+  .#{$namespace}-guanbi:before {
+    content: "\100c8";
+  }
+  
+  .#{$namespace}-shoucang:before {
+    content: "\100c9";
+  }
+  
+  .#{$namespace}-lianjie:before {
+    content: "\100ca";
+  }
+  
+  .#{$namespace}-hongbao:before {
+    content: "\100cb";
+  }
+  
+  .#{$namespace}-shezhi:before {
+    content: "\100cc";
+  }
+  
+  .#{$namespace}-bianji:before {
+    content: "\100cd";
+  }
+  
+  .#{$namespace}-meiwu:before {
+    content: "\100ce";
+  }
+  
+  .#{$namespace}-zhuanfa:before {
+    content: "\100cf";
+  }
+  
+  .#{$namespace}-shangchuan:before {
+    content: "\100d0";
+  }
+  
+  .#{$namespace}-lahei:before {
+    content: "\100d1";
+  }
+  
+  .#{$namespace}-QQkongjian:before {
+    content: "\100d2";
+  }
+  
+  .#{$namespace}-jiesuo:before {
+    content: "\100d3";
+  }
+  
+  .#{$namespace}-pinglun:before {
+    content: "\100d4";
+  }
+  
+  .#{$namespace}-xiazai:before {
+    content: "\100d5";
+  }
+  
+  .#{$namespace}-pengyouquan:before {
+    content: "\100d6";
+  }
+  
+  .#{$namespace}-tupian:before {
+    content: "\100d7";
+  }
+  
+  .#{$namespace}-guanli:before {
+    content: "\100d8";
+  }
+  
+  .#{$namespace}-duihua:before {
+    content: "\100d9";
+  }
+  
+  .#{$namespace}-weibo:before {
+    content: "\100da";
+  }
+  
+  .#{$namespace}-weixin:before {
+    content: "\100db";
+  }
+  
+  

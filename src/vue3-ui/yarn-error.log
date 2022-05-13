@@ -1,0 +1,73 @@
+Arguments: 
+  /usr/local/bin/node /usr/local/bin/yarn add global typescript -G
+
+PATH: 
+  /opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/homebrew/bin:/opt/homebrew/sbin
+
+Yarn version: 
+  1.22.17
+
+Node version: 
+  16.2.0
+
+Platform: 
+  darwin arm64
+
+Trace: 
+  Error: https://registry.npm.taobao.org/@vue3-ui%2fcomponents: [NOT_FOUND] @vue3-ui/components not found
+      at Request.params.callback [as _callback] (/usr/local/lib/node_modules/yarn/lib/cli.js:67029:18)
+      at Request.self.callback (/usr/local/lib/node_modules/yarn/lib/cli.js:140883:22)
+      at Request.emit (node:events:365:28)
+      at Request.<anonymous> (/usr/local/lib/node_modules/yarn/lib/cli.js:141855:10)
+      at Request.emit (node:events:365:28)
+      at Gunzip.<anonymous> (/usr/local/lib/node_modules/yarn/lib/cli.js:141777:12)
+      at Object.onceWrapper (node:events:471:28)
+      at Gunzip.emit (node:events:365:28)
+      at endReadableNT (node:internal/streams/readable:1312:12)
+      at processTicksAndRejections (node:internal/process/task_queues:83:21)
+
+npm manifest: 
+  {
+    "name": "vue3-ui",
+    "version": "1.0.0",
+    "description": "",
+    "private": true,
+    "main": "index.js",
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1",
+      "play": "pnpm -C play dev",
+      "build": "gulp -f build/gulpfile.ts"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "MIT",
+    "dependencies": {
+      "@vue3-ui/components": "workspace:^1.0.0",
+      "@vue3-ui/theme-chalk": "workspace:^1.0.0",
+      "@vue3-ui/utils": "workspace:^1.0.0",
+      "scss": "^0.2.4",
+      "typescript": "^4.6.4",
+      "vue": "^3.2.33"
+    },
+    "devDependencies": {
+      "@types/gulp": "^4.0.9",
+      "@types/gulp-autoprefixer": "^0.0.33",
+      "@types/gulp-clean-css": "^4.3.0",
+      "@types/gulp-sass": "^5.0.0",
+      "@types/sass": "^1.43.1",
+      "gulp": "^4.0.2",
+      "gulp-autoprefixer": "^8.0.0",
+      "gulp-clean-css": "^4.3.0",
+      "gulp-sass": "^5.1.0",
+      "gulp-typescript": "6.0.0-alpha.1",
+      "jscodeshift": "^0.13.1",
+      "sass": "^1.51.0",
+      "sucrase": "^3.21.0"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
