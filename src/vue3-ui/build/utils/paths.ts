@@ -3,4 +3,6 @@ import path from 'path';
 export const projectRootPath = path.resolve(__dirname, '../../');
 
 // 输出的模块路径
-export const outDir = path.relative(__dirname, '../../dist')
+export const outDir = path.resolve(__dirname, '../../dist')
+// 入口路径
+export const vUIPath = path.resolve(__dirname, '../../packages/v-ui')

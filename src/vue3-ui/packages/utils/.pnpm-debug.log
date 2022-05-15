@@ -1,0 +1,15 @@
+{
+  "0 debug pnpm:scope": {
+    "selected": 1,
+    "workspacePrefix": "/Users/xinglong.li-a1782/Documents/project/learn/dream/src/vue3-ui"
+  },
+  "1 error pnpm": {
+    "code": "ERR_PNPM_PACKAGE_JSON_EXISTS",
+    "err": {
+      "name": "pnpm",
+      "message": "package.json already exists",
+      "code": "ERR_PNPM_PACKAGE_JSON_EXISTS",
+      "stack": "pnpm: package.json already exists\n    at Object.handler [as init] (/usr/local/lib/node_modules/pnpm/dist/pnpm.cjs:173680:15)\n    at /usr/local/lib/node_modules/pnpm/dist/pnpm.cjs:176185:51\n    at async run (/usr/local/lib/node_modules/pnpm/dist/pnpm.cjs:176161:34)\n    at async runPnpm (/usr/local/lib/node_modules/pnpm/dist/pnpm.cjs:176379:5)\n    at async /usr/local/lib/node_modules/pnpm/dist/pnpm.cjs:176371:7"
+    }
+  }
+}

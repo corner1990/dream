@@ -10,3 +10,11 @@
     > components 存放所有组件， 最终通过index.ts 导出
     > theme-chalk 做样式 BEM
     > utils 存放所有模块以来的公共方法
+
+### build 打包模块 gulp实现流程控制
+- build 实现打包样式 工具方法
+
+### dist 目录打包结果
+- es/lib两种规范
+- theme-chalk
+- 最终发布的模块 
