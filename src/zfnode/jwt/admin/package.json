@@ -7,7 +7,7 @@
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "jwt-simple": "^0.5.5",
-    "mongoose": "^5.3.7",
+    "mongoose": "^5.7.5",
     "nrm": "^1.0.2"
   }
 }
