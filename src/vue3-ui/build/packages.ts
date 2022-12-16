@@ -4,9 +4,11 @@ import path from 'path';
 import { outDir, projectRootPath } from './utils/paths';
 import ts from 'gulp-typescript'
 import { widthTaskName } from './utils';
+
 // 打包工具库
 export const buildPackages: any = (dirName: string, name: string) =>  {
-    // console.log('dir', dirName, name);
+    // console.log('dir 000', dirName, name);
+   
     // 打包为cjs or esmodule 模式
     // 打包
     const tasks = Object.entries(buildConfig).map(([module, config]) => {
@@ -16,7 +18,7 @@ export const buildPackages: any = (dirName: string, name: string) =>  {
             widthTaskName(`build: ${dirName}`, () => {
                 const tsConfig = path.resolve(projectRootPath, './tsconfig.json'); // ts 配置文件路径
                 const inputs = ['**/*.ts', '!gulpfile.ts', "!node_modules"];
-                
+                console.log('inputs', inputs)
                 return src(inputs)
                     .pipe(ts.createProject(tsConfig, {
                         declaration: true, //生成配置文件

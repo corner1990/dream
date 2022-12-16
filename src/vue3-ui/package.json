@@ -30,6 +30,7 @@
     "@types/gulp-sass": "^5.0.0",
     "@types/sass": "^1.43.1",
     "@vue/compiler-sfc": "*",
+    "fast-glob": "^3.2.11",
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^8.0.0",
     "gulp-clean-css": "^4.3.0",

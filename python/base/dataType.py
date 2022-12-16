@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 # 数据类型
 # 1. 整数
     # 可以处理任意大小的整数， 负数， 如： 1， 10， -1
@@ -41,3 +43,33 @@ print(s);
     # 使用大写声明的变量一般为常量，不可以更改(相互协议，python本身不支持)
 PI = 3.1415965359
 print(PI)
+
+numbers = [1,2,3,4,5]
+for num in numbers:
+    print(num);
+
+print('hello world')
+# helo
+print(1)
+print(2)
+print(3)
+print(4)
+print(5)
+
+'''
+数据分析是指用适当的统计分析方法对收集来的大量数据进行分析，
+将它们加以汇总和理解并消化，以求最大化地开发数据的功能，发挥数据的作用。
+数据分析是为了提取有用信息和形成结论而对数据加以详细研究和概括总结的过程。
+数据分析的数学基础在20世纪早期就已...
+'''
+
+str1='hello';
+str2='xiao ming';
+
+
+if True:
+    print(str1)
+else:
+    print(str2)
+
+

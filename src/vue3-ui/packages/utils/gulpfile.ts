@@ -1,3 +1,3 @@
 import { buildPackages } from '../../build/packages'
 
-export default buildPackages(__dirname, './');
+export default buildPackages(__dirname, './**');
