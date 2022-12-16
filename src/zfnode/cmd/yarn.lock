@@ -19,13 +19,13 @@ ajv@^5.3.0:
     fast-json-stable-stringify "^2.0.0"
     json-schema-traverse "^0.3.0"
 
-ansi-regex@*, ansi-regex@^3.0.0:
-  version "3.0.0"
-  resolved "http://r.cnpmjs.org/ansi-regex/download/ansi-regex-3.0.0.tgz#ed0317c322064f79466c02966bddb605ab37d998"
-
 ansi-regex@^2.0.0:
   version "2.1.1"
-  resolved "http://r.cnpmjs.org/ansi-regex/download/ansi-regex-2.1.1.tgz#c3b33ab5ee360d86e0e628f0468ae7ef27d654df"
+  resolved "https://r.cnpmjs.org/ansi-regex/download/ansi-regex-2.1.1.tgz#c3b33ab5ee360d86e0e628f0468ae7ef27d654df"
+
+ansi-regex@^3.0.0:
+  version "3.0.0"
+  resolved "https://r.cnpmjs.org/ansi-regex/download/ansi-regex-3.0.0.tgz#ed0317c322064f79466c02966bddb605ab37d998"
 
 ansi-styles@^2.2.1:
   version "2.2.1"
@@ -33,7 +33,7 @@ ansi-styles@^2.2.1:
 
 ansi-styles@^3.2.1:
   version "3.2.1"
-  resolved "http://r.cnpmjs.org/ansi-styles/download/ansi-styles-3.2.1.tgz#41fbb20243e50b12be0f04b8dedbf07520ce841d"
+  resolved "https://r.cnpmjs.org/ansi-styles/download/ansi-styles-3.2.1.tgz#41fbb20243e50b12be0f04b8dedbf07520ce841d"
   dependencies:
     color-convert "^1.9.0"
 
@@ -110,8 +110,8 @@ aws4@^1.2.1, aws4@^1.8.0:
   resolved "http://registry.npm.taobao.org/aws4/download/aws4-1.8.0.tgz#f0e003d9ca9e7f59c7a508945d7b2ef9a04a542f"
 
 balanced-match@^1.0.0:
-  version "1.0.0"
-  resolved "http://registry.npm.taobao.org/balanced-match/download/balanced-match-1.0.0.tgz#89b4d199ab2bee49de164ea02b89ce462d71b767"
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-1.0.2.tgz#e83e3a7e3f300b34cb9d87f615fa0cbf357690ee"
 
 bcrypt-pbkdf@^1.0.0:
   version "1.0.2"
@@ -127,7 +127,7 @@ bl@~1.1.2:
 
 block-stream@*:
   version "0.0.9"
-  resolved "http://registry.npm.taobao.org/block-stream/download/block-stream-0.0.9.tgz#13ebfe778a03205cfe03751481ebb4b3300c126a"
+  resolved "https://registry.yarnpkg.com/block-stream/-/block-stream-0.0.9.tgz#13ebfe778a03205cfe03751481ebb4b3300c126a"
   dependencies:
     inherits "~2.0.0"
 
@@ -139,7 +139,7 @@ boom@2.x.x:
 
 brace-expansion@^1.1.7:
   version "1.1.11"
-  resolved "http://registry.npm.taobao.org/brace-expansion/download/brace-expansion-1.1.11.tgz#3c7fcbf529d87226f3d2f52b966ff5271eb441dd"
+  resolved "https://registry.yarnpkg.com/brace-expansion/-/brace-expansion-1.1.11.tgz#3c7fcbf529d87226f3d2f52b966ff5271eb441dd"
   dependencies:
     balanced-match "^1.0.0"
     concat-map "0.0.1"
@@ -166,7 +166,7 @@ builtins@^1.0.3:
 
 camelcase@^4.1.0:
   version "4.1.0"
-  resolved "http://r.cnpmjs.org/camelcase/download/camelcase-4.1.0.tgz#d545635be1e33c542649c69173e5de6acfae34dd"
+  resolved "https://r.cnpmjs.org/camelcase/download/camelcase-4.1.0.tgz#d545635be1e33c542649c69173e5de6acfae34dd"
 
 caseless@~0.11.0:
   version "0.11.0"
@@ -188,7 +188,7 @@ chalk@^1.1.1:
 
 chalk@^2.4.1:
   version "2.4.1"
-  resolved "http://r.cnpmjs.org/chalk/download/chalk-2.4.1.tgz#18c49ab16a037b6eb0152cc83e3471338215b66e"
+  resolved "https://r.cnpmjs.org/chalk/download/chalk-2.4.1.tgz#18c49ab16a037b6eb0152cc83e3471338215b66e"
   dependencies:
     ansi-styles "^3.2.1"
     escape-string-regexp "^1.0.5"
@@ -200,7 +200,7 @@ chownr@~1.0.1:
 
 cliui@^4.0.0:
   version "4.1.0"
-  resolved "http://r.cnpmjs.org/cliui/download/cliui-4.1.0.tgz#348422dbe82d800b3022eef4f6ac10bf2e4d1b49"
+  resolved "https://r.cnpmjs.org/cliui/download/cliui-4.1.0.tgz#348422dbe82d800b3022eef4f6ac10bf2e4d1b49"
   dependencies:
     string-width "^2.1.1"
     strip-ansi "^4.0.0"
@@ -223,7 +223,7 @@ co@^4.6.0:
 
 code-point-at@^1.0.0:
   version "1.1.0"
-  resolved "http://r.cnpmjs.org/code-point-at/download/code-point-at-1.1.0.tgz#0d070b4d043a5bea33a2f1a40e2edb3d9a4ccf77"
+  resolved "https://r.cnpmjs.org/code-point-at/download/code-point-at-1.1.0.tgz#0d070b4d043a5bea33a2f1a40e2edb3d9a4ccf77"
 
 coffee-script@^1.7.1:
   version "1.12.7"
@@ -237,13 +237,13 @@ coffee-script@~1.7.1:
 
 color-convert@^1.9.0:
   version "1.9.2"
-  resolved "http://r.cnpmjs.org/color-convert/download/color-convert-1.9.2.tgz#49881b8fba67df12a96bdf3f56c0aab9e7913147"
+  resolved "https://r.cnpmjs.org/color-convert/download/color-convert-1.9.2.tgz#49881b8fba67df12a96bdf3f56c0aab9e7913147"
   dependencies:
     color-name "1.1.1"
 
 color-name@1.1.1:
   version "1.1.1"
-  resolved "http://r.cnpmjs.org/color-name/download/color-name-1.1.1.tgz#4b1415304cf50028ea81643643bd82ea05803689"
+  resolved "https://r.cnpmjs.org/color-name/download/color-name-1.1.1.tgz#4b1415304cf50028ea81643643bd82ea05803689"
 
 columnify@~1.5.4:
   version "1.5.4"
@@ -264,7 +264,7 @@ commander@^2.9.0:
 
 concat-map@0.0.1:
   version "0.0.1"
-  resolved "http://registry.npm.taobao.org/concat-map/download/concat-map-0.0.1.tgz#d8a96bd77fd68df7793a73036a3ba0d5405d477b"
+  resolved "https://registry.yarnpkg.com/concat-map/-/concat-map-0.0.1.tgz#d8a96bd77fd68df7793a73036a3ba0d5405d477b"
 
 concat-stream@^1.5.2:
   version "1.6.2"
@@ -292,7 +292,7 @@ core-util-is@1.0.2, core-util-is@~1.0.0:
 
 cross-spawn@^5.0.1:
   version "5.1.0"
-  resolved "http://r.cnpmjs.org/cross-spawn/download/cross-spawn-5.1.0.tgz#e8bd0efee58fcff6f8f94510a0a554bbfa235449"
+  resolved "https://r.cnpmjs.org/cross-spawn/download/cross-spawn-5.1.0.tgz#e8bd0efee58fcff6f8f94510a0a554bbfa235449"
   dependencies:
     lru-cache "^4.0.1"
     shebang-command "^1.2.0"
@@ -324,17 +324,17 @@ debug@^2.2.0:
 
 debug@^3.1.0:
   version "3.1.0"
-  resolved "http://r.cnpmjs.org/debug/download/debug-3.1.0.tgz#5bb5a0672628b64149566ba16819e61518c67261"
+  resolved "https://r.cnpmjs.org/debug/download/debug-3.1.0.tgz#5bb5a0672628b64149566ba16819e61518c67261"
   dependencies:
     ms "2.0.0"
 
-debuglog@*, debuglog@^1.0.1:
+debuglog@^1.0.1:
   version "1.0.1"
   resolved "http://registry.npm.taobao.org/debuglog/download/debuglog-1.0.1.tgz#aa24ffb9ac3df9a2351837cfb2d279360cd78492"
 
 decamelize@^2.0.0:
   version "2.0.0"
-  resolved "http://r.cnpmjs.org/decamelize/download/decamelize-2.0.0.tgz#656d7bbc8094c4c788ea53c5840908c9c7d063c7"
+  resolved "https://r.cnpmjs.org/decamelize/download/decamelize-2.0.0.tgz#656d7bbc8094c4c788ea53c5840908c9c7d063c7"
   dependencies:
     xregexp "4.0.0"
 
@@ -372,7 +372,7 @@ editor@~1.0.0:
 
 ejs@^2.6.1:
   version "2.6.1"
-  resolved "http://r.cnpmjs.org/ejs/download/ejs-2.6.1.tgz#498ec0d495655abc6f23cd61868d926464071aa0"
+  resolved "https://r.cnpmjs.org/ejs/download/ejs-2.6.1.tgz#498ec0d495655abc6f23cd61868d926464071aa0"
 
 es5-ext@^0.10.35, es5-ext@^0.10.9, es5-ext@~0.10.14:
   version "0.10.46"
@@ -399,11 +399,11 @@ es6-symbol@^3.0.2, es6-symbol@^3.1.1, es6-symbol@~3.1.1:
 
 escape-string-regexp@^1.0.2, escape-string-regexp@^1.0.5:
   version "1.0.5"
-  resolved "http://r.cnpmjs.org/escape-string-regexp/download/escape-string-regexp-1.0.5.tgz#1b61c0562190a8dff6ae3bb2cf0200ca130b86d4"
+  resolved "https://r.cnpmjs.org/escape-string-regexp/download/escape-string-regexp-1.0.5.tgz#1b61c0562190a8dff6ae3bb2cf0200ca130b86d4"
 
 execa@^0.7.0:
   version "0.7.0"
-  resolved "http://r.cnpmjs.org/execa/download/execa-0.7.0.tgz#944becd34cc41ee32a63a9faf27ad5a65fc59777"
+  resolved "https://r.cnpmjs.org/execa/download/execa-0.7.0.tgz#944becd34cc41ee32a63a9faf27ad5a65fc59777"
   dependencies:
     cross-spawn "^5.0.1"
     get-stream "^3.0.0"
@@ -435,7 +435,7 @@ fast-json-stable-stringify@^2.0.0:
 
 find-up@^3.0.0:
   version "3.0.0"
-  resolved "http://r.cnpmjs.org/find-up/download/find-up-3.0.0.tgz#49169f1d7993430646da61ecc5ae355c21c97b73"
+  resolved "https://r.cnpmjs.org/find-up/download/find-up-3.0.0.tgz#49169f1d7993430646da61ecc5ae355c21c97b73"
   dependencies:
     locate-path "^3.0.0"
 
@@ -478,7 +478,7 @@ fs-write-stream-atomic@~1.0.8:
 
 fs.realpath@^1.0.0:
   version "1.0.0"
-  resolved "http://registry.npm.taobao.org/fs.realpath/download/fs.realpath-1.0.0.tgz#1504ad2523158caa40db4a2787cb01411994ea4f"
+  resolved "https://registry.yarnpkg.com/fs.realpath/-/fs.realpath-1.0.0.tgz#1504ad2523158caa40db4a2787cb01411994ea4f"
 
 fstream-ignore@^1.0.0:
   version "1.0.5"
@@ -495,9 +495,9 @@ fstream-npm@~1.2.0:
     fstream-ignore "^1.0.0"
     inherits "2"
 
-fstream@^1.0.0, fstream@^1.0.2, fstream@~1.0.10:
-  version "1.0.11"
-  resolved "http://registry.npm.taobao.org/fstream/download/fstream-1.0.11.tgz#5c1fb1f117477114f0632a0eb4b71b3cb0fd3171"
+fstream@^1.0.0, fstream@^1.0.12, fstream@~1.0.10:
+  version "1.0.12"
+  resolved "https://registry.yarnpkg.com/fstream/-/fstream-1.0.12.tgz#4e8ba8ee2d48be4f7d0de505455548eae5932045"
   dependencies:
     graceful-fs "^4.1.2"
     inherits "~2.0.0"
@@ -543,11 +543,11 @@ generate-object-property@^1.1.0:
 
 get-caller-file@^1.0.1:
   version "1.0.3"
-  resolved "http://r.cnpmjs.org/get-caller-file/download/get-caller-file-1.0.3.tgz#f978fa4c90d1dfe7ff2d6beda2a515e713bdcf4a"
+  resolved "https://r.cnpmjs.org/get-caller-file/download/get-caller-file-1.0.3.tgz#f978fa4c90d1dfe7ff2d6beda2a515e713bdcf4a"
 
 get-stream@^3.0.0:
   version "3.0.0"
-  resolved "http://r.cnpmjs.org/get-stream/download/get-stream-3.0.0.tgz#8e943d1358dc37555054ecbe2edb05aa174ede14"
+  resolved "https://r.cnpmjs.org/get-stream/download/get-stream-3.0.0.tgz#8e943d1358dc37555054ecbe2edb05aa174ede14"
 
 getpass@^0.1.1:
   version "0.1.7"
@@ -566,7 +566,22 @@ glob@^7.0.3, glob@^7.0.5, glob@^7.1.1, glob@~7.1.0:
     once "^1.3.0"
     path-is-absolute "^1.0.0"
 
-graceful-fs@^4.1.2, graceful-fs@^4.1.6, graceful-fs@~4.1.9:
+glob@^7.1.3:
+  version "7.2.0"
+  resolved "https://registry.yarnpkg.com/glob/-/glob-7.2.0.tgz#d15535af7732e02e948f4c41628bd910293f6023"
+  dependencies:
+    fs.realpath "^1.0.0"
+    inflight "^1.0.4"
+    inherits "2"
+    minimatch "^3.0.4"
+    once "^1.3.0"
+    path-is-absolute "^1.0.0"
+
+graceful-fs@^4.1.2:
+  version "4.2.9"
+  resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.2.9.tgz#041b05df45755e587a24942279b9d113146e1c96"
+
+graceful-fs@^4.1.6, graceful-fs@~4.1.9:
   version "4.1.11"
   resolved "http://registry.npm.taobao.org/graceful-fs/download/graceful-fs-4.1.11.tgz#0e8bdfe4d1ddb8854d64e04ea7c00e2a026e5658"
 
@@ -602,7 +617,7 @@ has-color@^0.1.7:
 
 has-flag@^3.0.0:
   version "3.0.0"
-  resolved "http://r.cnpmjs.org/has-flag/download/has-flag-3.0.0.tgz#b5d454dc2199ae225699f3467e5a07f3b955bafd"
+  resolved "https://r.cnpmjs.org/has-flag/download/has-flag-3.0.0.tgz#b5d454dc2199ae225699f3467e5a07f3b955bafd"
 
 has-unicode@^2.0.0, has-unicode@~2.0.1:
   version "2.0.1"
@@ -649,7 +664,7 @@ iferr@^0.1.5, iferr@~0.1.5:
   version "0.1.5"
   resolved "http://registry.npm.taobao.org/iferr/download/iferr-0.1.5.tgz#c60eed69e6d8fdb6b3104a1fcbca1c192dc5b501"
 
-imurmurhash@*, imurmurhash@^0.1.4:
+imurmurhash@^0.1.4:
   version "0.1.4"
   resolved "http://registry.npm.taobao.org/imurmurhash/download/imurmurhash-0.1.4.tgz#9218b9b2b928a238b13dc4fb6b6d576f231453ea"
 
@@ -661,8 +676,8 @@ inflight@^1.0.4, inflight@~1.0.5:
     wrappy "1"
 
 inherits@2, inherits@^2.0.3, inherits@~2.0.0, inherits@~2.0.1, inherits@~2.0.3:
-  version "2.0.3"
-  resolved "http://registry.npm.taobao.org/inherits/download/inherits-2.0.3.tgz#633c2c83e3da42a502f52466022480f4208261de"
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/inherits/-/inherits-2.0.4.tgz#0fa2c64f932917c3433a0ded55363aae37416b7c"
 
 ini@^1.1.0, ini@^1.3.4, ini@~1.3.4:
   version "1.3.5"
@@ -683,7 +698,7 @@ init-package-json@~1.9.4:
 
 invert-kv@^1.0.0:
   version "1.0.0"
-  resolved "http://r.cnpmjs.org/invert-kv/download/invert-kv-1.0.0.tgz#104a8e4aaca6d3d8cd157a8ef8bfab2d7a3ffdb6"
+  resolved "https://r.cnpmjs.org/invert-kv/download/invert-kv-1.0.0.tgz#104a8e4aaca6d3d8cd157a8ef8bfab2d7a3ffdb6"
 
 is-builtin-module@^1.0.0:
   version "1.0.0"
@@ -693,13 +708,13 @@ is-builtin-module@^1.0.0:
 
 is-fullwidth-code-point@^1.0.0:
   version "1.0.0"
-  resolved "http://r.cnpmjs.org/is-fullwidth-code-point/download/is-fullwidth-code-point-1.0.0.tgz#ef9e31386f031a7f0d643af82fde50c457ef00cb"
+  resolved "https://r.cnpmjs.org/is-fullwidth-code-point/download/is-fullwidth-code-point-1.0.0.tgz#ef9e31386f031a7f0d643af82fde50c457ef00cb"
   dependencies:
     number-is-nan "^1.0.0"
 
 is-fullwidth-code-point@^2.0.0:
   version "2.0.0"
-  resolved "http://r.cnpmjs.org/is-fullwidth-code-point/download/is-fullwidth-code-point-2.0.0.tgz#a3b30a5c4f199183167aaab93beefae3ddfb654f"
+  resolved "https://r.cnpmjs.org/is-fullwidth-code-point/download/is-fullwidth-code-point-2.0.0.tgz#a3b30a5c4f199183167aaab93beefae3ddfb654f"
 
 is-my-ip-valid@^1.0.0:
   version "1.0.0"
@@ -721,7 +736,7 @@ is-property@^1.0.0:
 
 is-stream@^1.1.0:
   version "1.1.0"
-  resolved "http://r.cnpmjs.org/is-stream/download/is-stream-1.1.0.tgz#12d4a3dd4e68e0b79ceb8dbc84173ae80d91ca44"
+  resolved "https://r.cnpmjs.org/is-stream/download/is-stream-1.1.0.tgz#12d4a3dd4e68e0b79ceb8dbc84173ae80d91ca44"
 
 is-typedarray@~1.0.0:
   version "1.0.0"
@@ -733,7 +748,7 @@ isarray@~1.0.0:
 
 isexe@^2.0.0:
   version "2.0.0"
-  resolved "http://r.cnpmjs.org/isexe/download/isexe-2.0.0.tgz#e8fbf374dc556ff8947a10dcb0572d633f2cfa10"
+  resolved "https://r.cnpmjs.org/isexe/download/isexe-2.0.0.tgz#e8fbf374dc556ff8947a10dcb0572d633f2cfa10"
 
 isstream@~0.1.2:
   version "0.1.2"
@@ -780,13 +795,13 @@ jsprim@^1.2.2:
 
 lcid@^1.0.0:
   version "1.0.0"
-  resolved "http://r.cnpmjs.org/lcid/download/lcid-1.0.0.tgz#308accafa0bc483a3867b4b6f2b9506251d1b835"
+  resolved "https://r.cnpmjs.org/lcid/download/lcid-1.0.0.tgz#308accafa0bc483a3867b4b6f2b9506251d1b835"
   dependencies:
     invert-kv "^1.0.0"
 
 locate-path@^3.0.0:
   version "3.0.0"
-  resolved "http://r.cnpmjs.org/locate-path/download/locate-path-3.0.0.tgz#dbec3b3ab759758071b58fe59fc41871af21400e"
+  resolved "https://r.cnpmjs.org/locate-path/download/locate-path-3.0.0.tgz#dbec3b3ab759758071b58fe59fc41871af21400e"
   dependencies:
     p-locate "^3.0.0"
     path-exists "^3.0.0"
@@ -797,10 +812,6 @@ lockfile@~1.0.2:
   dependencies:
     signal-exit "^3.0.2"
 
-lodash._baseindexof@*:
-  version "3.1.0"
-  resolved "http://registry.npm.taobao.org/lodash._baseindexof/download/lodash._baseindexof-3.1.0.tgz#fe52b53a1c6761e42618d654e4a25789ed61822c"
-
 lodash._baseuniq@~4.6.0:
   version "4.6.0"
   resolved "http://registry.npm.taobao.org/lodash._baseuniq/download/lodash._baseuniq-4.6.0.tgz#0ebb44e456814af7905c6212fa2c9b2d51b841e8"
@@ -808,27 +819,9 @@ lodash._baseuniq@~4.6.0:
     lodash._createset "~4.0.0"
     lodash._root "~3.0.0"
 
-lodash._bindcallback@*:
-  version "3.0.1"
-  resolved "http://registry.npm.taobao.org/lodash._bindcallback/download/lodash._bindcallback-3.0.1.tgz#e531c27644cf8b57a99e17ed95b35c748789392e"
-
-lodash._cacheindexof@*:
-  version "3.0.2"
-  resolved "http://registry.npm.taobao.org/lodash._cacheindexof/download/lodash._cacheindexof-3.0.2.tgz#3dc69ac82498d2ee5e3ce56091bafd2adc7bde92"
-
-lodash._createcache@*:
-  version "3.1.2"
-  resolved "http://registry.npm.taobao.org/lodash._createcache/download/lodash._createcache-3.1.2.tgz#56d6a064017625e79ebca6b8018e17440bdcf093"
-  dependencies:
-    lodash._getnative "^3.0.0"
-
 lodash._createset@~4.0.0:
   version "4.0.3"
   resolved "http://registry.npm.taobao.org/lodash._createset/download/lodash._createset-4.0.3.tgz#0f4659fbb09d75194fa9e2b88a6644d363c9fe26"
-
-lodash._getnative@*, lodash._getnative@^3.0.0:
-  version "3.9.1"
-  resolved "http://registry.npm.taobao.org/lodash._getnative/download/lodash._getnative-3.9.1.tgz#570bc7dede46d61cdcde687d65d3eecbaa3aaff5"
 
 lodash._root@~3.0.0:
   version "3.0.1"
@@ -837,10 +830,6 @@ lodash._root@~3.0.0:
 lodash.clonedeep@~4.5.0:
   version "4.5.0"
   resolved "http://registry.npm.taobao.org/lodash.clonedeep/download/lodash.clonedeep-4.5.0.tgz#e23f3f9c4f8fbdde872529c1071857a086e5ccef"
-
-lodash.restparam@*:
-  version "3.6.1"
-  resolved "http://registry.npm.taobao.org/lodash.restparam/download/lodash.restparam-3.6.1.tgz#936a4e309ef330a7645ed4145986c85ae5b20805"
 
 lodash.union@~4.6.0:
   version "4.6.0"
@@ -856,14 +845,14 @@ lodash.without@~4.4.0:
 
 lru-cache@^4.0.1:
   version "4.1.3"
-  resolved "http://r.cnpmjs.org/lru-cache/download/lru-cache-4.1.3.tgz#a1175cf3496dfc8436c156c334b4955992bce69c"
+  resolved "https://r.cnpmjs.org/lru-cache/download/lru-cache-4.1.3.tgz#a1175cf3496dfc8436c156c334b4955992bce69c"
   dependencies:
     pseudomap "^1.0.2"
     yallist "^2.1.2"
 
 mem@^1.1.0:
   version "1.1.0"
-  resolved "http://r.cnpmjs.org/mem/download/mem-1.1.0.tgz#5edd52b485ca1d900fe64895505399a0dfa45f76"
+  resolved "https://r.cnpmjs.org/mem/download/mem-1.1.0.tgz#5edd52b485ca1d900fe64895505399a0dfa45f76"
   dependencies:
     mimic-fn "^1.0.0"
 
@@ -879,15 +868,21 @@ mime-types@^2.1.11, mime-types@^2.1.12, mime-types@~2.1.19, mime-types@~2.1.7:
 
 mime@^2.3.1:
   version "2.3.1"
-  resolved "http://r.cnpmjs.org/mime/download/mime-2.3.1.tgz#b1621c54d63b97c47d3cfe7f7215f7d64517c369"
+  resolved "https://r.cnpmjs.org/mime/download/mime-2.3.1.tgz#b1621c54d63b97c47d3cfe7f7215f7d64517c369"
 
 mimic-fn@^1.0.0:
   version "1.2.0"
-  resolved "http://r.cnpmjs.org/mimic-fn/download/mimic-fn-1.2.0.tgz#820c86a39334640e99516928bd03fca88057d022"
+  resolved "https://r.cnpmjs.org/mimic-fn/download/mimic-fn-1.2.0.tgz#820c86a39334640e99516928bd03fca88057d022"
 
-minimatch@^3.0.0, minimatch@^3.0.2, minimatch@^3.0.4:
+minimatch@^3.0.0, minimatch@^3.0.2:
   version "3.0.4"
   resolved "http://registry.npm.taobao.org/minimatch/download/minimatch-3.0.4.tgz#5166e286457f03306064be5497e8dbb0c3d32083"
+  dependencies:
+    brace-expansion "^1.1.7"
+
+minimatch@^3.0.4:
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/minimatch/-/minimatch-3.1.2.tgz#19cd194bfd3e428f049a70817c038d89ab4be35b"
   dependencies:
     brace-expansion "^1.1.7"
 
@@ -895,7 +890,17 @@ minimist@0.0.8:
   version "0.0.8"
   resolved "http://registry.npm.taobao.org/minimist/download/minimist-0.0.8.tgz#857fcabfc3397d2625b8228262e86aa7a011b05d"
 
-"mkdirp@>=0.5 0", mkdirp@^0.5.0, mkdirp@~0.5.0, mkdirp@~0.5.1:
+minimist@^1.2.5:
+  version "1.2.5"
+  resolved "https://registry.yarnpkg.com/minimist/-/minimist-1.2.5.tgz#67d66014b66a6a8aaa0c083c5fd58df4e4e97602"
+
+"mkdirp@>=0.5 0":
+  version "0.5.5"
+  resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-0.5.5.tgz#d91cefd62d1436ca0f41620e251288d420099def"
+  dependencies:
+    minimist "^1.2.5"
+
+mkdirp@^0.5.0, mkdirp@~0.5.0, mkdirp@~0.5.1:
   version "0.5.1"
   resolved "http://registry.npm.taobao.org/mkdirp/download/mkdirp-0.5.1.tgz#30057438eac6cf7f8c4767f38648d6697d75c903"
   dependencies:
@@ -907,7 +912,7 @@ mkdirp@~0.3.5:
 
 ms@2.0.0:
   version "2.0.0"
-  resolved "http://r.cnpmjs.org/ms/download/ms-2.0.0.tgz#5608aeadfc00be6c2901df5f9861788de0d597c8"
+  resolved "https://r.cnpmjs.org/ms/download/ms-2.0.0.tgz#5608aeadfc00be6c2901df5f9861788de0d597c8"
 
 mute-stream@~0.0.4:
   version "0.0.7"
@@ -1020,7 +1025,7 @@ npm-registry-client@~7.2.1:
 
 npm-run-path@^2.0.0:
   version "2.0.2"
-  resolved "http://r.cnpmjs.org/npm-run-path/download/npm-run-path-2.0.2.tgz#35a9232dfa35d7067b4cb2ddf2357b1871536c5f"
+  resolved "https://r.cnpmjs.org/npm-run-path/download/npm-run-path-2.0.2.tgz#35a9232dfa35d7067b4cb2ddf2357b1871536c5f"
   dependencies:
     path-key "^2.0.0"
 
@@ -1138,7 +1143,7 @@ nrm@^1.0.2:
 
 number-is-nan@^1.0.0:
   version "1.0.1"
-  resolved "http://r.cnpmjs.org/number-is-nan/download/number-is-nan-1.0.1.tgz#097b602b53422a522c1afb8790318336941a011d"
+  resolved "https://r.cnpmjs.org/number-is-nan/download/number-is-nan-1.0.1.tgz#097b602b53422a522c1afb8790318336941a011d"
 
 oauth-sign@~0.8.1:
   version "0.8.2"
@@ -1176,7 +1181,7 @@ os-homedir@^1.0.0:
 
 os-locale@^2.0.0:
   version "2.1.0"
-  resolved "http://r.cnpmjs.org/os-locale/download/os-locale-2.1.0.tgz#42bc2900a6b5b8bd17376c8e882b65afccf24bf2"
+  resolved "https://r.cnpmjs.org/os-locale/download/os-locale-2.1.0.tgz#42bc2900a6b5b8bd17376c8e882b65afccf24bf2"
   dependencies:
     execa "^0.7.0"
     lcid "^1.0.0"
@@ -1195,23 +1200,23 @@ osenv@0, osenv@^0.1.4, osenv@~0.1.3:
 
 p-finally@^1.0.0:
   version "1.0.0"
-  resolved "http://r.cnpmjs.org/p-finally/download/p-finally-1.0.0.tgz#3fbcfb15b899a44123b34b6dcc18b724336a2cae"
+  resolved "https://r.cnpmjs.org/p-finally/download/p-finally-1.0.0.tgz#3fbcfb15b899a44123b34b6dcc18b724336a2cae"
 
 p-limit@^2.0.0:
   version "2.0.0"
-  resolved "http://r.cnpmjs.org/p-limit/download/p-limit-2.0.0.tgz#e624ed54ee8c460a778b3c9f3670496ff8a57aec"
+  resolved "https://r.cnpmjs.org/p-limit/download/p-limit-2.0.0.tgz#e624ed54ee8c460a778b3c9f3670496ff8a57aec"
   dependencies:
     p-try "^2.0.0"
 
 p-locate@^3.0.0:
   version "3.0.0"
-  resolved "http://r.cnpmjs.org/p-locate/download/p-locate-3.0.0.tgz#322d69a05c0264b25997d9f40cd8a891ab0064a4"
+  resolved "https://r.cnpmjs.org/p-locate/download/p-locate-3.0.0.tgz#322d69a05c0264b25997d9f40cd8a891ab0064a4"
   dependencies:
     p-limit "^2.0.0"
 
 p-try@^2.0.0:
   version "2.0.0"
-  resolved "http://r.cnpmjs.org/p-try/download/p-try-2.0.0.tgz#85080bb87c64688fa47996fe8f7dfbe8211760b1"
+  resolved "https://r.cnpmjs.org/p-try/download/p-try-2.0.0.tgz#85080bb87c64688fa47996fe8f7dfbe8211760b1"
 
 path-array@^1.0.0:
   version "1.0.1"
@@ -1221,11 +1226,11 @@ path-array@^1.0.0:
 
 path-exists@^3.0.0:
   version "3.0.0"
-  resolved "http://r.cnpmjs.org/path-exists/download/path-exists-3.0.0.tgz#ce0ebeaa5f78cb18925ea7d810d7b59b010fd515"
+  resolved "https://r.cnpmjs.org/path-exists/download/path-exists-3.0.0.tgz#ce0ebeaa5f78cb18925ea7d810d7b59b010fd515"
 
 path-is-absolute@^1.0.0:
   version "1.0.1"
-  resolved "http://registry.npm.taobao.org/path-is-absolute/download/path-is-absolute-1.0.1.tgz#174b9268735534ffbc7ace6bf53a5a9e1b5c5f5f"
+  resolved "https://registry.yarnpkg.com/path-is-absolute/-/path-is-absolute-1.0.1.tgz#174b9268735534ffbc7ace6bf53a5a9e1b5c5f5f"
 
 path-is-inside@^1.0.1, path-is-inside@~1.0.2:
   version "1.0.2"
@@ -1233,7 +1238,7 @@ path-is-inside@^1.0.1, path-is-inside@~1.0.2:
 
 path-key@^2.0.0:
   version "2.0.1"
-  resolved "http://r.cnpmjs.org/path-key/download/path-key-2.0.1.tgz#411cadb574c5a140d3a4b1910d40d80cc9f40b40"
+  resolved "https://r.cnpmjs.org/path-key/download/path-key-2.0.1.tgz#411cadb574c5a140d3a4b1910d40d80cc9f40b40"
 
 performance-now@^2.1.0:
   version "2.1.0"
@@ -1269,7 +1274,7 @@ proto-list@~1.2.1:
 
 pseudomap@^1.0.2:
   version "1.0.2"
-  resolved "http://r.cnpmjs.org/pseudomap/download/pseudomap-1.0.2.tgz#f052a28da70e618917ef0a8ac34c1ae5a68286b3"
+  resolved "https://r.cnpmjs.org/pseudomap/download/pseudomap-1.0.2.tgz#f052a28da70e618917ef0a8ac34c1ae5a68286b3"
 
 psl@^1.1.24:
   version "1.1.29"
@@ -1368,7 +1373,7 @@ readable-stream@~2.1.5:
     string_decoder "~0.10.x"
     util-deprecate "~1.0.1"
 
-readdir-scoped-modules@*, readdir-scoped-modules@^1.0.0:
+readdir-scoped-modules@^1.0.0:
   version "1.0.2"
   resolved "http://registry.npm.taobao.org/readdir-scoped-modules/download/readdir-scoped-modules-1.0.2.tgz#9fafa37d286be5d92cbaebdee030dc9b5f406747"
   dependencies:
@@ -1437,17 +1442,23 @@ request@~2.75.0:
 
 require-directory@^2.1.1:
   version "2.1.1"
-  resolved "http://r.cnpmjs.org/require-directory/download/require-directory-2.1.1.tgz#8c64ad5fd30dab1c976e2344ffe7f792a6a6df42"
+  resolved "https://r.cnpmjs.org/require-directory/download/require-directory-2.1.1.tgz#8c64ad5fd30dab1c976e2344ffe7f792a6a6df42"
 
 require-main-filename@^1.0.1:
   version "1.0.1"
-  resolved "http://r.cnpmjs.org/require-main-filename/download/require-main-filename-1.0.1.tgz#97f717b69d48784f5f526a6c5aa8ffdda055a4d1"
+  resolved "https://r.cnpmjs.org/require-main-filename/download/require-main-filename-1.0.1.tgz#97f717b69d48784f5f526a6c5aa8ffdda055a4d1"
 
 retry@^0.10.0, retry@~0.10.0:
   version "0.10.1"
   resolved "http://registry.npm.taobao.org/retry/download/retry-0.10.1.tgz#e76388d217992c252750241d3d3956fed98d8ff4"
 
-rimraf@2, rimraf@^2.5.2:
+rimraf@2:
+  version "2.7.1"
+  resolved "https://registry.yarnpkg.com/rimraf/-/rimraf-2.7.1.tgz#35797f13a7fdadc566142c29d4f07ccad483e3ec"
+  dependencies:
+    glob "^7.1.3"
+
+rimraf@^2.5.2:
   version "2.6.2"
   resolved "http://registry.npm.taobao.org/rimraf/download/rimraf-2.6.2.tgz#2ed8150d24a16ea8651e6d6ef0f47c4158ce7a36"
   dependencies:
@@ -1477,7 +1488,7 @@ semver@~5.3.0:
 
 set-blocking@^2.0.0, set-blocking@~2.0.0:
   version "2.0.0"
-  resolved "http://r.cnpmjs.org/set-blocking/download/set-blocking-2.0.0.tgz#045f9782d011ae9a6803ddd382b24392b3d890f7"
+  resolved "https://r.cnpmjs.org/set-blocking/download/set-blocking-2.0.0.tgz#045f9782d011ae9a6803ddd382b24392b3d890f7"
 
 sha@~2.0.1:
   version "2.0.1"
@@ -1488,17 +1499,17 @@ sha@~2.0.1:
 
 shebang-command@^1.2.0:
   version "1.2.0"
-  resolved "http://r.cnpmjs.org/shebang-command/download/shebang-command-1.2.0.tgz#44aac65b695b03398968c39f363fee5deafdf1ea"
+  resolved "https://r.cnpmjs.org/shebang-command/download/shebang-command-1.2.0.tgz#44aac65b695b03398968c39f363fee5deafdf1ea"
   dependencies:
     shebang-regex "^1.0.0"
 
 shebang-regex@^1.0.0:
   version "1.0.0"
-  resolved "http://r.cnpmjs.org/shebang-regex/download/shebang-regex-1.0.0.tgz#da42f49740c0b42db2ca9728571cb190c98efea3"
+  resolved "https://r.cnpmjs.org/shebang-regex/download/shebang-regex-1.0.0.tgz#da42f49740c0b42db2ca9728571cb190c98efea3"
 
 signal-exit@^3.0.0, signal-exit@^3.0.2:
   version "3.0.2"
-  resolved "http://r.cnpmjs.org/signal-exit/download/signal-exit-3.0.2.tgz#b5fdc08f1287ea1178628e415e25132b73646c6d"
+  resolved "https://r.cnpmjs.org/signal-exit/download/signal-exit-3.0.2.tgz#b5fdc08f1287ea1178628e415e25132b73646c6d"
 
 slash@^1.0.0:
   version "1.0.0"
@@ -1557,7 +1568,7 @@ sshpk@^1.7.0:
 
 string-width@^1.0.1:
   version "1.0.2"
-  resolved "http://r.cnpmjs.org/string-width/download/string-width-1.0.2.tgz#118bdf5b8cdc51a2a7e70d211e07e2b0b9b107d3"
+  resolved "https://r.cnpmjs.org/string-width/download/string-width-1.0.2.tgz#118bdf5b8cdc51a2a7e70d211e07e2b0b9b107d3"
   dependencies:
     code-point-at "^1.0.0"
     is-fullwidth-code-point "^1.0.0"
@@ -1565,7 +1576,7 @@ string-width@^1.0.1:
 
 "string-width@^1.0.2 || 2", string-width@^2.0.0, string-width@^2.1.1:
   version "2.1.1"
-  resolved "http://r.cnpmjs.org/string-width/download/string-width-2.1.1.tgz#ab93f27a8dc13d28cac815c462143a6d9012ae9e"
+  resolved "https://r.cnpmjs.org/string-width/download/string-width-2.1.1.tgz#ab93f27a8dc13d28cac815c462143a6d9012ae9e"
   dependencies:
     is-fullwidth-code-point "^2.0.0"
     strip-ansi "^4.0.0"
@@ -1586,23 +1597,23 @@ stringstream@~0.0.4:
 
 strip-ansi@^3.0.0, strip-ansi@^3.0.1, strip-ansi@~3.0.1:
   version "3.0.1"
-  resolved "http://r.cnpmjs.org/strip-ansi/download/strip-ansi-3.0.1.tgz#6a385fb8853d952d5ff05d0e8aaf94278dc63dcf"
+  resolved "https://r.cnpmjs.org/strip-ansi/download/strip-ansi-3.0.1.tgz#6a385fb8853d952d5ff05d0e8aaf94278dc63dcf"
   dependencies:
     ansi-regex "^2.0.0"
 
 strip-ansi@^4.0.0:
   version "4.0.0"
-  resolved "http://r.cnpmjs.org/strip-ansi/download/strip-ansi-4.0.0.tgz#a8479022eb1ac368a871389b635262c505ee368f"
+  resolved "https://r.cnpmjs.org/strip-ansi/download/strip-ansi-4.0.0.tgz#a8479022eb1ac368a871389b635262c505ee368f"
   dependencies:
     ansi-regex "^3.0.0"
 
 strip-eof@^1.0.0:
   version "1.0.0"
-  resolved "http://r.cnpmjs.org/strip-eof/download/strip-eof-1.0.0.tgz#bb43ff5598a6eb05d89b59fcd129c983313606bf"
+  resolved "https://r.cnpmjs.org/strip-eof/download/strip-eof-1.0.0.tgz#bb43ff5598a6eb05d89b59fcd129c983313606bf"
 
 supervisor@^0.12.0:
   version "0.12.0"
-  resolved "http://r.cnpmjs.org/supervisor/download/supervisor-0.12.0.tgz#de7e6337015b291851c10f3538c4a7f04917ecc1"
+  resolved "https://r.cnpmjs.org/supervisor/download/supervisor-0.12.0.tgz#de7e6337015b291851c10f3538c4a7f04917ecc1"
 
 supports-color@^2.0.0:
   version "2.0.0"
@@ -1610,16 +1621,16 @@ supports-color@^2.0.0:
 
 supports-color@^5.3.0, supports-color@^5.4.0:
   version "5.4.0"
-  resolved "http://r.cnpmjs.org/supports-color/download/supports-color-5.4.0.tgz#1c6b337402c2137605efe19f10fec390f6faab54"
+  resolved "https://r.cnpmjs.org/supports-color/download/supports-color-5.4.0.tgz#1c6b337402c2137605efe19f10fec390f6faab54"
   dependencies:
     has-flag "^3.0.0"
 
 tar@^2.0.0, tar@~2.2.1:
-  version "2.2.1"
-  resolved "http://registry.npm.taobao.org/tar/download/tar-2.2.1.tgz#8e4d2a256c0e2185c6b18ad694aec968b83cb1d1"
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/tar/-/tar-2.2.2.tgz#0ca8848562c7299b8b446ff6a4d60cdbb23edc40"
   dependencies:
     block-stream "*"
-    fstream "^1.0.2"
+    fstream "^1.0.12"
     inherits "2"
 
 text-table@~0.2.0:
@@ -1693,7 +1704,7 @@ uuid@^3.3.2:
   version "3.3.2"
   resolved "http://registry.npm.taobao.org/uuid/download/uuid-3.3.2.tgz#1b4af4955eb3077c501c23872fc6513811587131"
 
-validate-npm-package-license@*, validate-npm-package-license@^3.0.1:
+validate-npm-package-license@^3.0.1:
   version "3.0.4"
   resolved "http://registry.npm.taobao.org/validate-npm-package-license/download/validate-npm-package-license-3.0.4.tgz#fc91f6b9c7ba15c857f4cb2c5defeec39d4f410a"
   dependencies:
@@ -1728,11 +1739,11 @@ wcwidth@^1.0.0:
 
 which-module@^2.0.0:
   version "2.0.0"
-  resolved "http://r.cnpmjs.org/which-module/download/which-module-2.0.0.tgz#d9ef07dce77b9902b8a3a8fa4b31c3e3f7e6e87a"
+  resolved "https://r.cnpmjs.org/which-module/download/which-module-2.0.0.tgz#d9ef07dce77b9902b8a3a8fa4b31c3e3f7e6e87a"
 
 which@1, which@^1.2.9:
   version "1.3.1"
-  resolved "http://r.cnpmjs.org/which/download/which-1.3.1.tgz#a45043d54f5805316da8d62f9f50918d3da70b0a"
+  resolved "https://r.cnpmjs.org/which/download/which-1.3.1.tgz#a45043d54f5805316da8d62f9f50918d3da70b0a"
   dependencies:
     isexe "^2.0.0"
 
@@ -1750,7 +1761,7 @@ wide-align@^1.1.0:
 
 wrap-ansi@^2.0.0:
   version "2.1.0"
-  resolved "http://r.cnpmjs.org/wrap-ansi/download/wrap-ansi-2.1.0.tgz#d8fc3d284dd05794fe84973caecdd1cf824fdd85"
+  resolved "https://r.cnpmjs.org/wrap-ansi/download/wrap-ansi-2.1.0.tgz#d8fc3d284dd05794fe84973caecdd1cf824fdd85"
   dependencies:
     string-width "^1.0.1"
     strip-ansi "^3.0.1"
@@ -1769,7 +1780,7 @@ write-file-atomic@~1.2.0:
 
 xregexp@4.0.0:
   version "4.0.0"
-  resolved "http://r.cnpmjs.org/xregexp/download/xregexp-4.0.0.tgz#e698189de49dd2a18cc5687b05e17c8e43943020"
+  resolved "https://r.cnpmjs.org/xregexp/download/xregexp-4.0.0.tgz#e698189de49dd2a18cc5687b05e17c8e43943020"
 
 xtend@^4.0.0:
   version "4.0.1"
@@ -1777,21 +1788,21 @@ xtend@^4.0.0:
 
 "y18n@^3.2.1 || ^4.0.0":
   version "4.0.0"
-  resolved "http://r.cnpmjs.org/y18n/download/y18n-4.0.0.tgz#95ef94f85ecc81d007c264e190a120f0a3c8566b"
+  resolved "https://r.cnpmjs.org/y18n/download/y18n-4.0.0.tgz#95ef94f85ecc81d007c264e190a120f0a3c8566b"
 
 yallist@^2.1.2:
   version "2.1.2"
-  resolved "http://r.cnpmjs.org/yallist/download/yallist-2.1.2.tgz#1c11f9218f076089a47dd512f93c6699a6a81d52"
+  resolved "https://r.cnpmjs.org/yallist/download/yallist-2.1.2.tgz#1c11f9218f076089a47dd512f93c6699a6a81d52"
 
 yargs-parser@^10.1.0:
   version "10.1.0"
-  resolved "http://r.cnpmjs.org/yargs-parser/download/yargs-parser-10.1.0.tgz#7202265b89f7e9e9f2e5765e0fe735a905edbaa8"
+  resolved "https://r.cnpmjs.org/yargs-parser/download/yargs-parser-10.1.0.tgz#7202265b89f7e9e9f2e5765e0fe735a905edbaa8"
   dependencies:
     camelcase "^4.1.0"
 
 yargs@^12.0.1:
   version "12.0.1"
-  resolved "http://r.cnpmjs.org/yargs/download/yargs-12.0.1.tgz#6432e56123bb4e7c3562115401e98374060261c2"
+  resolved "https://r.cnpmjs.org/yargs/download/yargs-12.0.1.tgz#6432e56123bb4e7c3562115401e98374060261c2"
   dependencies:
     cliui "^4.0.0"
     decamelize "^2.0.0"
