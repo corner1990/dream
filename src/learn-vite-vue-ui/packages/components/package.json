@@ -1,0 +1,18 @@
+{
+  "name": "my-learn-vite-ui",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "vite build",
+    "copyLess": "esno ./copy-less",
+    "build:all": "vite build & esno ./copy-less"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@my-learn-vite-ui/utils": "workspace:^1.0.0"
+  }
+}
