@@ -1,0 +1,15 @@
+{
+  "name": "learn-vite-vue3",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "vite -m development",
+    "build": "vite build"
+  },
+  "dependencies": {
+    "@vitejs/plugin-vue": "^4.1.0",
+    "vite": "^4.2.1",
+    "vue-router": "4"
+  }
+}
