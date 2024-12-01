@@ -30,7 +30,7 @@
     "html-webpack-plugin": "^5.3.2",
     "less": "^4.1.1",
     "less-loader": "^10.0.1",
-    "qs": "^6.10.1",
+    "qs": "^6.10.3",
     "source-map-loader": "^3.0.0",
     "style-loader": "^3.2.1",
     "ts-loader": "^9.2.5",
