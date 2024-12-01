@@ -25,7 +25,7 @@
     "less": "^4.1.1",
     "less-loader": "^8.1.1",
     "lint-staged": "^7.2.2",
-    "qs": "^6.10.1",
+    "qs": "^6.10.3",
     "rollup-plugin-vue": "^6.0.0",
     "source-map-loader": "^2.0.1",
     "style-loader": "^2.0.0",
