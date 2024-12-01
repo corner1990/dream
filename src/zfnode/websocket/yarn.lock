@@ -299,7 +299,7 @@ vary@~1.1.2:
   resolved "http://registry.npm.taobao.org/vary/download/vary-1.1.2.tgz#2299f02c6ded30d4a5961b0b9f74524a18f634fc"
 
 ws@^6.1.0:
-  version "6.1.0"
-  resolved "http://registry.npm.taobao.org/ws/download/ws-6.1.0.tgz#119a9dbf92c54e190ec18d10e871d55c95cf9373"
+  version "6.2.2"
+  resolved "https://registry.yarnpkg.com/ws/-/ws-6.2.2.tgz#dd5cdbd57a9979916097652d78f1cc5faea0c32e"
   dependencies:
     async-limiter "~1.0.0"
